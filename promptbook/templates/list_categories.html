@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="title">Categories</h1>
+  <div class="columns is-multiline">
+    {% for category in categories %}
+      <div class="column is-one-third">
+        <div class="card">
+          <div class="card-content">
+            <h3 class="subtitle"><a href="{% url 'list_prompts' category.id %}">{{ category.name }}</a></h3>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
