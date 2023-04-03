@@ -1,6 +1,5 @@
 import json
 
-from django.shortcuts import render
 from .models import Category, Prompt, PromptLabel, Label
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -8,6 +7,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 def list_categories(request):
     categories = Category.objects.all()
@@ -31,6 +32,35 @@ def list_prompts(request, category_id):
         'prompt_labels': prompt_labels.items(),
     })
 
+def list_prompts_by_label(request, label_id):
+    label = get_object_or_404(Label, pk=label_id)
+    prompt_labels = PromptLabel.objects.filter(label=label)
+    prompts = [pl.prompt for pl in prompt_labels]
+
+    return render(request, 'list_prompts_by_label.html', {'label': label, 'prompts': prompts})
+
+def editor(request):
+    categories = Category.objects.all()
+    labels = Label.objects.all()
+
+    if request.method == 'POST':
+        prompt_text = request.POST['prompt_text']
+        category_id = request.POST['category']
+        selected_labels = request.POST.getlist('labels')
+
+        category = Category.objects.get(id=category_id)
+        prompt = Prompt(text=prompt_text, category=category)
+        prompt.save()
+
+        for label_id in selected_labels:
+            label = Label.objects.get(id=label_id)
+            prompt_label = PromptLabel(prompt=prompt, label=label)
+            prompt_label.save()
+
+        return HttpResponseRedirect(reverse('list_prompts', args=[category_id]))
+
+    return render(request, 'editor.html', {'categories': categories, 'labels': labels})
+
 def login(request):
     if request.user.is_authenticated:
         return redirect('list_categories')
@@ -43,8 +73,6 @@ def login(request):
     else:
         form = AuthenticationForm(request)
     return render(request, 'login.html', {'form': form})
-
-
 
 def logout(request):
     auth_logout(request)
@@ -64,9 +92,3 @@ def edit_prompt(request, prompt_id):
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
-def list_prompts_by_label(request, label_id):
-    label = get_object_or_404(Label, pk=label_id)
-    prompt_labels = PromptLabel.objects.filter(label=label)
-    prompts = [pl.prompt for pl in prompt_labels]
-
-    return render(request, 'list_prompts_by_label.html', {'label': label, 'prompts': prompts})

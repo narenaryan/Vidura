@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+    <div class="field">
+      <label class="label">Add your prompt</label>
+      <div class="control">
+        <textarea class="textarea" name="prompt_text" rows="10" required></textarea>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Category</label>
+      <div class="control">
+        <div>
+          <select name="category" required>
+            <option value="">Select a category</option>
+            {% for category in categories %}
+              <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Labels</label>
+      <div class="control">
+        <div>
+            <select name="labels" multiple>
+                {% for label in labels %}
+                  <option value="{{ label.id }}">{{ label.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <button type="submit" class="button is-primary">Save</button>
+      </div>
+    </div>
+  </form>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      $('select').selectize();
+    });
+  </script>
+{% endblock %}
