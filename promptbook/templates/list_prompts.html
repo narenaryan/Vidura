@@ -7,12 +7,12 @@
       <div class="column is-one-third">
         <div class="box">
           <div class="content">
-            <p>{{ prompt.text|truncatechars:250 }} <span class="tag is-light">Length: {{ prompt.text|length }} chars...</span></p>
+            <p data-prompt-id="{{ prompt.id }}" data-full-text="{{ prompt.text }}">{{ prompt.text|truncatechars:250 }} <span class="tag is-light">Length: {{ prompt.text|length }} chars...</span></p>
             <div class="tags">
               {% for id, label in prompt_labels %}
                 {% if id == prompt.id %}
                   {% for label_val in label %} 
-                    <span class="tag is-rounded">{{ label_val.name }}</span>
+                  <a href="{% url 'list_prompts_by_label' label_val.id %}"><span class="tag is-rounded">{{ label_val.name }}</span></a>
                   {% endfor %}
                 {% endif %}
               {% endfor %}
@@ -23,13 +23,67 @@
               <i class="fas fa-copy"></i>
             </span>
           </button>
+          <button class="button is-small" onclick="openEditPrompt({{ prompt.id }})">
+            <span class="icon">
+              <i class="fas fa-edit"></i>
+            </span>
+          </button>
         </div>
       </div>
     {% endfor %}
   </div>
 
+  <div class="modal" id="editPromptModal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Edit Prompt</p>
+        <button class="delete" aria-label="close" onclick="closeEditPrompt()"></button>
+      </header>
+      <section class="modal-card-body">
+        <input type="hidden" id="editPromptId">
+        <textarea class="textarea" id="editPromptText" rows="10"></textarea>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button is-success" onclick="saveEditPrompt()">Save</button>
+        <button class="button" onclick="closeEditPrompt()">Cancel</button>
+      </footer>
+    </div>
+  </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
   <script>
     new ClipboardJS('.button');
+
+    // Custom functions for displaying popup
+    function openEditPrompt(promptId) {
+      document.getElementById('editPromptId').value = promptId;
+      const promptText = document.querySelector(`[data-prompt-id="${promptId}"]`).dataset.fullText;
+      document.getElementById('editPromptText').value = promptText;
+      document.getElementById('editPromptModal').classList.add('is-active');
+    }
+  
+    function closeEditPrompt() {
+      document.getElementById('editPromptModal').classList.remove('is-active');
+    }
+  
+    async function saveEditPrompt() {
+      const promptId = document.getElementById('editPromptId').value;
+      const newText = document.getElementById('editPromptText').value;
+  
+      const response = await fetch(`/prompts/edit/${promptId}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify({ 'text': newText })
+      });
+  
+      if (response.ok) {
+        location.reload();
+      } else {
+        alert('Error: Unable to save the updated prompt');
+      }
+    }
   </script>
 {% endblock %}

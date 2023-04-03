@@ -1,9 +1,13 @@
+import json
+
 from django.shortcuts import render
-from .models import Category, Prompt, PromptLabel
+from .models import Category, Prompt, PromptLabel, Label
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 def list_categories(request):
     categories = Category.objects.all()
@@ -43,3 +47,24 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect('login')
+
+@csrf_exempt
+def edit_prompt(request, prompt_id):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            prompt = Prompt.objects.get(pk=prompt_id)
+            prompt.text = data.get('text', prompt.text)
+            prompt.save()
+            return JsonResponse({'status': 'success'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+
+def list_prompts_by_label(request, label_id):
+    label = get_object_or_404(Label, pk=label_id)
+    prompt_labels = PromptLabel.objects.filter(label=label)
+    prompts = [pl.prompt for pl in prompt_labels]
+
+    return render(request, 'list_prompts_by_label.html', {'label': label, 'prompts': prompts})
