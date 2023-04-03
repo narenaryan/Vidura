@@ -7,8 +7,12 @@ Welcome to your all-in-one ChatGPT prompt management system. If you are saving e
 ## Categories view
 ![Categories](./screens/categories.png)
 
+We simplified categories for you. You can request new categories and we will add it for you.
+
 ## Prompts view
 ![Prompts](./screens/prompts.png)
+
+Each prompt will have a list of labels attached like "gpt-3", "simple", or "complex". User can click on a label on any prompt and visit all the prompts tagged with the given label name. 
 
 ## How to run Vidura ?
 You can run this software by installing Python 3.9 or above on your machine, and install developer dependencies on your Python environment like:
