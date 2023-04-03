@@ -22,7 +22,7 @@ def list_prompts(request, category_id):
     return render(request, 'list_prompts.html', {
         'category': category,
         'prompts': prompts,
-        'prompt_labels': prompt_labels,
+        'prompt_labels': prompt_labels.items(),
     })
 
 def login(request):

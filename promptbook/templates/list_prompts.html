@@ -9,9 +9,12 @@
           <div class="content">
             <p>{{ prompt.text|truncatechars:250 }} <span class="tag is-light">Length: {{ prompt.text|length }} chars...</span></p>
             <div class="tags">
-              {{ prompt_labels }}
-              {% for label in prompt_labels.prompt.id %}
-                <span class="tag is-rounded">{{ label }}</span>
+              {% for id, label in prompt_labels %}
+                {% if id == prompt.id %}
+                  {% for label_val in label %} 
+                    <span class="tag is-rounded">{{ label_val.name }}</span>
+                  {% endfor %}
+                {% endif %}
               {% endfor %}
             </div>
           </div>
