@@ -11,8 +11,10 @@ from django.views.decorators.csrf import csrf_exempt
 
 def list_categories(request):
     categories = Category.objects.all()
-    context = {'categories': categories}
-    return render(request, 'list_categories.html', context)
+    category_colors = ['pastel-green', 'pastel-blue', 'pastel-yellow', 'pastel-pink']
+    categories_with_colors = [(category, category_colors[i % len(category_colors)]) for i, category in enumerate(categories)]
+    return render(request, 'list_categories.html', {'categories_with_colors': categories_with_colors})
+
 
 def list_prompts(request, category_id):
     category = Category.objects.get(pk=category_id)

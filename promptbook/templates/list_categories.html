@@ -2,14 +2,43 @@
 
 {% block content %}
   <h1 class="title">Categories</h1>
+  <style>
+    .category-card {
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .category-card:hover {
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+      transform: translateY(-5px);
+    }
+
+    .pastel-green {
+      background-color: #b8e6b5;
+    }
+
+    .pastel-blue {
+      background-color: #b5d5e6;
+    }
+
+    .pastel-yellow {
+      background-color: #f5e6b5;
+    }
+
+    .pastel-pink {
+      background-color: #e6b5c9;
+    }
+  </style>
   <div class="columns is-multiline">
-    {% for category in categories %}
+    {% for category, color in categories_with_colors %}
       <div class="column is-one-third">
-        <div class="card">
-          <div class="card-content">
-            <h3 class="subtitle"><a href="{% url 'list_prompts' category.id %}">{{ category.name }}</a></h3>
+        <a href="{% url 'list_prompts' category.id %}">
+          <div class="category-card has-text-centered {{ color }}">
+            <h3 class="title">{{ category.name }}</h3>
           </div>
-        </div>
+        </a>
       </div>
     {% endfor %}
   </div>
