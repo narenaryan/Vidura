@@ -1,18 +1,34 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1 class="title">Activity</h1>
-  <div class="columns is-multiline">
-    {% for action in actions %}
-      <div class="column is-full">
-        <div class="box">
-          <p>{{ action.actor }} {{ action.verb }} {{ action.target }} on {{ action.timestamp|date:"F j, Y, P" }}</p>
-        </div>
-      </div>
-    {% empty %}
-      <div class="column">
-        <p>No activity found.</p>
-      </div>
-    {% endfor %}
+  <h1 class="title">Activity Stream</h1>
+
+  <div class="box">
+    <ul>
+      {% for action in actions %}
+        <li>
+          <div class="media">
+            <div class="media-left">
+              <figure class="image is-48x48">
+                {% if action.actor.profile.avatar %}
+                  <img src="{{ action.actor.profile.avatar.url }}" alt="{{ action.actor.username }}'s avatar">
+                {% else %}
+                  <span class="icon is-medium">
+                    <i class="fas fa-user fa-2x"></i>
+                  </span>
+                {% endif %}
+              </figure>
+            </div>
+            <div class="media-content">
+              <p>
+                <strong>{{ action.actor }}</strong> {{ action.verb }} <em>{{ action.target }}</em> {{ action.timesince }} ago.
+              </p>
+            </div>
+          </div>
+        </li>
+      {% empty %}
+        <li>No recent activity.</li>
+      {% endfor %}
+    </ul>
   </div>
 {% endblock %}
