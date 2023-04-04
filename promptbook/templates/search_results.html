@@ -24,6 +24,12 @@
       <div class="column is-one-third">
         <div class="box">
           <p>{{ prompt.text|truncatechars:250 }} <span class="tag is-light">Length: {{ prompt.text|length }} chars...</span></p>
+          <a href="{% url 'list_prompts' prompt.category.pk %}" class="tag">{{ prompt.category.name }}</a>
+          <button style="color: rgb(27, 187, 49);" class="copy-button button is-small" data-clipboard-text="{{ prompt.text }}">
+            <span class="icon">
+              <i class="fas fa-thin fa-copy"></i>
+            </span>
+          </button>
         </div>
       </div>
     {% empty %}
@@ -32,4 +38,20 @@
       </div>
     {% endfor %}
   </div>
+  <div id="overlay" class="overlay"></div>
+  <div id="copy-notification" class="copy-notification">Copied prompt to clipboard <i class="fa-solid fa-face-smile-wink"></i></div>
+  <script>
+    const clipboard = new ClipboardJS('.copy-button');
+    const copyNotification = document.getElementById('copy-notification');
+    const overlay = document.getElementById('overlay');
+  
+    clipboard.on('success', () => {
+      overlay.style.display = 'block';
+      copyNotification.style.display = 'block';
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        copyNotification.style.display = 'none';
+      }, 2000);
+    });
+  </script>
 {% endblock %}
