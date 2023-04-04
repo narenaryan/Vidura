@@ -1,22 +1,22 @@
 import json
 
 from .models import Category, Prompt, PromptLabel, Label
-from django.contrib.auth import login as auth_login
-from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def list_categories(request):
     categories = Category.objects.all()
     category_colors = ['pastel-green', 'pastel-blue', 'pastel-yellow', 'pastel-pink']
     categories_with_colors = [(category, category_colors[i % len(category_colors)]) for i, category in enumerate(categories)]
     return render(request, 'list_categories.html', {'categories_with_colors': categories_with_colors})
 
-
+@login_required
 def list_prompts(request, category_id):
     category = Category.objects.get(pk=category_id)
     prompts = category.prompt_set.all()
@@ -32,6 +32,7 @@ def list_prompts(request, category_id):
         'prompt_labels': prompt_labels.items(),
     })
 
+@login_required
 def list_prompts_by_label(request, label_id):
     label = get_object_or_404(Label, pk=label_id)
     prompt_labels = PromptLabel.objects.filter(label=label)
@@ -39,6 +40,7 @@ def list_prompts_by_label(request, label_id):
 
     return render(request, 'list_prompts_by_label.html', {'label': label, 'prompts': prompts})
 
+@login_required
 def editor(request):
     categories = Category.objects.all()
     labels = Label.objects.all()
@@ -79,6 +81,7 @@ def logout(request):
     return redirect('login')
 
 @csrf_exempt
+@login_required
 def edit_prompt(request, prompt_id):
     if request.method == 'POST':
         try:
@@ -92,6 +95,7 @@ def edit_prompt(request, prompt_id):
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
+@login_required
 def delete_prompt(request, prompt_id):
     prompt = get_object_or_404(Prompt, id=prompt_id)
     prompt.delete()
