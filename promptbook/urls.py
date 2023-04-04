@@ -11,4 +11,5 @@ urlpatterns = [
     path('labels/<int:label_id>/prompts/', views.list_prompts_by_label, name='list_prompts_by_label'),
     path('editor/', views.editor, name='editor'),
     path('delete_prompt/<int:prompt_id>/', views.delete_prompt, name='delete_prompt'),
+    path('search/', views.search, name='search'),
 ]

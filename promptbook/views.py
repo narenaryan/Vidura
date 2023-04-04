@@ -100,3 +100,18 @@ def delete_prompt(request, prompt_id):
     prompt = get_object_or_404(Prompt, id=prompt_id)
     prompt.delete()
     return JsonResponse({'status': 'success'})
+
+@login_required
+def search(request):
+    query = request.GET.get('q', '')
+
+    found_categories = Category.objects.filter(name__icontains=query)
+    found_prompts = Prompt.objects.filter(text__icontains=query)
+
+    context = {
+        'query': query,
+        'found_categories': found_categories,
+        'found_prompts': found_prompts,
+    }
+
+    return render(request, 'search_results.html', context)

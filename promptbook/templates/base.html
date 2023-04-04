@@ -69,6 +69,23 @@
                         Categories
                     </a>
                     <a class="navbar-item has-text-white" href="{% url 'editor' %}">Editor</a>
+                    <!-- Add this inside your navbar div, adjust accordingly -->
+                    <div class="navbar-item">
+                        <form method="GET" action="{% url 'search' %}">
+                            <div class="field has-addons">
+                                <div class="control">
+                                    <input class="input" type="text" name="q" placeholder="Search">
+                                </div>
+                                <div class="control">
+                                    <button class="button" type="submit">
+                                        <span class="icon">
+                                            <i class="fas fa-search"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <div class="navbar-end">
                     {% if user.is_authenticated %}
