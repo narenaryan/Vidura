@@ -8,6 +8,8 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from actstream import action
+from actstream.models import Action
 
 @login_required
 def list_categories(request):
@@ -53,6 +55,7 @@ def editor(request):
         category = Category.objects.get(id=category_id)
         prompt = Prompt(text=prompt_text, category=category)
         prompt.save()
+        action.send(request.user, verb='created', target=prompt)
 
         for label_id in selected_labels:
             label = Label.objects.get(id=label_id)
@@ -115,3 +118,8 @@ def search(request):
     }
 
     return render(request, 'search_results.html', context)
+
+@login_required
+def activity_stream(request):
+    actions = Action.objects.all()
+    return render(request, 'activity_stream.html', {'actions': actions})

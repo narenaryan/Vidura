@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="title">Activity</h1>
+  <div class="columns is-multiline">
+    {% for action in actions %}
+      <div class="column is-full">
+        <div class="box">
+          <p>{{ action.actor }} {{ action.verb }} {{ action.target }} on {{ action.timestamp|date:"F j, Y, P" }}</p>
+        </div>
+      </div>
+    {% empty %}
+      <div class="column">
+        <p>No activity found.</p>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

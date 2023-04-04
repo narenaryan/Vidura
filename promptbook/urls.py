@@ -1,5 +1,6 @@
 from django.urls import path
 
+import promptbook.register_models
 from . import views
 
 urlpatterns = [
@@ -12,4 +13,5 @@ urlpatterns = [
     path('editor/', views.editor, name='editor'),
     path('delete_prompt/<int:prompt_id>/', views.delete_prompt, name='delete_prompt'),
     path('search/', views.search, name='search'),
+    path('', views.activity_stream, name='index'),
 ]

@@ -57,13 +57,18 @@
 </head>
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
-    <nav class="navbar is-black  has-shadow">
+    <nav class="navbar is-black  has-shadow" role="navigation" aria-label="main navigation">
         <div class="container">
             <div class="navbar-brand">
-                <a class="navbar-item has-text-white" href="{% url 'list_categories' %}">
+                <a class="navbar-item has-text-white" href="/">
                     <strong class="logo">Vidura</strong> &nbsp;<p>Beta</p>
                 </a>
             </div>
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+              </a>
             <div class="navbar-menu">
                 <div class="navbar-start">
                     <a class="navbar-item has-text-white" href="{% url 'list_categories' %}">
@@ -75,7 +80,7 @@
                         <form method="GET" action="{% url 'search' %}">
                             <div class="field has-addons">
                                 <div class="control">
-                                    <input class="input" type="text" name="q" placeholder="Search">
+                                    <input class="input" type="text" name="q" placeholder="Search prompts">
                                 </div>
                                 <div class="control">
                                     <button class="button" type="submit">
@@ -104,6 +109,17 @@
             {% endblock %}
         </div>
     </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const burger = document.querySelector('.navbar-burger');
+          const menu = document.querySelector('.navbar-menu');
+    
+          burger.addEventListener('click', () => {
+            burger.classList.toggle('is-active');
+            menu.classList.toggle('is-active');
+          });
+        });
+    </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <footer class="footer">
