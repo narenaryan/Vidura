@@ -1,4 +1,4 @@
-Project status: ![example workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
+![Django](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
 ## Vidura
 Are you a ChatGPT prompt engineer? 
 
