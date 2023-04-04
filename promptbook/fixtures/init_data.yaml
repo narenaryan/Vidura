@@ -1,0 +1,160 @@
+---
+# Categories
+- model: promptbook.Category
+  pk: 1
+  fields:
+    name: Story Writing
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+- model: promptbook.Category
+  pk: 2
+  fields:
+    name: Poetry
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+- model: promptbook.Category
+  pk: 3
+  fields:
+    name: Coding
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+- model: promptbook.Category
+  pk: 4
+  fields:
+    name: Mathematics
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+- model: promptbook.Category
+  pk: 5
+  fields:
+    name: Hobbies
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+- model: promptbook.Category
+  pk: 6
+  fields:
+    name: Personal Development
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+- model: promptbook.Category
+  pk: 7
+  fields:
+    name: Miscellaneous
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+- model: promptbook.Category
+  pk: 8
+  fields:
+    name: Jailbreak
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+- model: promptbook.Category
+  pk: 9
+  fields:
+    name: Website Building
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+# Labels
+- model: promptbook.Label
+  pk: 1
+  fields:
+    name: gpt-3
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+- model: promptbook.Label
+  pk: 2
+  fields:
+    name: gpt-4
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+- model: promptbook.Label
+  pk: 3
+  fields:
+    name: complex
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+- model: promptbook.Label
+  pk: 4
+  fields:
+    name: simple
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+# Story Writing Prompts
+- model: promptbook.Prompt
+  pk: 1
+  fields:
+    category: 1
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+    text: |
+      Write a story about a person who discovers a magical object hidden in their backyard.
+      Begin the story by describing the person's ordinary day and surroundings, and then explain how they stumble upon the object.
+      Make sure to include details about the object's appearance and any unusual properties it may have.
+      Finally, describe how the person's life is transformed by the discovery of the magical object.
+- model: promptbook.Prompt
+  pk: 2
+  fields:
+    category: 1
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+    text: |
+      Write a story about a person who wakes up in a mysterious location with no memory of how they got there.
+      Begin the story by describing the surroundings and any clues the person might have about their identity or whereabouts.
+      Include details about the person's attempts to escape or discover more information, as well as any obstacles or dangers they face along the way.
+      Finally, describe how the person's memory is restored and what they discover about their past.
+- model: promptbook.Prompt
+  pk: 3
+  fields:
+    category: 1
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+    text: |
+      Write a story about a group of astronauts who are on a mission to explore a distant planet.
+      Begin the story by describing the spaceship and the crew members, and explain the purpose of the mission.
+      Include details about the challenges the crew faces during the journey, such as technical malfunctions and interpersonal conflicts.
+      Finally, describe the crew's arrival on the planet and their interactions with any alien life forms they encounter.
+# Poetry prompts
+- model: promptbook.Prompt
+  pk: 4
+  fields:
+    category: 2
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+    text: |
+      Compose a free-verse poem about the relationship between humans and nature.
+      Begin by describing the beauty and power of the natural world, and then explore the ways in which humans have impacted and transformed it.
+      Consider the ways in which human progress and industrialization have changed the landscape and the environment, and the resulting consequences for both humans and the natural world.
+      End the poem with a call to action or a meditation on the delicate balance between human needs and the needs of the earth.
+# Coding Prompts
+- model: promptbook.Prompt
+  pk: 5
+  fields:
+    category: 3
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+    text: |
+      Can you write a program that takes a list of numbers as input and outputs the sum of the odd numbers in the list ?
+      Begin by defining a function that takes a list as its argument, and then use a loop to iterate over the list and add up the odd numbers.
+      Finally, return the sum as the output of the function.
+- model: promptbook.Prompt
+  pk: 6
+  fields:
+    category: 3
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+    text: |
+      Create a script that analyzes a text file and counts the frequency of each word.
+      Begin by reading the text file and storing its contents in a string.
+      Then, use the split() method to create an array of individual words, and iterate over this array to count the frequency of each word.
+      Finally, output the results in a format that displays each word and its frequency.
+- model: promptbook.Prompt
+  pk: 7
+  fields:
+    category: 3
+    created_at: 2023-01-01 00:00
+    modified_at: 2023-01-01 00:00
+    text: |
+      Develop a web application that allows users to search for and filter a list of items.
+      Begin by creating a web page with a search bar and filter options, and use JavaScript to read in a list of items from a data source.
+      Then, use JavaScript to implement the search and filter functionality, so that users can search for specific items or filter the list by various criteria.
+      Finally, display the results on the page in a user-friendly format.
