@@ -1,5 +1,8 @@
 [![Django CI](https://github.com/narenaryan/Vidura/actions/workflows/django.yml/badge.svg?branch=main)](https://github.com/narenaryan/Vidura/actions/workflows/django.yml)
-## Vidura
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/narenaryan/Vidura/main/vidura-logo.png" width="500px"/>
+</p>
 Are you a ChatGPT prompt engineer? 
 
 Welcome to your all-in-one ChatGPT prompt management system. If you are saving emerging prompts on text editors, git, and on xyz, now goes the pain to add, tag, search and retrieve.
