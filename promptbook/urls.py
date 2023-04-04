@@ -10,4 +10,5 @@ urlpatterns = [
     path('prompts/edit/<int:prompt_id>/', views.edit_prompt, name='edit_prompt'),
     path('labels/<int:label_id>/prompts/', views.list_prompts_by_label, name='list_prompts_by_label'),
     path('editor/', views.editor, name='editor'),
+    path('delete_prompt/<int:prompt_id>/', views.delete_prompt, name='delete_prompt'),
 ]

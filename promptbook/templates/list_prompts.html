@@ -18,14 +18,19 @@
               {% endfor %}
             </div>
           </div>
-          <button class="button is-small" data-clipboard-text="{{ prompt.text }}">
+          <button style="color: rgb(27, 187, 49);" class="button is-small" data-clipboard-text="{{ prompt.text }}">
             <span class="icon">
               <i class="fas fa-copy"></i>
             </span>
           </button>
-          <button class="button is-small" onclick="openEditPrompt({{ prompt.id }})">
+          <button style="color: rgb(66, 73, 224);" class="button is-small" onclick="openEditPrompt({{ prompt.id }})">
             <span class="icon">
               <i class="fas fa-edit"></i>
+            </span>
+          </button>
+          <button class="button is-small delete-prompt is-pulled-right" data-prompt-id="{{ prompt.id }}">
+            <span class="icon">
+              <i style="color: rgb(212, 34, 34);" class="fas fa-trash-alt"></i>
             </span>
           </button>
         </div>
@@ -60,7 +65,7 @@
   <script>
     new ClipboardJS('.button');
 
-    // Custom functions for displaying popup
+    // Handle edit prompt
     function openEditPrompt(promptId) {
       document.getElementById('editPromptId').value = promptId;
       const promptText = document.querySelector(`[data-prompt-id="${promptId}"]`).dataset.fullText;
@@ -91,5 +96,27 @@
         alert('Error: Unable to save the updated prompt');
       }
     }
+
+    // Delete a prompt with JS
+    const deleteButtons = document.querySelectorAll('.delete-prompt');
+    deleteButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const promptId = button.dataset.promptId;
+        fetch(`/delete_prompt/${promptId}/`, {
+            method: 'POST',
+            headers: {
+              'X-CSRFToken': '{{ csrf_token }}' 
+            }
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === 'success') {
+              location.reload();
+            } else {
+              alert('An error occurred while deleting the prompt.');
+            }
+          });
+      });
+    });
   </script>
 {% endblock %}

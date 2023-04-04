@@ -10,7 +10,7 @@ class Category(models.Model):
 
 class Prompt(models.Model):
     text = models.TextField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
@@ -27,7 +27,7 @@ class Label(models.Model):
 
 class PromptLabel(models.Model):
     label = models.ForeignKey(Label, on_delete=models.DO_NOTHING)
-    prompt = models.ForeignKey(Prompt, on_delete=models.DO_NOTHING)
-    
+    prompt = models.ForeignKey(Prompt, on_delete=models.CASCADE)
+
     def __str__(self):
         return f"Label: {self.label.__str__()}, Prompt: {self.prompt.__str__()}" 

@@ -92,3 +92,7 @@ def edit_prompt(request, prompt_id):
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
+def delete_prompt(request, prompt_id):
+    prompt = get_object_or_404(Prompt, id=prompt_id)
+    prompt.delete()
+    return JsonResponse({'status': 'success'})
