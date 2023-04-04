@@ -1,4 +1,4 @@
-![Django](https://github.com/narenaryan/Vidura/blob/main/.github/workflows/django.yml/badge.svg)
+[![Django CI](https://github.com/narenaryan/Vidura/actions/workflows/django.yml/badge.svg?branch=main)](https://github.com/narenaryan/Vidura/actions/workflows/django.yml)
 ## Vidura
 Are you a ChatGPT prompt engineer? 
 
