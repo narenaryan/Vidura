@@ -23,7 +23,11 @@ Each prompt will have a list of labels attached like "gpt-3", "simple", or "comp
 ## New prompt editor view
 ![Create Prompt](./screens/create_prompt.png)
 
-## Open ChatGPT from Vidura
+## Universal search
+One can search matching categories and prompts in one place by using search bar.
+![Search](./screens/search.png)
+
+## Copy to Clipboard & Open ChatGPT from Vidura
 Click the "Copy to clipboard" button and then click the Chat GPT logo on a prompt and immediately you will be taken to a new chat of ChatGPT (make sure you logged in already). Hit Ctrl/Cmd + v to paste your prompt into ChatGPT.
 ![Open ChatGPT from Vidura](./screens/open_gpt.png)
 
