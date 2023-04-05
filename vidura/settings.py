@@ -32,9 +32,6 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-LOGIN_REDIRECT_URL = 'list_categories'
-LOGOUT_REDIRECT_URL = 'login'
-
 # Application definition
 
 INSTALLED_APPS = [

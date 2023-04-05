@@ -14,4 +14,5 @@ urlpatterns = [
     path('delete_prompt/<int:prompt_id>/', views.delete_prompt, name='delete_prompt'),
     path('search/', views.search, name='search'),
     path('', views.activity_stream, name='index'),
+    path('upload_avatar/', views.upload_avatar, name='upload_avatar'),
 ]

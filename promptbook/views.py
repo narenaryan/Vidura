@@ -1,24 +1,24 @@
 import json
 
 from .models import Category, Prompt, PromptLabel, Label
-from django.contrib.auth import login as auth_login, logout as auth_logout
+from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from actstream import action
 from actstream.models import Action
 
-@login_required
+@login_required(login_url='/login/')
 def list_categories(request):
     categories = Category.objects.all()
     category_colors = ['pastel-green', 'pastel-blue', 'pastel-yellow', 'pastel-pink']
     categories_with_colors = [(category, category_colors[i % len(category_colors)]) for i, category in enumerate(categories)]
     return render(request, 'list_categories.html', {'categories_with_colors': categories_with_colors})
 
-@login_required
+@login_required(login_url='/login/')
 def list_prompts(request, category_id):
     category = Category.objects.get(pk=category_id)
     prompts = category.prompt_set.all()
@@ -34,7 +34,7 @@ def list_prompts(request, category_id):
         'prompt_labels': prompt_labels.items(),
     })
 
-@login_required
+@login_required(login_url='/login/')
 def list_prompts_by_label(request, label_id):
     label = get_object_or_404(Label, pk=label_id)
     prompt_labels = PromptLabel.objects.filter(label=label)
@@ -66,25 +66,50 @@ def editor(request):
 
     return render(request, 'editor.html', {'categories': categories, 'labels': labels})
 
-def login(request):
-    if request.user.is_authenticated:
-        return redirect('list_categories')
+# def login(request):
+#     if request.user.is_authenticated:
+#         return redirect('list_categories')
 
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            auth_login(request, form.get_user())
-            return redirect('list_categories')
+#     if request.method == 'POST':
+#         form = AuthenticationForm(request, data=request.POST)
+#         if form.is_valid():
+#             auth_login(request, form.get_user())
+#             return redirect('list_categories')
+#     else:
+#         form = AuthenticationForm(request)
+#     return render(request, 'login.html', {'form': form})
+
+def login(request):
+    if request.method == "POST":
+        # Get the username and password from the request body
+        body = request.body.decode("utf-8")
+        data = json.loads(body)
+        username = data.get("username")
+        password = data.get("password")
+
+        # Authenticate the user
+        user = authenticate(request, username=username, password=password)
+
+        # If the user is authenticated, log them in and redirect to the dashboard
+        if user is not None:
+            auth_login(request, user)
+            return redirect("list_categories")
+
+        # If the user is not authenticated, display an error message
+        else:
+            error_message = "Invalid username or password"
+            return HttpResponseBadRequest(error_message)
+
+    # If the request method is not POST, render the login form
     else:
-        form = AuthenticationForm(request)
-    return render(request, 'login.html', {'form': form})
+        return render(request, "login.html")
 
 def logout(request):
     auth_logout(request)
     return redirect('login')
 
 @csrf_exempt
-@login_required
+@login_required(login_url='/login/')
 def edit_prompt(request, prompt_id):
     if request.method == 'POST':
         try:
@@ -119,7 +144,18 @@ def search(request):
 
     return render(request, 'search_results.html', context)
 
-@login_required
+@login_required(login_url='/login/')
 def activity_stream(request):
     actions = Action.objects.all()
     return render(request, 'activity_stream.html', {'actions': actions})
+
+@login_required
+def upload_avatar(request):
+    if request.method == 'POST':
+        avatar = request.FILES.get('avatar')
+        if avatar:
+            request.user.profile.avatar = avatar
+            request.user.profile.save()
+        return redirect('upload_avatar')
+
+    return render(request, 'upload_avatar.html')

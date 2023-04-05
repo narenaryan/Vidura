@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+    <div class="hero-body">
+        <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+            <form class="box">
+                {% csrf_token %}
+                <div class="field">
+                <label for="" class="label">Username</label>
+                <div class="control has-icons-left">
+                    <input type="text" placeholder="e.g. bobsmith" class="input" id="username" required>
+                    <span class="icon is-small is-left">
+                    <i class="fa fa-user"></i>
+                    </span>
+                </div>
+                </div>
+                <div class="field">
+                <label for="" class="label">Password</label>
+                <div class="control has-icons-left">
+                    <input type="password" placeholder="*******" class="input" id="password" required>
+                    <span class="icon is-small is-left">
+                    <i class="fa fa-lock"></i>
+                    </span>
+                </div>
+                </div>
+                <div class="field">
+                <label for="" class="checkbox">
+                    <input type="checkbox">
+                    Remember me
+                </label>
+                </div>
+                <div class="field">
+                <button class="button is-success" id="login-button">
+                    Login
+                </button>
+                </div>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    </section>
+    <script>
+        $(document).ready(function() {
+          $("#login-button").click(function(event) {
+            event.preventDefault();
+            
+            const usernameInput = $("#username").val();
+            const passwordInput = $("#password").val();
+      
+            $.ajax({
+              url: "{% url 'login' %}",
+              type: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+              },
+              data: JSON.stringify({
+                username: usernameInput,
+                password: passwordInput
+              }),
+              success: function() {
+                window.location.href = "{% url 'list_categories' %}";
+              },
+              error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+              }
+            });
+          });
+        });
+      </script>
+{% endblock %}

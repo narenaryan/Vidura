@@ -56,6 +56,8 @@
     </style>
 </head>
 <body>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
     <nav class="navbar is-black  has-shadow" role="navigation" aria-label="main navigation">
         <div class="container">
@@ -69,6 +71,7 @@
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
               </a>
+              {% if user.is_authenticated %}
             <div class="navbar-menu">
                 <div class="navbar-start">
                     <a class="navbar-item has-text-white" href="{% url 'list_categories' %}">
@@ -94,10 +97,35 @@
                     </div>
                 </div>
                 <div class="navbar-end">
-                    {% if user.is_authenticated %}
-                    <a class="navbar-item has-text-white" href="{% url 'logout' %}">
+                    <!-- ... other navbar content ... -->
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link" href="#">
+                    {% if user.profile.avatar %}
+                        <img src="{{ user.profile.avatar.url }}" alt="{{ user.username }}'s avatar" width="28" height="28" class="is-rounded">
+                      {% else %}
+                        <span class="icon">
+                          <i class="fas fa-user"></i>
+                        </span>
+                      {% endif %}
+                    </a>
+                    <div class="navbar-dropdown is-right">
+                    <a class="navbar-item" href="{% url 'upload_avatar' %}">
+                        <span class="icon">
+                        <i class="fas fa-image"></i>
+                        </span>
+                        Upload Avatar
+                    </a>
+                    <hr class="navbar-divider">
+                    <a class="navbar-item" href="{% url 'logout' %}">
+                        <span class="icon">
+                        <i class="fas fa-sign-out-alt"></i>
+                        </span>
                         Logout
                     </a>
+                    </div>
+                </div>
+                <!-- ... other navbar content ... -->
+  
                     {% endif %}
                 </div>
             </div>
@@ -120,8 +148,6 @@
           });
         });
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <footer class="footer">
         <p>{% now 'Y' %}. All rights reserved @ <a href="https://happy-pythonist.com/" target="_blank">happy-pythonist.com</a></p>
         <a href="https://github.com/narenaryan/Vidura" target="_blank">
