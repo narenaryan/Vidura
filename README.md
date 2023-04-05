@@ -34,6 +34,16 @@ You can run this software by installing Python 3.9 or above on your machine, and
 pip install -r requirements.txt
 ```
 
+## Run db migrations
+```bash
+python manage.py migrate
+```
+
+## Load fixture data
+```bash
+python manage.py loaddata
+```
+
 ## Run the server locally
 ```bash
 python manage.py runserver
