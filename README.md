@@ -6,7 +6,7 @@
 
 Are you a ChatGPT prompt engineer?. Welcome to your all-in-one ChatGPT prompt management system. If you are saving emerging prompts on text editors, git, and on xyz, now goes the pain to add, tag, search and retrieve.
 
-Prompts are nothing but thoughts out of your mind like communication. But, complex thougts easily eascapes your memory. Moreover, connecting thoughts is harder. Vidura solves that problem for prompt engineers by streamlining their thoughts/prompts.
+Prompts are nothing but thoughts out of our mind like communication. But, complex thougts easily eascape our memory. Moreover, connecting thoughts is harder. Vidura solves that problem for prompt engineers by streamlining their thoughts/prompts.
 
 # Screenshots
 ## Categories view
