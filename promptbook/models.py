@@ -7,6 +7,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.ImageField(upload_to='avatars/', default=None, blank=True, null=True)
 
+
     def __str__(self):
         return f"{self.user.username}'s profile"
 
@@ -33,6 +34,8 @@ class Prompt(models.Model):
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    is_public = models.BooleanField(default=False)
 
     def __str__(self):
         return self.text[:50] + '...' if len(self.text) > 50 else self.text

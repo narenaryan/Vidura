@@ -8,6 +8,8 @@ from django.http import JsonResponse, HttpResponseRedirect, HttpResponseBadReque
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+
 from actstream import action
 from actstream.models import Action
 
@@ -21,7 +23,8 @@ def list_categories(request):
 @login_required(login_url='/login/')
 def list_prompts(request, category_id):
     category = Category.objects.get(pk=category_id)
-    prompts = category.prompt_set.all()
+    # Show prompts that are either public or belong to the current user
+    prompts = category.prompt_set.filter(Q(is_public=True) | Q(owner=request.user))
 
     prompt_labels = {}
     for prompt in prompts:
@@ -53,7 +56,7 @@ def editor(request):
         selected_labels = request.POST.getlist('labels')
 
         category = Category.objects.get(id=category_id)
-        prompt = Prompt(text=prompt_text, category=category)
+        prompt = Prompt(text=prompt_text, category=category, owner=request.user)
         prompt.save()
         action.send(request.user, verb='created', target=prompt)
 
