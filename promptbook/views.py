@@ -24,7 +24,7 @@ def list_categories(request):
 def list_prompts(request, category_id):
     category = Category.objects.get(pk=category_id)
     # Show prompts that are either public or belong to the current user
-    prompts = category.prompt_set.filter(Q(is_public=True) | Q(owner=request.user))
+    prompts = category.prompt_set.filter(Q(is_public=True) | Q(owner=request.user)).order_by('-created_at')
 
     prompt_labels = {}
     for prompt in prompts:
