@@ -42,6 +42,9 @@
         </div>
         </div>
     </div>
+    <div class="loading-overlay" style="display: none;">
+      <div class="loader"></div>
+    </div>
     </section>
     <script>
         $(document).ready(function() {
@@ -50,7 +53,8 @@
             
             const usernameInput = $("#username").val();
             const passwordInput = $("#password").val();
-      
+            $(".loading-overlay").show();
+
             $.ajax({
               url: "{% url 'login' %}",
               type: "POST",
@@ -67,6 +71,7 @@
               },
               error: function(xhr, status, error) {
                 console.error(xhr.responseText);
+                $(".loading-overlay").hide();
               }
             });
           });
