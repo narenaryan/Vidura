@@ -69,19 +69,6 @@ def editor(request):
 
     return render(request, 'editor.html', {'categories': categories, 'labels': labels})
 
-# def login(request):
-#     if request.user.is_authenticated:
-#         return redirect('list_categories')
-
-#     if request.method == 'POST':
-#         form = AuthenticationForm(request, data=request.POST)
-#         if form.is_valid():
-#             auth_login(request, form.get_user())
-#             return redirect('list_categories')
-#     else:
-#         form = AuthenticationForm(request)
-#     return render(request, 'login.html', {'form': form})
-
 def login(request):
     if request.method == "POST":
         # Get the username and password from the request body

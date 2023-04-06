@@ -81,6 +81,23 @@
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
       }
+
+      .community-label {
+        background-color: #f1c40f;
+        color: #fff;
+        padding: 0px 5px;
+        border-radius: 20px;
+        font-weight: bold;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.2s ease-in-out;
+        display: inline-block; /* add display property to make border-radius work */
+        margin-bottom: 1rem;
+      }
+      
+      .community-label:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+      }
       
     </style>
 </head>
