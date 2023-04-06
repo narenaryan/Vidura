@@ -149,7 +149,7 @@ def activity_stream(request):
     actions = Action.objects.all()
     return render(request, 'activity_stream.html', {'actions': actions})
 
-@login_required
+@login_required(login_url='/login/')
 def upload_avatar(request):
     if request.method == 'POST':
         avatar = request.FILES.get('avatar')
@@ -159,3 +159,13 @@ def upload_avatar(request):
         return redirect('upload_avatar')
 
     return render(request, 'upload_avatar.html')
+
+@login_required(login_url='/login/')
+def create_category(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        category_name = data.get("name")
+        if category_name:
+            new_category = Category.objects.create(name=category_name)
+            return JsonResponse({"status": "success", "category_id": new_category.pk})
+    return JsonResponse({"status": "error"})

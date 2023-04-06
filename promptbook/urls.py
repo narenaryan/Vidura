@@ -15,4 +15,5 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('', views.activity_stream, name='index'),
     path('upload_avatar/', views.upload_avatar, name='upload_avatar'),
+    path('create_category/', views.create_category, name='create_category'),
 ]
