@@ -11,6 +11,7 @@
             <span class="community-label is-rounded">community</span>
             {% endif %}
             <p data-prompt-id="{{ prompt.id }}" data-full-text="{{ prompt.text }}">{{ prompt.text|truncatechars:250 }} <span class="tag is-light">Length: {{ prompt.text|length }} chars.</span></p>
+            <hr />
             <div class="tags">
               {% for id, label in prompt_labels %}
                 {% if id == prompt.id %}

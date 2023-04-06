@@ -22,8 +22,10 @@
   <div class="columns is-multiline">
     {% for prompt in found_prompts %}
       <div class="column is-one-third">
+        <div class="content">
         <div class="box">
           <p>{{ prompt.text|truncatechars:250 }} <span class="tag is-light">Length: {{ prompt.text|length }} chars...</span></p>
+          <hr />
           <a href="{% url 'list_prompts' prompt.category.pk %}" class="tag">{{ prompt.category.name }}</a>
           <button style="color: rgb(27, 187, 49);" class="copy-button button is-small" data-clipboard-text="{{ prompt.text }}">
             <span class="icon">
@@ -31,6 +33,7 @@
             </span>
           </button>
         </div>
+      </div>
       </div>
     {% empty %}
       <div class="column">
