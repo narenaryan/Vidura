@@ -45,14 +45,24 @@ pip install -r requirements.txt
 python manage.py migrate
 ```
 
-## Load fixture data
+## Create a super user
 ```bash
-python manage.py loaddata
+python manage.py createsuperuser
+```
+and enter required credentials to use for basic auth.
+
+## Load fixture data
+To load default categories and labels into System, run below command:
+
+```bash
+python manage.py loaddata promptbook/fixtures/init_data.yaml
 ```
 
 ## Run the server locally
 ```bash
 python manage.py runserver
 ```
+
+Access server at http://127.0.0.1:8000 and enter the credentials created before to launch Vidura dashboard.
 
 **Note**: Vidura is a court minister and advisor from ancient Indian epic "Mahabharata". https://en.wikipedia.org/wiki/Vidura
