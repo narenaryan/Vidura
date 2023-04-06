@@ -90,3 +90,6 @@ db.sqlite3
 venv
 staticfiles
 media
+.env
+env.bak
+docker-compose.yaml

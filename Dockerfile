@@ -21,7 +21,7 @@ COPY . /opt/services/djangoapp/src
 RUN python manage.py collectstatic --no-input -v 2
 
 # Expose the port the app runs on
-EXPOSE 8000
+EXPOSE 80
 
 # Start Gunicorn to serve the Django app using ASGI
-CMD ["gunicorn", "vidura.asgi:application", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:8000"]
+CMD ["gunicorn", "vidura.asgi:application", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:80"]
