@@ -93,3 +93,4 @@ media
 .env
 env.bak
 docker-compose.yaml
+static
