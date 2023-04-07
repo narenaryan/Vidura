@@ -4,7 +4,7 @@ from io import BytesIO
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
-from .models import Category, Prompt
+from .models import Category, Prompt, PromptLabel, Label
 from PIL import Image
 
 from .models import Category
@@ -125,4 +125,54 @@ class SearchViewTestCase(TestCase):
     def test_search_unauthenticated_user(self):
         self.client.logout()
         response = self.client.get(reverse('search'), {'q': 'test'})
+        self.assertEqual(response.status_code, 302)
+
+class ListPromptsViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user1 = User.objects.create_user(
+            username='testuser1',
+            password='testpass1'
+        )
+        self.user2 = User.objects.create_user(
+            username='testuser2',
+            password='testpass2'
+        )
+        self.category = Category.objects.create(
+            name='Test Category',
+            help_text='This is a test category'
+        )
+        self.label = Label.objects.create(
+            name='Test Label'
+        )
+        self.prompt1 = Prompt.objects.create(
+            text='This is a test prompt',
+            category=self.category,
+            owner=self.user1,
+            is_public=True
+        )
+        self.prompt2 = Prompt.objects.create(
+            text='This is another test prompt',
+            category=self.category,
+            owner=self.user2,
+            is_public=False
+        )
+        self.prompt_label = PromptLabel.objects.create(
+            prompt=self.prompt1,
+            label=self.label
+        )
+
+    def test_list_prompts_authenticated_user(self):
+        self.client.login(username='testuser1', password='testpass1')
+        url = reverse('list_prompts', args=[self.category.id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'This is a test prompt')
+        self.assertNotContains(response, 'This is another test prompt')
+        self.assertContains(response, 'Test Label')
+
+    def test_list_prompts_unauthenticated_user(self):
+        self.client.logout()
+        url = reverse('list_prompts', args=[self.category.id])
+        response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
