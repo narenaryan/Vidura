@@ -162,7 +162,9 @@ def create_category(request):
     if request.method == "POST":
         data = json.loads(request.body)
         category_name = data.get("name")
+        help_text = data.get("helpText")
+
         if category_name:
-            new_category = Category.objects.create(name=category_name)
+            new_category = Category.objects.create(name=category_name, help_text=help_text)
             return JsonResponse({"status": "success", "category_id": new_category.pk})
     return JsonResponse({"status": "error"})

@@ -25,6 +25,7 @@ class Category(models.Model):
     name = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+    help_text = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name

@@ -34,6 +34,33 @@
     .add-category {
       color: #02c0a4
     }
+
+    .category-card {
+      position: relative;
+      height: 6.5rem;
+    }
+    
+    .popup {
+      display: none;
+      position: absolute;
+      top: -1.5em;
+      padding: 1em;
+      background-color: black;
+      color: white;
+      border: 1px solid #ccc;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+      border-radius: 10px;
+    }
+    
+    .category-card:hover .popup {
+      display: block;
+      opacity: 1;
+      color: white;
+    }
+    
   </style>
   <div class="container">
     <p>Welcome to Vidura, a ChatGPT Prompt Management System (CPMS) that allows you to easily create, retrieve, and search your prompts.
@@ -55,6 +82,10 @@
             <div class="control">
               <input type="text" class="input" id="category-name" placeholder="Enter category name" required>
             </div>
+            <label for="category-name" class="label">Help Text</label>
+            <div class="control">
+              <input type="text" class="input" id="category-help-text" placeholder="Enter few comma-seprated use cases for this category" required>
+            </div>
           </div>
         </form>
       </section>
@@ -70,6 +101,10 @@
         <a href="{% url 'list_prompts' category.id %}">
           <div class="category-card has-text-centered {{ color }}">
             <h3 class="title">{{ category.name }}</h3>
+              <!-- Hover info popup -->
+            <div class="popup">
+              <p>{{ category.help_text }}</p>
+            </div>
           </div>
         </a>
       </div>
@@ -93,8 +128,8 @@
       $("#save-category").click(function(event) {
         event.preventDefault();
         const categoryName = $("#category-name").val();
-    
-        if (categoryName.trim() !== "") {
+        const categoryHelpText = $("#category-help-text").val();
+        if (categoryName.trim() !== "" && categoryHelpText.trim() !== "") {
           $.ajax({
             url: "{% url 'create_category' %}",
             type: "POST",
@@ -103,7 +138,8 @@
               "X-CSRFToken": "{{ csrf_token }}"
             },
             data: JSON.stringify({
-              name: categoryName
+              name: categoryName,
+              helpText: categoryHelpText
             }),
             success: function() {
               window.location.reload();
