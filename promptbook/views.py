@@ -15,8 +15,8 @@ from actstream.models import Action
 
 @login_required(login_url='/login/')
 def list_categories(request):
-    categories = Category.objects.all()
-    category_colors = ['pastel-green', 'pastel-blue', 'pastel-yellow', 'pastel-pink']
+    categories = Category.objects.all().order_by('name')
+    category_colors = ['pastel-yellow', 'pastel-green', 'pastel-blue', 'pastel-pink']
     categories_with_colors = [(category, category_colors[i % len(category_colors)]) for i, category in enumerate(categories)]
     return render(request, 'list_categories.html', {'categories_with_colors': categories_with_colors})
 
