@@ -8,15 +8,15 @@ ENV DJANGO_SETTINGS_MODULE vidura.settings
 
 # Set the working directory
 # arbitrary location choice: you can change the directory
-RUN mkdir -p /opt/services/djangoapp/src
-WORKDIR /opt/services/djangoapp/src
+RUN mkdir -p /opt/services/djangoapp
+WORKDIR /opt/services/djangoapp
 
 # Copy requirements.txt and install dependencies
-COPY requirements.txt /opt/services/djangoapp/src
+COPY requirements.txt /opt/services/djangoapp
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the project
-COPY . /opt/services/djangoapp/src
+COPY . /opt/services/djangoapp
 
 RUN python manage.py collectstatic --no-input -v 2
 
