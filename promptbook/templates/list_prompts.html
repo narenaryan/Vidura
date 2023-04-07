@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <style>
+    .back-button {
+      margin-bottom: 1rem;
+    }
+  </style>
+  <a href="{% url 'list_categories' %}" class="back-button">
+    <i class="fas fa-arrow-left"></i> Back to Categories
+  </a>
   <h1 class="title">Prompts in category: {{ category.name }}</h1>
   <div class="columns is-multiline">
     {% for prompt in prompts %}
