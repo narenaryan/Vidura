@@ -1,11 +1,13 @@
 
 import json
 from io import BytesIO
+from PIL import Image
+
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
+
 from .models import Category, Prompt, PromptLabel, Label
-from PIL import Image
 
 from .models import Category
 
@@ -176,3 +178,63 @@ class ListPromptsViewTestCase(TestCase):
         url = reverse('list_prompts', args=[self.category.id])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
+
+class ListPromptsByLabelViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='testuser',
+            password='testpass'
+        )
+        self.category = Category.objects.create(
+            name='Test Category',
+            help_text='This is a test category'
+        )
+        self.label1 = Label.objects.create(
+            name='Test Label 1'
+        )
+        self.label2 = Label.objects.create(
+            name='Test Label 2'
+        )
+        self.prompt1 = Prompt.objects.create(
+            text='This is a test prompt',
+            category=self.category,
+            owner=self.user,
+            is_public=True
+        )
+        self.prompt2 = Prompt.objects.create(
+            text='This is another test prompt',
+            category=self.category,
+            owner=self.user,
+            is_public=True
+        )
+        self.prompt_label1 = PromptLabel.objects.create(
+            prompt=self.prompt1,
+            label=self.label1
+        )
+        self.prompt_label2 = PromptLabel.objects.create(
+            prompt=self.prompt2,
+            label=self.label2
+        )
+
+    def test_list_prompts_by_label_authenticated_user(self):
+        self.client.login(username='testuser', password='testpass')
+        url = reverse('list_prompts_by_label', args=[self.label1.id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'This is a test prompt')
+        self.assertNotContains(response, 'This is another test prompt')
+        self.assertContains(response, 'Test Label 1')
+        self.assertNotContains(response, 'Test Label 2')
+
+    def test_list_prompts_by_label_unauthenticated_user(self):
+        self.client.logout()
+        url = reverse('list_prompts_by_label', args=[self.label1.id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+
+    def test_list_prompts_by_label_invalid_label_id(self):
+        self.client.login(username='testuser', password='testpass')
+        url = reverse('list_prompts_by_label', args=[999])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
