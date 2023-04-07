@@ -42,7 +42,13 @@
   </form>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      $('select').selectize();
+      var sl = $('select').selectize({
+        plugins: ["clear_button"]
+      });
+      var control = sl[0].selectize;
+      {% if selected_category %}
+      control.setValue({{ selected_category }});
+      {% endif %}
     });
   </script>
 {% endblock %}

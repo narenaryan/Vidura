@@ -2,7 +2,6 @@ import json
 
 from .models import Category, Prompt, PromptLabel, Label
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
-from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
@@ -66,8 +65,16 @@ def editor(request):
             prompt_label.save()
 
         return HttpResponseRedirect(reverse('list_prompts', args=[category_id]))
+    category_id = request.GET.get("category_id")
 
-    return render(request, 'editor.html', {'categories': categories, 'labels': labels})
+    if category_id:
+        category_id = int(category_id)
+
+    return render(request, 'editor.html', {
+        'categories': categories,
+        'labels': labels,
+        'selected_category': category_id
+    })
 
 def login(request):
     if request.method == "POST":
