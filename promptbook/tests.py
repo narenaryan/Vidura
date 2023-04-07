@@ -9,7 +9,35 @@ from PIL import Image
 
 from .models import Category
 
-class CreateCategoryTestCase(TestCase):
+class ListCategoriesViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='testuser',
+            password='testpass'
+        )
+        self.category1 = Category.objects.create(
+            name='Test Category 1',
+            help_text='This is a test category'
+        )
+        self.category2 = Category.objects.create(
+            name='Test Category 2',
+            help_text='This is another test category'
+        )
+
+    def test_list_categories_authenticated_user(self):
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.get(reverse('list_categories'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Test Category 1')
+        self.assertContains(response, 'Test Category 2')
+
+    def test_list_categories_unauthenticated_user(self):
+        self.client.logout()
+        response = self.client.get(reverse('list_categories'))
+        self.assertEqual(response.status_code, 302)
+
+class CreateCategoryViewTestCase(TestCase):
     def setUp(self):
         self.client = Client()
         self.user = User.objects.create_user(username="testuser", password="testpass")
@@ -31,7 +59,7 @@ class CreateCategoryTestCase(TestCase):
         self.assertEqual(Category.objects.count(), 0)
         self.assertEqual(response.json()["status"], "error")
 
-class UploadAvatarTestCase(TestCase):
+class UploadAvatarViewTestCase(TestCase):
     def setUp(self):
         self.client = Client()
         self.user = User.objects.create_user(username="testuser", password="testpass")
