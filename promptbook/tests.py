@@ -4,6 +4,7 @@ from io import BytesIO
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
+from .models import Category, Prompt
 from PIL import Image
 
 from .models import Category
@@ -47,8 +48,53 @@ class UploadAvatarTestCase(TestCase):
 
         response = self.client.post(self.url, {'name': 'avatar','avatar': file}, enctype="multipart/form-data")
         self.assertEqual(response.status_code, 302)
-        # self.assertEqual(self.user.profile.avatar.url, "/media/test.png")
 
     def test_upload_avatar_failure(self):
         response = self.client.post(self.url, {'not_avatar': 'test'}, enctype="multipart/form-data")
         self.assertEqual(response.status_code, 400)
+
+class SearchViewTestCase(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='testuser',
+            password='testpass'
+        )
+        self.category = Category.objects.create(
+            name='Test Category',
+            help_text='This is a test category'
+        )
+        self.prompt = Prompt.objects.create(
+            text='This is a test prompt',
+            category=self.category,
+            owner=self.user,
+            is_public=True
+        )
+        self.client.login(username="testuser", password="testpass")
+
+    # No categories or prompts matches
+    def test_search_no_results(self):
+        response = self.client.get(reverse('search'), {'q': 'nonexistent'})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "No categories found.")
+        self.assertContains(response, "No prompts found.")
+
+    # A category and prompt matches
+    def test_search_categories(self):
+        response = self.client.get(reverse('search'), {'q': 'test'})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Test Category')
+        self.assertContains(response, 'This is a test prompt')
+
+    # Only a prompt matches
+    def test_search_prompts(self):
+        response = self.client.get(reverse('search'), {'q': 'prompt'})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'This is a test prompt')
+        self.assertContains(response, "No categories found.")
+
+    # Test unauthenticated user
+    def test_search_unauthenticated_user(self):
+        self.client.logout()
+        response = self.client.get(reverse('search'), {'q': 'test'})
+        self.assertEqual(response.status_code, 302)
