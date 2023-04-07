@@ -19,6 +19,12 @@
             <span class="community-label is-rounded">community</span>
             {% endif %}
             <p data-prompt-id="{{ prompt.id }}" data-full-text="{{ prompt.text }}">{{ prompt.text|truncatechars:250 }} <span class="tag is-light">Length: {{ prompt.text|length }} chars.</span></p>
+              <!-- If owner, show edit prompt, otherwise show eye logo-->
+              {% if user == prompt.owner %}
+              <button style="color: rgb(66, 73, 224);" class="button is-light" onclick="openEditPrompt({{ prompt.id }})">
+                Edit
+              </button>
+              {% endif %}
             <hr />
             <div class="tags">
               {% for id, label in prompt_labels %}
@@ -30,19 +36,14 @@
               {% endfor %}
             </div>
           </div>
-          <button style="color: rgb(27, 187, 49);" class="copy-button button is-small" data-clipboard-text="{{ prompt.text }}">
+          <button class="copy-button button is-small" data-clipboard-text="{{ prompt.text }}">
             <span class="icon">
               <i class="fas fa-thin fa-copy"></i>
-            </span>
+            </span>&nbsp;&nbsp;
+            Copy to clipboard 
           </button>
-          <!-- If owner, show edit prompt, otherwise show eye logo-->
-          {% if user == prompt.owner %}
-          <button style="color: rgb(66, 73, 224);" class="button is-small" onclick="openEditPrompt({{ prompt.id }})">
-            <span class="icon">
-              <i class="fas fa-edit"></i>
-            </span>
-          </button>
-          {% else %}
+          <!-- If not owner, show eye logo-->
+          {% if user != prompt.owner %}
           <button style="color: rgb(66, 73, 224);" class="button is-small" onclick="openScratchpadPrompt({{ prompt.id }})">
             <span class="icon">
               <i class="fas fa-eye"></i>
@@ -72,7 +73,7 @@
     <div class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
-        <p class="modal-card-title">Edit Prompt</p>
+        <p class="modal-card-title">Edit</p>
         <button class="delete" aria-label="close" onclick="closeEditPrompt()"></button>
       </header>
       <section class="modal-card-body">
