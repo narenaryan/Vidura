@@ -1,3 +1,4 @@
+{% load static %}
 {% load tz %} 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,8 +25,13 @@
         max-height: 10px;
       }
 
-      .logo {
+      .logo-name {
         font-size: 1.5rem;
+      }
+      
+      .logo {
+        height: 50px;
+        padding-right: 0px;
       }
 
       .selectize-control.multi .selectize-input [data-value]{
@@ -108,8 +114,9 @@
     <nav class="navbar is-fixed-top is-black  has-shadow" role="navigation" aria-label="main navigation">
         <div class="container">
             <div class="navbar-brand">
+              <img class="navbar-item logo" src="{% static 'promptbook/vidura-logo-grn.png' %}" alt="My image">
                 <a class="navbar-item has-text-white" href="/">
-                    <strong class="logo">Vidura</strong> &nbsp;<p>Beta</p>
+                    <strong class="logo-name">Vidura</strong> &nbsp;<p>Beta</p>
                 </a>
             </div>
             <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
