@@ -149,10 +149,18 @@ def activity_stream(request):
 @login_required(login_url='/login/')
 def upload_avatar(request):
     if request.method == 'POST':
+        
+        if not request.FILES:
+            error_message = "Invalid file uploaded"
+            return HttpResponseBadRequest(error_message)
+
         avatar = request.FILES.get('avatar')
-        if avatar:
-            request.user.profile.avatar = avatar
-            request.user.profile.save()
+        if not avatar:
+            error_message = "There is no file named `avatar` in form"
+            return HttpResponseBadRequest(error_message)
+
+        request.user.profile.avatar = avatar
+        request.user.profile.save()
         return redirect('upload_avatar')
 
     return render(request, 'upload_avatar.html')
