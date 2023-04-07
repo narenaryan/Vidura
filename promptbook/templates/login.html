@@ -6,6 +6,7 @@
         <div class="container">
         <div class="columns is-centered">
             <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+              <div id="error-message" class="error" style="display: none;"></div>
             <form class="box">
                 {% csrf_token %}
                 <div class="field">
@@ -47,34 +48,38 @@
     </div>
     </section>
     <script>
-        $(document).ready(function() {
-          $("#login-button").click(function(event) {
-            event.preventDefault();
-            
-            const usernameInput = $("#username").val();
-            const passwordInput = $("#password").val();
-            $(".loading-overlay").show();
-
-            $.ajax({
-              url: "{% url 'login' %}",
-              type: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": "{{ csrf_token }}"
-              },
-              data: JSON.stringify({
-                username: usernameInput,
-                password: passwordInput
-              }),
-              success: function() {
-                window.location.href = "{% url 'list_categories' %}";
-              },
-              error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                $(".loading-overlay").hide();
-              }
-            });
+      $(document).ready(function() {
+        $("#login-button").click(function(event) {
+          event.preventDefault();
+          
+          const usernameInput = $("#username").val();
+          const passwordInput = $("#password").val();
+          $(".loading-overlay").show();
+  
+          $.ajax({
+            url: "{% url 'login' %}",
+            type: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": "{{ csrf_token }}"
+            },
+            data: JSON.stringify({
+              username: usernameInput,
+              password: passwordInput
+            }),
+            success: function() {
+              window.location.href = "{% url 'list_categories' %}";
+            },
+            error: function(xhr, status, error) {
+              console.error(xhr.responseText);
+              $(".loading-overlay").hide();
+              // Display the error message
+              $("#error-message").text("Incorrect username or password. Please try again.");
+              $("#error-message").show();
+            }
           });
         });
-      </script>
+      });
+    </script>
+  
 {% endblock %}
