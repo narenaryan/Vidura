@@ -8,11 +8,11 @@
     <title>Vidura</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work Sans">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css" integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <style>
       body {
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Work Sans', sans-serif;
         padding-top: 2.25rem;
       }
 
@@ -82,7 +82,8 @@
         height: 60px;
         animation: spin 2s linear infinite;
       }
-      
+
+
       @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
@@ -202,10 +203,25 @@
         });
     </script>
     <footer class="footer">
-        <p>{% now 'Y' %}. All rights reserved @ <a href="https://happy-pythonist.com/" target="_blank">happy-pythonist.com</a></p>
-        <a href="https://github.com/narenaryan/Vidura" target="_blank">
-          <i class="fab fa-github"></i> GitHub
-        </a>
-      </footer>
+      <div class="container">
+        <div class="columns is-vcentered">
+          <div class="column is-6">
+            <p>{% now 'Y' %}. All rights reserved @ <a href="https://happy-pythonist.com/" target="_blank">happy-pythonist.com</a></p>
+          </div>
+          <div class="column is-2">
+            <a href="https://github.com/narenaryan/Vidura" target="_blank">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+          </div>
+          <div class="column is-2">
+            <a href="https://vidura-docs.s3.us-west-2.amazonaws.com/Terms+%26+Conditions+Vidura+Cloud.pdf" target="_blank">Terms and Conditions</a>
+          </div>
+          <div class="column is-2">
+            <a href="https://vidura-docs.s3.us-west-2.amazonaws.com/Privacy+Policy+Vidura+cloud.pdf" target="_blank">Privacy</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
 </body>
 </html>

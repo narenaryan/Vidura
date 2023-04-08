@@ -60,7 +60,10 @@
       opacity: 1;
       color: white;
     }
-    
+
+    .category-name-control {
+      padding-bottom: 1rem;
+    }
   </style>
   <div class="container">
     <p>Welcome to Vidura, a ChatGPT Prompt Management System (CPMS) that allows you to easily create, retrieve, and search your prompts.
@@ -71,7 +74,7 @@
     <div class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
-        <p class="modal-card-title">Add Category</p>
+        <p class="modal-card-title">Add</p>
         <button class="delete" aria-label="close" id="close-modal"></button>
       </header>
       <section class="modal-card-body">
@@ -79,7 +82,7 @@
           {% csrf_token %}
           <div class="field">
             <label for="category-name" class="label">Category Name</label>
-            <div class="control">
+            <div class="control category-name-control">
               <input type="text" class="input" id="category-name" placeholder="Enter category name" required>
             </div>
             <label for="category-name" class="label">Help Text</label>
