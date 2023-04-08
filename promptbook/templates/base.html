@@ -15,8 +15,6 @@
     <meta property="og:image" content="https://i.ibb.co/7Vyt7Kw/vidura-logo-grn.png">
     <meta name="twitter:image" content="https://i.ibb.co/7Vyt7Kw/vidura-logo-grn.png">
     <title>Vidura Cloud</title>
-    <link rel="stylesheet" href="./assets/css/bulma.min.css">
-    <link rel="stylesheet" href="./assets/css/main.css">
     <link rel="icon" type="image/x-icon" href="https://i.ibb.co/7Vyt7Kw/vidura-logo-grn.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -28,6 +26,21 @@
         padding-top: 2.25rem;
       }
 
+      button {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        color: rgba(0, 0, 0, 0.7);
+        font-weight: 500;
+        transition: box-shadow 0.2s ease-in-out;
+      }
+
+      button:hover {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .navbar {
+        background-color: #f2f2f2;
+        font-weight: 500;
+      }
       .title {
         font-size: 1rem;
         line-height: 4.125;
@@ -124,11 +137,11 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
-    <nav class="navbar is-fixed-top is-black  has-shadow" role="navigation" aria-label="main navigation">
+    <nav class="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
         <div class="container">
             <div class="navbar-brand">
               <img class="navbar-item logo" src="https://i.ibb.co/7Vyt7Kw/vidura-logo-grn.png" alt="My image">
-                <a class="navbar-item has-text-white" href="/">
+                <a class="navbar-item" href="/">
                     <strong class="logo-name">Vidura</strong> &nbsp;<p>Beta</p>
                 </a>
             </div>
@@ -140,10 +153,10 @@
               {% if user.is_authenticated %}
             <div class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item has-text-white" href="{% url 'list_categories' %}">
+                    <a class="navbar-item" href="{% url 'list_categories' %}">
                         Categories
                     </a>
-                    <a class="navbar-item has-text-white" href="{% url 'editor' %}">Editor</a>
+                    <a class="navbar-item" href="{% url 'editor' %}">Editor</a>
                     <!-- Add this inside your navbar div, adjust accordingly -->
                     <div class="navbar-item">
                         <form method="GET" action="{% url 'search' %}">

@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <style>
+    .textarea {
+      background-color: #f2f2f2
+    }
+
+    .option {
+      font-weight: 500;
+    }
+  </style>
   <form method="post">
     {% csrf_token %}
     <div class="field">
@@ -36,7 +45,7 @@
     </div>
     <div class="field">
       <div class="control">
-        <button type="submit" class="button is-primary">Save</button>
+        <button type="submit" class="button">Save</button>
         <button  class="button is-grey"><a href="{% url 'list_categories' %}"> Cancel</a></button>
       </div>
     </div>

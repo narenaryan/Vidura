@@ -4,10 +4,25 @@
   <h1 class="title">Categories</h1>
   <style>
     .category-card {
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      transition: all 0.3s ease;
+      background-color: #fff;
+      border-radius: 6px;
+      box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
+      color: #4a4a4a;
+      display: block;
+      padding: 1.25rem;
+      height: 17.5rem;
+    }
+
+    .category-label {
+      position: relative;
+      width: 10rem;
+      max-height: 20px;
+      left: 0.5rem;
+      background-color: #f2f2f2;
+      color: black;
+      font-size: 0.8rem;
+      border-radius: 4px;
+      text-align: left;
     }
 
     .category-card:hover {
@@ -32,12 +47,9 @@
     }
 
     .add-category {
-      color: #02c0a4
-    }
-
-    .category-card {
-      position: relative;
-      height: 6.5rem;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      color: rgba(0, 0, 0, 0.7);
+      font-weight: 500;
     }
     
     .popup {
@@ -64,12 +76,23 @@
     .category-name-control {
       padding-bottom: 1rem;
     }
+
+    .prompt-count {
+      padding-bottom: 1rem;
+    }
+
   </style>
   <div class="container">
     <p>Welcome to Vidura, a ChatGPT Prompt Management System (CPMS) that allows you to easily create, retrieve, and search your prompts.
     </p>
   </div><br />
-  <button class="button is-primary add-category" id="add-category-button">Add category</button><hr />
+  <button class="button add-category is-light" id="add-category-button">
+    <span class="icon">
+      <i class="fas fa-plus"></i>
+    </span>
+    <span>Add Category</span>
+  </button>
+  <hr />
   <div class="modal" id="add-category-modal">
     <div class="modal-background"></div>
     <div class="modal-card">
@@ -81,11 +104,11 @@
         <form id="add-category-form">
           {% csrf_token %}
           <div class="field">
-            <label for="category-name" class="label">Category Name</label>
+            <label for="category-name" class="label">Category name</label>
             <div class="control category-name-control">
               <input type="text" class="input" id="category-name" placeholder="Enter category name" required>
             </div>
-            <label for="category-name" class="label">Help Text</label>
+            <label for="category-name" class="label">Help text</label>
             <div class="control">
               <input type="text" class="input" id="category-help-text" placeholder="Enter few comma-seprated use cases for this category" required>
             </div>
@@ -93,21 +116,29 @@
         </form>
       </section>
       <footer class="modal-card-foot">
-        <button class="button is-success" id="save-category">Save</button>
+        <button class="button raised" id="save-category">Save</button>
         <button class="button" id="cancel-category">Cancel</button>
       </footer>
     </div>
   </div>  
   <div class="columns is-multiline">
     {% for category, color in categories_with_colors %}
-      <div class="column is-one-third">
+      <div class="column is-one-fifth">
         <a href="{% url 'list_prompts' category.id %}">
-          <div class="category-card has-text-centered {{ color }}">
-            <h3 class="title">{{ category.name }}</h3>
-              <!-- Hover info popup -->
-            <div class="popup">
-              <p>{{ category.help_text }}</p>
+          <div class="category-card">
+            <div class="row">
+              <div class="category-label">{{ category.help_text|truncatechars:20 }}</div>
             </div>
+            <div class="row has-text-centered">
+              <h3 class="title">{{ category.name}}</h3>
+            </div>
+            <p class="is-size-7 has-text-weight-semibold prompt-count">Prompts: <span class="has-text-weight-normal">12</span></p>
+            <p class="is-size-7 has-text-weight-semibold">Recetnly used prompts:</p>
+            <ul>
+              <li>Prompt 1 title or excerpt...</li>
+              <li>Prompt 2 title or excerpt...</li>
+            </ul>
+            <p class="is-size-7 has-text-weight-semibold">Last updated: <span class="has-text-weight-normal">2023-04-01</span></p>
           </div>
         </a>
       </div>
