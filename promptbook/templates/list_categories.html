@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1 class="title">Categories</h1>
   <style>
     .category-card {
       background-color: #fff;
@@ -10,7 +9,7 @@
       color: #4a4a4a;
       display: block;
       padding: 1.25rem;
-      height: 18rem;
+      height: 20rem;
     }
 
     .category-label {
@@ -85,10 +84,17 @@
       padding-bottom: 1rem;
     }
 
+    .prompt-preview {
+      font-size: 10px;
+    }
+
+    .preview-section {
+      height: 5rem;
+    }
   </style>
   <div class="container">
-    <p>Welcome to Vidura, a ChatGPT Prompt Management System (CPMS) that allows you to easily create, retrieve, and search your prompts.
-    </p>
+    <p>Welcome to Vidura, a ChatGPT Prompt Management System (CPMS) that allows you to easily create, retrieve, and search your prompts.</p>
+    <h1 class="title">Categories</h1>
   </div><br />
   <button class="button add-category is-light" id="add-category-button">
     <span class="icon">
@@ -126,7 +132,7 @@
     </div>
   </div>  
   <div class="columns is-multiline">
-    {% for category, color in categories_with_colors %}
+    {% for category in categories %}
       <div class="column is-one-fifth">
           <div class="category-card">
             <div class="row">
@@ -135,13 +141,18 @@
             <div class="row has-text-centered">
               <h3 class="title">{{ category.name}}</h3>
             </div>
-            <p class="is-size-7 has-text-weight-semibold prompt-count">Prompts: <span class="has-text-weight-normal">12</span></p>
-            <p class="is-size-7 has-text-weight-semibold">Recetnly used prompts:</p>
+            <p class="is-size-7 has-text-weight-semibold prompt-count">Prompts: <span class="has-text-weight-normal">{{ category.num_prompts }}</span></p>
+            <section class="preview-section">
+            <p class="is-size-7 has-text-weight-semibold">Recetnly added prompts:</p>
             <ul>
-              <li>Prompt 1 title or excerpt...</li>
-              <li>Prompt 2 title or excerpt...</li>
+              {% for prompt in category.recent_prompts %}
+              <li class="prompt-preview">{{ prompt.text|truncatechars:50 }}</li>
+              {% empty %}
+              <li>None</li>
+              {% endfor %}
             </ul>
-            <p class="is-size-7 has-text-weight-semibold last-updated-btn">Last updated: <span class="has-text-weight-normal">2023-04-01</span></p>
+            </section>
+            <p class="is-size-7 has-text-weight-semibold last-updated-btn">Last updated: <span class="has-text-weight-normal">{{ category.last_updated|date:"Y-m-d m:s" }}</span></p>
             <a href="{% url 'list_prompts' category.id %}">
               <button class="button explore-btn is-size-7">Explore</button>
             </a>
