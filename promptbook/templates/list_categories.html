@@ -10,7 +10,7 @@
       color: #4a4a4a;
       display: block;
       padding: 1.25rem;
-      height: 17.5rem;
+      height: 18rem;
     }
 
     .category-label {
@@ -85,6 +85,10 @@
       color: #485fc7;
     }
 
+    .last-updated-btn {
+      padding-bottom: 1rem;
+    }
+
   </style>
   <div class="container">
     <p>Welcome to Vidura, a ChatGPT Prompt Management System (CPMS) that allows you to easily create, retrieve, and search your prompts.
@@ -128,7 +132,6 @@
   <div class="columns is-multiline">
     {% for category, color in categories_with_colors %}
       <div class="column is-one-fifth">
-        <a href="{% url 'list_prompts' category.id %}">
           <div class="category-card">
             <div class="row">
               <div class="category-label">{{ category.help_text|truncatechars:20 }}</div>
@@ -142,9 +145,11 @@
               <li>Prompt 1 title or excerpt...</li>
               <li>Prompt 2 title or excerpt...</li>
             </ul>
-            <p class="is-size-7 has-text-weight-semibold">Last updated: <span class="has-text-weight-normal">2023-04-01</span></p>
+            <p class="is-size-7 has-text-weight-semibold last-updated-btn">Last updated: <span class="has-text-weight-normal">2023-04-01</span></p>
+            <a href="{% url 'list_prompts' category.id %}">
+              <button class="button explore-btn is-size-7">Explore</button>
+            </a>
           </div>
-        </a>
       </div>
       {% empty %}
       <div class="column">
