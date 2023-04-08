@@ -8,16 +8,26 @@ from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.db.models import Count, Max
 
 from actstream import action
 from actstream.models import Action
 
 @login_required(login_url='/login/')
 def list_categories(request):
-    categories = Category.objects.all().order_by('name')
-    category_colors = ['pastel-yellow', 'pastel-green', 'pastel-blue', 'pastel-pink']
-    categories_with_colors = [(category, category_colors[i % len(category_colors)]) for i, category in enumerate(categories)]
-    return render(request, 'list_categories.html', {'categories_with_colors': categories_with_colors})
+    user = request.user
+    # Only get categories of user
+    categories = Category.objects.all().annotate(
+        num_prompts=Count('prompt', filter=Q(prompt__owner=user)),
+        last_updated=Max('prompt__modified_at', filter=Q(prompt__owner=user))
+    )
+
+    # Get two most recent prompts for each category
+    for category in categories:
+        category.recent_prompts = category.prompt_set.filter(owner=user).order_by('-modified_at')[:2]
+
+    context = {'categories': categories}
+    return render(request, 'list_categories.html', context)
 
 @login_required(login_url='/login/')
 def list_prompts(request, category_id):
