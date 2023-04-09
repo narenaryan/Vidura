@@ -22,7 +22,7 @@ Each prompt will have a list of labels attached like "gpt-3", "simple", or "comp
 ## Edit Prompt view
 ![Editor](./screens/edit_prompt.png)
 
-## New prompt editor view
+## Create new prompt using editor
 ![Create Prompt](./screens/create_prompt.png)
 
 ## Universal search
@@ -30,8 +30,11 @@ One can search matching categories and prompts in one place by using search bar.
 ![Search](./screens/search.png)
 
 ## Copy to Clipboard & Open ChatGPT from Vidura
-Click the "Copy to clipboard" button and then click the Chat GPT logo on a prompt and immediately you will be taken to a new chat of ChatGPT (make sure you logged in already). Hit Ctrl/Cmd + v to paste your prompt into ChatGPT.
-![Open ChatGPT from Vidura](./screens/open_gpt.png)
+Click the "Copy to clipboard" button and click the Chat GPT logo to open a new ChatGPT window. Hit Ctrl or Cmd(Mac OS) + v to paste your prompt into ChatGPT.
+
+## Checkout cool prompts shared by community
+To checkout all cool prompts shared by other users, head to homepage by clicking "Vidura" logo. By default, when a user creates a public prompt, it is shared to all others as a "community" labelled prompt in respective category.
+![Community](./screens/actstream.png)
 
 ## How to run Vidura ?
 You can run this software by installing Python 3.9 or above on your machine, and install developer dependencies on your Python environment like:
