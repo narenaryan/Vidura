@@ -52,7 +52,6 @@ SITE_ID = 4
 
 LOGIN_REDIRECT_URL = '/categories'
 LOGOUT_REDIRECT_URL = '/'
-USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Google sign in settings END
