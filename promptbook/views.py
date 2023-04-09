@@ -1,6 +1,8 @@
 import json
 
 from enum import Enum
+
+from django.db import IntegrityError
 from .models import Category, Prompt, PromptLabel, Label
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.shortcuts import render, redirect, get_object_or_404
@@ -79,7 +81,19 @@ def editor(request):
 
         category = Category.objects.get(id=category_id)
         prompt = Prompt(text=prompt_text, category=category, owner=request.user, is_public=is_public)
-        prompt.save()
+        # prompt.save()
+        
+        try:
+            prompt.save()
+        except IntegrityError as e:
+            # load the same page with an error message
+            return render(request, 'editor.html', {
+                'categories': categories,
+                'labels': labels,
+                'selected_category': category_id,
+                'error_message': 'A prompt with this text already exists. Please enter a different prompt.'
+            })
+
         action.send(request.user, verb='created', target=prompt)
 
         for label_id in selected_labels:
