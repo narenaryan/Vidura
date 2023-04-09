@@ -9,7 +9,7 @@
       color: #4a4a4a;
       display: block;
       padding: 1.25rem;
-      height: 20rem;
+      height: 18rem;
     }
 
     .category-label {
@@ -76,10 +76,6 @@
       padding-bottom: 1rem;
     }
 
-    .prompt-count {
-      padding-bottom: 1rem;
-    }
-
     .last-updated-btn {
       padding-bottom: 1rem;
     }
@@ -93,8 +89,8 @@
     }
   </style>
   <div class="container">
-    <p>Welcome to Vidura, a ChatGPT Prompt Management System (CPMS) that allows you to easily create, retrieve, and search your prompts.</p>
     <h1 class="title">Categories</h1>
+    <p>Welcome to Vidura, a ChatGPT Prompt Management System (CPMS) that allows you to easily create, retrieve, and search your prompts.</p>
   </div><br />
   <button class="button add-category is-light" id="add-category-button">
     <span class="icon">
@@ -146,7 +142,7 @@
             <p class="is-size-7 has-text-weight-semibold">Recetnly added prompts:</p>
             <ul>
               {% for prompt in category.recent_prompts %}
-              <li class="prompt-preview">{{ prompt.text|truncatechars:50 }}</li>
+              <li class="prompt-preview">* {{ prompt.text|truncatechars:50 }}</li>
               {% empty %}
               <li>None</li>
               {% endfor %}
