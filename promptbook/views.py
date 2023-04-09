@@ -166,11 +166,13 @@ def search(request):
 
 @login_required(login_url='/login/')
 def activity_stream(request):
-    prompt_content_type = ContentType.objects.get_for_model(Prompt)
+    # This version properly type casts SQL queries to SQLite, PostgreSQL databases
+    public_prompts = Prompt.objects.filter(is_public=True)
     actions = Action.objects.filter(
-        Q(verb='created', target_content_type=prompt_content_type, target_object_id__in=Prompt.objects.filter(is_public=True)) |
-        Q(verb='made public')
+        Q(target_object_id__in=public_prompts.values_list('id', flat=True), target_content_type=ContentType.objects.get_for_model(Prompt)),
+        Q(verb="created") | Q(verb="made public")
     )
+
     return render(request, 'activity_stream.html', {'actions': actions})
 
 @login_required(login_url='/login/')

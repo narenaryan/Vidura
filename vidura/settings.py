@@ -183,7 +183,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 if os.getenv("ENV") == "development":
     ALLOWED_HOSTS = ["*"]
-
-ALLOWED_HOSTS = ['cloud.vidura.ai']
+else:
+    ALLOWED_HOSTS = ['cloud.vidura.ai']
 
 CSRF_TRUSTED_ORIGINS = ['https://*.vidura.ai']
