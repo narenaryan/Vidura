@@ -109,6 +109,8 @@ def login(request):
 
     # If the request method is not POST, render the login form
     else:
+        if request.user.is_authenticated:
+            return redirect('list_categories')
         return render(request, "login.html")
 
 def logout(request):
