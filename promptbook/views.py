@@ -11,6 +11,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db.models import Count, Max
 from django.contrib.contenttypes.models import ContentType
+from django.db.models.functions import Cast
+from django.db.models import IntegerField
 
 from actstream import action
 from actstream.models import Action
@@ -167,9 +169,9 @@ def search(request):
 @login_required(login_url='/login/')
 def activity_stream(request):
     # This version properly type casts SQL queries to SQLite, PostgreSQL databases
-    public_prompts = Prompt.objects.filter(is_public=True)
+    public_prompts = Prompt.objects.filter(is_public=True).annotate(id_as_integer=Cast('id', IntegerField()))
     actions = Action.objects.filter(
-        Q(target_object_id__in=public_prompts.values_list('id', flat=True), target_content_type=ContentType.objects.get_for_model(Prompt)),
+        Q(target_object_id__in=public_prompts.values_list('id_as_integer', flat=True), target_content_type=ContentType.objects.get_for_model(Prompt)),
         Q(verb="created") | Q(verb="made public")
     )
 
