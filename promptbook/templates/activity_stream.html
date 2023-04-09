@@ -21,7 +21,10 @@
             </div>
             <div class="media-content">
               <p>
-                <strong>{{ action.actor }}</strong> {{ action.verb }} <em>{{ action.target }}</em> {{ action.timesince }} ago.
+                <strong>{{ action.actor }}</strong> {{ action.verb }} <em>{{ action.target }}</em> {{ action.timesince }} ago 
+                {% if action.target and action.target.category %}
+                in <a href="{% url 'list_prompts' action.target.category.id %}">{{ action.target.category.name }}</a>
+                {% endif %}
               </p><hr />
             </div>
           </div>

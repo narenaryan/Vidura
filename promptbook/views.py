@@ -1,5 +1,6 @@
 import json
 
+from enum import Enum
 from .models import Category, Prompt, PromptLabel, Label
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.shortcuts import render, redirect, get_object_or_404
@@ -9,9 +10,14 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.db.models import Count, Max
+from django.contrib.contenttypes.models import ContentType
 
 from actstream import action
 from actstream.models import Action
+
+class PrompVisibility(Enum):
+    yes = 'yes'
+    no = 'no'
 
 @login_required(login_url='/login/')
 def list_categories(request):
@@ -60,12 +66,17 @@ def editor(request):
     labels = Label.objects.all()
 
     if request.method == 'POST':
+        is_public = False
         prompt_text = request.POST['prompt_text']
         category_id = request.POST['category']
         selected_labels = request.POST.getlist('labels')
+        is_public_prompt_option = request.POST.get('is-public-prompt')
+
+        if is_public_prompt_option and is_public_prompt_option.lower() == PrompVisibility.yes.value:
+            is_public = True
 
         category = Category.objects.get(id=category_id)
-        prompt = Prompt(text=prompt_text, category=category, owner=request.user)
+        prompt = Prompt(text=prompt_text, category=category, owner=request.user, is_public=is_public)
         prompt.save()
         action.send(request.user, verb='created', target=prompt)
 
@@ -155,7 +166,11 @@ def search(request):
 
 @login_required(login_url='/login/')
 def activity_stream(request):
-    actions = Action.objects.all()
+    prompt_content_type = ContentType.objects.get_for_model(Prompt)
+    actions = Action.objects.filter(
+        Q(verb='created', target_content_type=prompt_content_type, target_object_id__in=Prompt.objects.filter(is_public=True)) |
+        Q(verb='made public')
+    )
     return render(request, 'activity_stream.html', {'actions': actions})
 
 @login_required(login_url='/login/')
@@ -188,3 +203,21 @@ def create_category(request):
             new_category = Category.objects.create(name=category_name, help_text=help_text)
             return JsonResponse({"status": "success", "category_id": new_category.pk})
     return JsonResponse({"status": "error"})
+
+
+@login_required
+def toggle_prompt_public(request, prompt_id):
+    if request.method == 'POST':
+        try:
+            prompt = Prompt.objects.get(id=prompt_id, owner=request.user)
+            prompt.is_public = not prompt.is_public
+            prompt.save()
+
+            if prompt.is_public:
+                action.send(request.user, verb='made public', target=prompt)
+
+            return JsonResponse({'success': True, 'is_public': prompt.is_public})
+        except Prompt.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Prompt not found'})
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request method'})

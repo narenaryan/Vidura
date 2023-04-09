@@ -12,6 +12,59 @@
       font-weight: 500;
     }
 
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+      margin-right: 5px;
+    }
+    
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .toggle-label {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+    
+    .toggle-label:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+    
+    .toggle-input:checked + .toggle-label {
+      background-color: #13e94a;
+    }
+    
+    .toggle-input:checked + .toggle-label:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+    
+    .toggle-text {
+      display: inline;
+      font-size: 0.7rem;
+    }
+    
   </style>
   <a href="{% url 'list_categories' %}" class="back-button">
     <i class="fas fa-arrow-left"></i> Back to Categories
@@ -25,12 +78,23 @@
             {% if user != prompt.owner and prompt.is_public %}
             <span class="community-label is-rounded">community</span>
             {% endif %}
-            <p data-prompt-id="{{ prompt.id }}" data-full-text="{{ prompt.text }}">{{ prompt.text|truncatechars:250 }} <span class="tag is-light">Length: {{ prompt.text|length }} chars.</span></p>
+            <p data-prompt-id="{{ prompt.id }}" data-full-text="{{ prompt.text }}">{{ prompt.text|truncatechars:250 }} <span class="tag is-light">Length: {{ prompt.text|length }} chars.</span></p>          
               <!-- If owner, show edit prompt, otherwise show eye logo-->
               {% if user == prompt.owner %}
-              <button class="button edit-prompt-btn" onclick="openEditPrompt({{ prompt.id }})">
-                Edit
-              </button>
+              <div class="columns">
+                <div class="column is-6">
+                  <button class="button edit-prompt-btn" onclick="openEditPrompt({{ prompt.id }})">
+                    Edit
+                  </button>
+                </div>
+                <div class="column is-6 is-pulled-right">
+                  <span class="toggle-text">{{ prompt.is_public|yesno:"Public,Private" }}</span>
+                  <div class="toggle-switch is-justify-content-flex-end">
+                    <input type="checkbox" id="toggle-{{ prompt.id }}" class="toggle-input" {% if prompt.is_public %}checked{% endif %} data-prompt-id="{{ prompt.id }}">
+                    <label for="toggle-{{ prompt.id }}" class="toggle-label"></label>
+                  </div>
+                </div>
+              </div>
               {% endif %}
             <hr />
             <div class="tags">
@@ -208,6 +272,24 @@
       copyButton.on("click", function() {
         var win = window.open('https://chat.openai.com/chat', '_blank');
         win.focus();
+      });
+
+      $('.toggle-input').on('change', function() {
+        const promptId = $(this).data('prompt-id');
+        const isPublic = $(this).is(':checked');
+        const url = `{% url 'toggle_prompt_public' 0 %}`.replace('0', promptId);
+
+        $.post(url, {
+          'prompt_id': promptId,
+          'is_public': isPublic,
+          'csrfmiddlewaretoken': '{{ csrf_token }}'
+        }, function(data) {
+          if (data.success) {
+            console.log('Toggle updated successfully');
+          } else {
+            console.log('Error updating toggle');
+          }
+        });
       });
     });
   </script>
