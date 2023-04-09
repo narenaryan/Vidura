@@ -54,6 +54,7 @@ LOGIN_REDIRECT_URL = '/categories'
 LOGOUT_REDIRECT_URL = '/'
 
 # see: https://stackoverflow.com/questions/8153875/how-to-deploy-an-https-only-site-with-django-nginx
+USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Google sign in settings END
