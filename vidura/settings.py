@@ -28,9 +28,32 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Google sign in settings BEGIN
+# See: https://dev.to/mdrhmn/django-google-authentication-using-django-allauth-18f8
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+# Because the site newly created will have PK 2
+SITE_ID = 3
+
+LOGIN_REDIRECT_URL = '/categories'
+LOGOUT_REDIRECT_URL = '/'
+
+# Google sign in settings END
 
 # Application definition
 
@@ -43,7 +66,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'promptbook',
+    # activity stream
     'actstream',
+    'django.contrib.sites',
+    # django-allauth apps
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [

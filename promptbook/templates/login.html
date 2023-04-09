@@ -1,7 +1,18 @@
 {% extends 'base.html' %}
-
+{% load socialaccount %}
 {% block content %}
 <section>
+  <style>
+    .button.is-google {
+      background-color: #4285F4;
+      color: white;
+      border: none;
+  }
+  .button.is-google:hover {
+      background-color: #357ae8;
+      color: white;
+  }
+  </style>
     <div class="hero-body">
         <div class="container">
         <div class="columns is-centered">
@@ -39,6 +50,15 @@
                 </button>
                 </div>
             </form>
+            <a href="{% provider_login_url 'google' %}" class="button is-google">
+              <span class="icon">
+                  <i class="fab fa-google"></i>
+              </span>
+              <span>Sign in with Google</span>
+            </a> <p>(No signup required <i class="fas fa-thumbs-up"></i>)</p>
+            <!-- <a href="{% provider_login_url 'google' %}" class="btn btn-danger">
+              <i class="fab fa-google"></i> Sign in with Google
+            </a> -->
             </div>
         </div>
         </div>
