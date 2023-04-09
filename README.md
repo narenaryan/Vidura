@@ -10,31 +10,31 @@ Prompts are nothing but thoughts out of our mind like communication. But, comple
 
 # Screenshots
 ## Categories view
-![Categories](./screens/categories.png)
+<table><tr><td><img src="./screens/categories.png" alt="Categories"/></td></tr></table>
 
 We simplified categories for you. You can request new categories and we will add it for you.
 
 ## Prompts view
-![Prompts](./screens/prompts.png)
+<table><tr><td><img src="./screens/prompts.png" alt="Prompts"/></td></tr></table>
 
 Each prompt will have a list of labels attached like "gpt-3", "simple", or "complex". User can click on a label on any prompt and visit all the prompts tagged with the given label name. 
 
 ## Edit Prompt view
-![Editor](./screens/edit_prompt.png)
+<table><tr><td><img src="./screens/edit_prompt.png" alt="Editor"/></td></tr></table>
 
 ## Create new prompt using editor
-![Create Prompt](./screens/create_prompt.png)
+<table><tr><td><img src="./screens/create_prompt.png" alt="Create Prompt"/></td></tr></table>
 
 ## Universal search
 One can search matching categories and prompts in one place by using search bar.
-![Search](./screens/search.png)
+<table><tr><td><img src="./screens/search.png" alt="Search"/></td></tr></table>
 
 ## Copy to Clipboard & Open ChatGPT from Vidura
 Click the "Copy to clipboard" button and click the Chat GPT logo to open a new ChatGPT window. Hit Ctrl or Cmd(Mac OS) + v to paste your prompt into ChatGPT.
 
 ## Checkout cool prompts shared by community
 To checkout all cool prompts shared by other users, head to homepage by clicking "Vidura" logo. By default, when a user creates a public prompt, it is shared to all others as a "community" labelled prompt in respective category.
-![Community](./screens/actstream.png)
+<table><tr><td><img src="./screens/actstream.png" alt="Search"/></td></tr></table>
 
 ## How to run Vidura ?
 You can run this software by installing Python 3.9 or above on your machine, and install developer dependencies on your Python environment like:
