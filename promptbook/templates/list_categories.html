@@ -90,9 +90,9 @@
   </style>
   <div class="container">
     <h1 class="title">Categories</h1>
-    <p>Welcome to Vidura, a ChatGPT Prompt Management System (CPMS) that allows you to easily create, retrieve, and search your prompts.</p>
+    <p style="font-weight: 600">Welcome to Vidura, a ChatGPT Prompt Management System (CPMS) that allows you to easily create, retrieve, and search your prompts.</p>
   </div><br />
-  <button class="button add-category is-light" id="add-category-button">
+  <button class="button add-category" id="add-category-button">
     <span class="icon">
       <i class="fas fa-plus"></i>
     </span>
@@ -132,10 +132,7 @@
       <div class="column is-one-fifth">
           <div class="category-card">
             <div class="row">
-              <div class="category-label">{{ category.help_text|truncatechars:20 }}</div>
-            </div>
-            <div class="row has-text-centered">
-              <h3 class="title">{{ category.name}}</h3>
+              <h3 class="title category-title">{{ category.name}}</h3>
             </div>
             <p class="is-size-7 has-text-weight-semibold prompt-count">Prompts: <span class="has-text-weight-normal">{{ category.num_prompts }}</span></p>
             <section class="preview-section">
