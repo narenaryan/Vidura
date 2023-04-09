@@ -67,6 +67,10 @@
     .content-list {
       padding-top: 2rem;
     }
+
+    .last-updated {
+      font-size: 12px;
+    }
   </style>
   <a href="{% url 'list_categories' %}" class="back-button">
     <i class="fas fa-arrow-left"></i> Back to Categories
@@ -116,6 +120,9 @@
                 {% endif %}
               {% endfor %}
             </div>
+          </div>
+          <div class="row">
+            <p class="last-updated">Last updated: {{ prompt.modified_at }}</p>
           </div>
           <button class="copy-button button is-small" data-clipboard-text="{{ prompt.text }}">
             <span class="icon">
