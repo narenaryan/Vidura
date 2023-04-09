@@ -52,6 +52,7 @@ SITE_ID = 4
 
 LOGIN_REDIRECT_URL = '/categories'
 LOGOUT_REDIRECT_URL = '/'
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 
 # Google sign in settings END
 
