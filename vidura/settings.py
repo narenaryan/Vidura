@@ -47,8 +47,8 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-# Because the site newly created will have PK 2
-SITE_ID = 3
+# Because the site newly created will have a new PK. Update this after checking the ID in admin
+SITE_ID = 4
 
 LOGIN_REDIRECT_URL = '/categories'
 LOGOUT_REDIRECT_URL = '/'
