@@ -181,9 +181,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-if os.getenv("ENV") == "production":
-    ALLOWED_HOSTS = ['https://vidura.ai', 'https://cloud.vidura.ai']
-else:
+if os.getenv("ENV") == "development":
     ALLOWED_HOSTS = ["*"]
+
+ALLOWED_HOSTS = ['cloud.vidura.ai']
 
 CSRF_TRUSTED_ORIGINS = ['https://*.vidura.ai']
