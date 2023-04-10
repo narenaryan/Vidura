@@ -94,3 +94,5 @@ media
 env.bak
 docker-compose.yaml
 static
+# localdev settings
+viduraenv/

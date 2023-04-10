@@ -1,7 +1,8 @@
-from django.urls import path
+from django.urls import include, path
 
 import promptbook.register_models
 from . import views
+from rest_framework import routers
 
 urlpatterns = [
     path('login/', views.login, name='login'),
@@ -18,3 +19,10 @@ urlpatterns = [
     path('upload_avatar/', views.upload_avatar, name='upload_avatar'),
     path('create_category/', views.create_category, name='create_category'),
 ]
+
+api_urls = [
+    # add CategoryListCreateView to the urls
+    path('api/categories/', views.CategoryListCreateView.as_view(), name='category-list'),
+]
+
+urlpatterns += api_urls
