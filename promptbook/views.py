@@ -34,7 +34,7 @@ def list_categories(request):
     user = request.user
     # Only get categories of user
     categories = Category.objects.all().annotate(
-        num_prompts=Count('prompt', filter=Q(prompt__owner=user)),
+        num_prompts=Count('prompt', filter=Q(prompt__owner=user) | Q(prompt__is_public=True)),
         last_updated=Max('prompt__modified_at', filter=Q(prompt__owner=user))
     )
 
