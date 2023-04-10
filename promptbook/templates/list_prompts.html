@@ -296,6 +296,8 @@
         const promptId = $(this).data('prompt-id');
         const isPublic = $(this).is(':checked');
         const url = `{% url 'toggle_prompt_public' 0 %}`.replace('0', promptId);
+        // Need to copy this into a new variable to scope it in post callback
+        const that = $(this);
 
         $.post(url, {
           'prompt_id': promptId,
@@ -304,9 +306,9 @@
         }, function(data) {
           if (data.success) {
             if (isPublic) {
-              $(".toggle-text").text("Click to make private")
+              that.parent().siblings(".toggle-text").text("Click to make private");
             } else {
-              $(".toggle-text").text("Click to make public")
+              that.parent().siblings(".toggle-text").text("Click to make public");
             }
             console.log('Toggle updated successfully');
           } else {
