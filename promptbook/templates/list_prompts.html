@@ -72,6 +72,18 @@
       font-size: 12px;
     }
 
+    /* Your styles for iPhone 12 Pro go here */
+    @media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) {
+      .column.is-pulled-right {
+        float: none !important;
+        margin-left: auto;
+      }
+
+      .modal-card {
+        width: 85%;
+      }
+    }
+
   </style>
   <a href="{% url 'list_categories' %}" class="back-button">
     <i class="fas fa-arrow-left"></i> Back to Categories
