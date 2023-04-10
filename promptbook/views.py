@@ -3,6 +3,7 @@ import json
 from enum import Enum
 
 from django.db import IntegrityError
+from django.db.models import Count
 from .models import Category, Prompt, PromptLabel, Label
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.shortcuts import render, redirect, get_object_or_404
@@ -18,6 +19,11 @@ from django.db.models import IntegerField
 
 from actstream import action
 from actstream.models import Action
+from rest_framework import viewsets, permissions
+from promptbook.serializers import CategorySerializer
+from rest_framework import generics, permissions
+from rest_framework.response import Response
+
 
 class PrompVisibility(Enum):
     yes = 'yes'
@@ -241,3 +247,25 @@ def toggle_prompt_public(request, prompt_id):
             return JsonResponse({'success': False, 'error': 'Prompt not found'})
     else:
         return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
+
+# for apis
+
+class CategoryListCreateView(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save()
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+
+        # Add the count of public prompts for each category
+        for category in serializer.data:
+            count = Prompt.objects.filter(category_id=category['id'], is_public=True).count()
+            category['public_prompt_count'] = count
+
+        return Response(serializer.data)
