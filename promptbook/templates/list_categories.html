@@ -78,6 +78,7 @@
 
     .last-updated-btn {
       padding-bottom: 1rem;
+      font-size: 10px;
     }
 
     .prompt-preview {
@@ -145,7 +146,7 @@
               {% endfor %}
             </ul>
             </section>
-            <p class="is-size-7 has-text-weight-semibold last-updated-btn">Last updated: <span class="has-text-weight-normal">{{ category.last_updated|date:"Y-m-d m:s" }}</span></p>
+            <p class="is-size-8 has-text-weight-semibold last-updated-btn">Last updated: <span class="has-text-weight-normal">{{ category.last_updated }}</span></p>
             <a href="{% url 'list_prompts' category.id %}">
               <button class="button explore-btn is-size-7">Explore</button>
             </a>
