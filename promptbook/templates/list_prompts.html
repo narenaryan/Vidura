@@ -62,15 +62,31 @@
     
     .toggle-text {
       display: inline;
-      font-size: 0.7rem;
+      font-size: 10px;
     }
-    
+    .content-list {
+      padding-top: 2rem;
+    }
+
+    .last-updated {
+      font-size: 12px;
+    }
+
+
   </style>
   <a href="{% url 'list_categories' %}" class="back-button">
     <i class="fas fa-arrow-left"></i> Back to Categories
   </a>
   <h1 class="title">Prompts in category: {{ category.name }}</h1>
-  <div class="columns is-multiline">
+  {% if prompts %}
+  <a href="{% url 'editor' %}?category_id={{ category.id }}" class="add-prompt-btn">
+    <button class="button">
+      <span class="icon"><i class="fas fa-plus"></i></span>
+      <span>Add prompt</span>
+    </button>
+  </a>
+  {% endif %}
+  <div class="columns is-multiline content-list">
     {% for prompt in prompts %}
       <div class="column is-one-third">
         <div class="box">
@@ -88,7 +104,7 @@
                   </button>
                 </div>
                 <div class="column is-6 is-pulled-right">
-                  <span class="toggle-text">{{ prompt.is_public|yesno:"Public,Private" }}</span>
+                  <span class="toggle-text">{{ prompt.is_public|yesno:"Click to make private,Click to make public" }}</span>
                   <div class="toggle-switch is-justify-content-flex-end">
                     <input type="checkbox" id="toggle-{{ prompt.id }}" class="toggle-input" {% if prompt.is_public %}checked{% endif %} data-prompt-id="{{ prompt.id }}">
                     <label for="toggle-{{ prompt.id }}" class="toggle-label"></label>
@@ -106,6 +122,9 @@
                 {% endif %}
               {% endfor %}
             </div>
+          </div>
+          <div class="row">
+            <p class="last-updated">Last updated: {{ prompt.modified_at }}</p>
           </div>
           <button class="copy-button button is-small" data-clipboard-text="{{ prompt.text }}">
             <span class="icon">
@@ -285,6 +304,11 @@
           'csrfmiddlewaretoken': '{{ csrf_token }}'
         }, function(data) {
           if (data.success) {
+            if (isPublic) {
+              $(".toggle-text").text("Click to make private")
+            } else {
+              $(".toggle-text").text("Click to make public")
+            }
             console.log('Toggle updated successfully');
           } else {
             console.log('Error updating toggle');
