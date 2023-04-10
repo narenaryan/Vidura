@@ -15,8 +15,11 @@ class LabelSerializer(serializers.ModelSerializer):
 
 
 class PromptSerializer(serializers.ModelSerializer):
-    category = CategorySerializer()
-    labels = LabelSerializer(many=True)
+    category = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all())
+    labels = serializers.PrimaryKeyRelatedField(
+        queryset=Label.objects.all(), many=True)
+    owner = serializers.ReadOnlyField(source='owner.username')
 
     class Meta:
         model = Prompt
@@ -24,15 +27,7 @@ class PromptSerializer(serializers.ModelSerializer):
                   'modified_at', 'owner', 'is_public', 'labels')
 
     def create(self, validated_data):
-        category_data = validated_data.pop('category')
         labels_data = validated_data.pop('labels')
-        category = Category.objects.create(**category_data)
-        prompt = Prompt.objects.create(category=category, **validated_data)
-        for label_data in labels_data:
-            try:
-                label = Label.objects.get(**label_data)
-                prompt.labels.add(label)
-            except Label.DoesNotExist:
-                # Ignore if label does not exist, do not add it to the prompt
-                pass
+        prompt = Prompt.objects.create(**validated_data)
+        prompt.labels.set(labels_data)
         return prompt

@@ -3,6 +3,7 @@ from django.urls import include, path
 import promptbook.register_models
 from . import views
 from rest_framework import routers
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path('login/', views.login, name='login'),
@@ -27,6 +28,8 @@ urlpatterns = [
 
 api_urls = [
     # add CategoryListCreateView to the urls
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/categories/', views.CategoryListCreateView.as_view(),
          name='category-list'),
     path('api/prompts/create/',
