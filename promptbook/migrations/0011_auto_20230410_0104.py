@@ -13,7 +13,7 @@ def set_text_hash(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('promptbook', '0010_alter_prompt_unique_together'),
+        ('promptbook', '0009_category_help_text'),
     ]
 
     operations = [
