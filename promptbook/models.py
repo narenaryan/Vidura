@@ -36,6 +36,16 @@ class Category(models.Model):
         return self.name
 
 
+class Label(models.Model):
+    # TODO: Add unique together constraint for name
+    name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Prompt(models.Model):
     text = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
@@ -44,6 +54,7 @@ class Prompt(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     is_public = models.BooleanField(default=False)
     text_hash = models.CharField(max_length=32, unique=True)
+    labels = models.ManyToManyField(Label, through='PromptLabel')
 
     def __str__(self):
         return self.text[:50] + '...' if len(self.text) > 50 else self.text
@@ -56,15 +67,6 @@ class Prompt(models.Model):
     # Add unique together constraint for text_hash, owner and category
     class Meta:
         unique_together = ['text_hash', 'owner', 'category']
-
-
-class Label(models.Model):
-    name = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-    modified_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name
 
 
 class PromptLabel(models.Model):
