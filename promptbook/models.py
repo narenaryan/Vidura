@@ -1,3 +1,5 @@
+import hashlib
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -41,13 +43,19 @@ class Prompt(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     is_public = models.BooleanField(default=False)
+    text_hash = models.CharField(max_length=32, unique=True)
 
     def __str__(self):
         return self.text[:50] + '...' if len(self.text) > 50 else self.text
 
-    # add unique together constraint for text, owner and category
+    # Generates hash and stores it in text_hash
+    def save(self, *args, **kwargs):
+        self.text_hash = hashlib.md5(self.text.encode()).hexdigest()
+        super().save(*args, **kwargs)
+
+    # Add unique together constraint for text_hash, owner and category
     class Meta:
-        unique_together = ['text', 'owner', 'category']
+        unique_together = ['text_hash', 'owner', 'category']
 
 
 class Label(models.Model):
