@@ -9,6 +9,15 @@
   .option {
     font-weight: 500;
   }
+
+  .sensitive-info-banner {
+    color: midnightblue;
+    font-size: 500;
+  }
+
+  .select-options {
+    font-family: 'Poppins', sans-serif;
+  }
 </style>
 {% if error_message %}
 <span class="mb-3 tag is-danger is-light is-medium">{{ error_message }}</span>
@@ -16,16 +25,23 @@
 <form method="post">
   {% csrf_token %}
   <div class="field">
-    <label class="label">Add your prompt</label>
+    <div class="columns">
+      <div class="column is-one-quarter">
+        <label class="label">Prompt Editor</label>
+      </div>
+      <div class="column">
+        <p class="sensitive-info-banner">(Important: Please do not enter sensitive information in Vidura or in ChatGPT)</p>
+      </div>
+    </div>
     <div class="control">
-      <textarea class="textarea" name="prompt_text" rows="10" required></textarea>
+      <textarea placeholder="Add your text here..." class="textarea" name="prompt_text" rows="10" required></textarea>
     </div>
   </div>
   <div class="field">
     <label class="label">Category</label>
     <div class="control">
       <div>
-        <select name="category" required>
+        <select class="select-options" name="category" required>
           <option value="">Select a category</option>
           {% for category in categories %}
           <option value="{{ category.id }}">{{ category.name }}</option>
@@ -38,7 +54,7 @@
     <label class="label">Is Community Prompt ?</label>
     <div class="control">
       <div>
-        <select name="is-public-prompt">
+        <select class="select-options" name="is-public-prompt">
           <option value="yes">Yes</option>
           <option value="no" selected>No</option>
         </select>
