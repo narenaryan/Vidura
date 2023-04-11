@@ -7,3 +7,4 @@ pillow==9.5.0
 psycopg2-binary==2.9.6
 django-allauth==0.54.0
 djangorestframework==3.14.0
+textstat==0.7.3
