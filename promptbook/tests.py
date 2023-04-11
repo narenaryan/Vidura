@@ -98,7 +98,8 @@ class SearchViewTestCase(TestCase):
             text='This is a test prompt',
             category=self.category,
             owner=self.user,
-            is_public=True
+            is_public=True,
+            flesch_reading_score = 72.5
         )
         self.client.login(username="testuser", password="testpass")
 
@@ -151,13 +152,15 @@ class ListPromptsViewTestCase(TestCase):
             text='This is a test prompt',
             category=self.category,
             owner=self.user1,
-            is_public=True
+            is_public=True,
+            flesch_reading_score = 72.5
         )
         self.prompt2 = Prompt.objects.create(
             text='This is another test prompt',
             category=self.category,
             owner=self.user2,
-            is_public=False
+            is_public=False,
+            flesch_reading_score = 50.5
         )
         self.prompt_label = PromptLabel.objects.create(
             prompt=self.prompt1,
@@ -200,13 +203,15 @@ class ListPromptsByLabelViewTestCase(TestCase):
             text='This is a test prompt',
             category=self.category,
             owner=self.user,
-            is_public=True
+            is_public=True,
+            flesch_reading_score = 72.5
         )
         self.prompt2 = Prompt.objects.create(
             text='This is another test prompt',
             category=self.category,
             owner=self.user,
-            is_public=True
+            is_public=True,
+            flesch_reading_score = 50.5
         )
         self.prompt_label1 = PromptLabel.objects.create(
             prompt=self.prompt1,
@@ -238,3 +243,4 @@ class ListPromptsByLabelViewTestCase(TestCase):
         url = reverse('list_prompts_by_label', args=[999])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
+

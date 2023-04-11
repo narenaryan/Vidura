@@ -15,7 +15,7 @@ from django.db.models import Q
 from django.db.models import Count, Max
 from django.contrib.contenttypes.models import ContentType
 from django.db.models.functions import Cast
-from django.db.models import IntegerField
+from django.db.models import Case, When, Value, CharField, IntegerField
 
 from actstream import action
 from actstream.models import Action
@@ -23,11 +23,24 @@ from rest_framework import viewsets, permissions
 from promptbook.serializers import CategorySerializer
 from rest_framework import generics, permissions
 from rest_framework.response import Response
-
+import textstat
 
 class PrompVisibility(Enum):
     yes = 'yes'
     no = 'no'
+
+# Calculates the easiness using flesch reading score
+easiness_sql_case = Case(
+    When(flesch_reading_score__gte=90, then=Value("perfect")),
+    When(flesch_reading_score__gte=80, then=Value("highly readable")),
+    When(flesch_reading_score__gte=70, then=Value("readable")),
+    When(flesch_reading_score__gte=60, then=Value("standard")),
+    When(flesch_reading_score__gte=50, then=Value("poor")),
+    When(flesch_reading_score__gte=30, then=Value("confusing")),
+    default=Value("very confusing"),
+    output_field=CharField(),
+)
+
 
 @login_required(login_url='/login/')
 def list_categories(request):
@@ -49,9 +62,11 @@ def list_categories(request):
 def list_prompts(request, category_id):
     category = Category.objects.get(pk=category_id)
     # Show prompts that are either public or belong to the current user
-    prompts = category.prompt_set.filter(Q(is_public=True) | Q(owner=request.user)).order_by('-created_at')
-
+    prompts = category.prompt_set.filter(Q(is_public=True) | Q(owner=request.user)).annotate(
+        easiness=easiness_sql_case
+    ).order_by('-created_at')
     prompt_labels = {}
+
     for prompt in prompts:
         labels = [pl.label for pl in PromptLabel.objects.filter(prompt=prompt)]
         prompt_labels[prompt.id] = labels
@@ -86,9 +101,10 @@ def editor(request):
             is_public = True
 
         category = Category.objects.get(id=category_id)
-        prompt = Prompt(text=prompt_text, category=category, owner=request.user, is_public=is_public)
+        reading_score = textstat.flesch_reading_ease(prompt_text)
+        prompt = Prompt(text=prompt_text, category=category, owner=request.user, is_public=is_public, flesch_reading_score=reading_score)
         # prompt.save()
-        
+
         try:
             prompt.save()
         except IntegrityError as e:
@@ -118,6 +134,27 @@ def editor(request):
         'labels': labels,
         'selected_category': category_id
     })
+
+@login_required(login_url='/login/')
+def edit_prompt(request, prompt_id):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            prompt = Prompt.objects.get(pk=prompt_id)
+            prompt.text = data.get('text', prompt.text)
+            prompt.flesch_reading_score = textstat.flesch_reading_ease(prompt.text)
+
+            try:
+                prompt.save()
+            except IntegrityError as e:
+                error_message = 'A prompt with this text already exists. Please enter a different prompt.'
+                return HttpResponseBadRequest(error_message)
+
+            return JsonResponse({'status': 'success'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 def login(request):
     if request.method == "POST":
@@ -149,21 +186,6 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect('login')
-
-@csrf_exempt
-@login_required(login_url='/login/')
-def edit_prompt(request, prompt_id):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            prompt = Prompt.objects.get(pk=prompt_id)
-            prompt.text = data.get('text', prompt.text)
-            prompt.save()
-            return JsonResponse({'status': 'success'})
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': str(e)})
-    else:
-        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 @login_required
 def delete_prompt(request, prompt_id):

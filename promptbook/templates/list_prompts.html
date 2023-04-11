@@ -73,6 +73,45 @@
       font-size: 12px;
     }
 
+    .easiness-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      transform: skewX(-20deg);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    
+    .easiness-perfect {
+      background: linear-gradient(to right, #00d1b2, #2ecc71);
+    }
+    
+    .easiness-highly-readable {
+      background: linear-gradient(to right, #2ecc71, #f1c40f);
+    }
+    
+    .easiness-readable {
+      background: linear-gradient(to right, #f1c40f, #f39c12);
+    }
+    
+    .easiness-standard {
+      background: linear-gradient(to right, #f39c12, #e67e22);
+    }
+    
+    .easiness-poor {
+      background: linear-gradient(to right, #e67e22, #e74c3c);
+    }
+    
+    .easiness-confusing {
+      background: linear-gradient(to right, #e74c3c, #c0392b);
+    }
+    
+    .easiness-very-confusing {
+      background: linear-gradient(to right, #c0392b, #b0342d);
+    }
+
     /* Your styles for iPhone 12 Pro go here */
     @media only screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) {
       .column.is-pulled-right {
@@ -106,6 +145,7 @@
             {% if user != prompt.owner and prompt.is_public %}
             <span class="community-label is-rounded">community</span>
             {% endif %}
+            <p> <span class="easiness-badge easiness-{{ prompt.easiness|slugify }}">{{ prompt.easiness }}</span></p>
             <p data-prompt-id="{{ prompt.id }}" data-full-text="{{ prompt.text }}">{{ prompt.text|truncatechars:250 }} <span class="tag is-light">Length: {{ prompt.text|length }} chars.</span></p>          
               <!-- If owner, show edit prompt, otherwise show eye logo-->
               {% if user == prompt.owner %}
@@ -249,20 +289,24 @@
     async function saveEditPrompt() {
       const promptId = $('#editPromptId').val();
       const updatedText = $('#editPromptText').val();
-      const response = await fetch(`/prompts/edit/${promptId}/`, {
+
+      $.ajax({
+        url: `/prompts/edit/${promptId}/`,
         method: 'POST',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({ 'text': updatedText }),
         headers: {
-          'Content-Type': 'application/json',
           'X-CSRFToken': '{{ csrf_token }}'
         },
-        body: JSON.stringify({ 'text': updatedText })
+        success: function () {
+          location.reload();
+        },
+        error: function (msg) {
+          console.log(msg);
+          alert(msg);
+        }
       });
-  
-      if (response.ok) {
-        location.reload();
-      } else {
-        alert('Error: Unable to save the updated prompt');
-      }
     }
 
     // Handle scratchpad prompt
@@ -288,7 +332,8 @@
           headers: {
             'X-CSRFToken': '{{ csrf_token }}'
           },
-          dataType: 'json'
+          dataType: 'json',
+          contentType: 'application/json',
         }).done(function(data) {
           if (data.status === 'success') {
             location.reload();

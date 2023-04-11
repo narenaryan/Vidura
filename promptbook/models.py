@@ -44,6 +44,7 @@ class Prompt(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     is_public = models.BooleanField(default=False)
     text_hash = models.CharField(max_length=32, unique=True)
+    flesch_reading_score = models.FloatField(max_length=6)
 
     def __str__(self):
         return self.text[:50] + '...' if len(self.text) > 50 else self.text
