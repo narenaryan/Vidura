@@ -23,8 +23,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-jjzo#gr%31zskhnyx_ktcy_85_fl^)5h@&*tp97+n#xy#ckb*o'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -191,7 +189,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 if os.getenv("ENV") == "development":
     ALLOWED_HOSTS = ["*"]
+    DEBUG = True
 else:
     ALLOWED_HOSTS = ['cloud.vidura.ai']
+    DEBUG = False
 
 CSRF_TRUSTED_ORIGINS = ['https://*.vidura.ai']
