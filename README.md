@@ -6,7 +6,19 @@
 
 Are you a ChatGPT prompt engineer?. Welcome to your all-in-one ChatGPT prompt management system. If you are saving emerging prompts on text editors, git, and on xyz, now goes the pain to add, tag, search and retrieve.
 
-Prompts are nothing but thoughts out of our mind like communication. But, complex thougts easily eascape our memory. Moreover, connecting thoughts is harder. Vidura solves that problem for prompt engineers by streamlining their thoughts/prompts.
+Prompts are nothing but thoughts out of our mind like communication. But, complex thougts easily eascape our memory. Moreover, connecting thoughts is harder. Vidura solves that problem for prompt engineers by streamlining their thoughts/prompts. 
+
+
+This is a basic version for personal use, but if you want to preview more exciting features, like:
+
+1. Rate your prompts by quality (prompt efficiency score)
+2. API to import and export categories and prompts
+3. Support for managing multiple types of prompts (ChatGPT, Stable Diffusion, Custom prompts)
+4. Be part of a global prompt-engineering community,
+
+visit: https://cloud.vidura.ai
+
+Signup for free with your google account and start prompting in seconds. 😉
 
 # Screenshots
 ## Categories view
