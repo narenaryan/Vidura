@@ -50,7 +50,7 @@ class Prompt(models.Model):
 
     # Generates hash and stores it in text_hash
     def save(self, *args, **kwargs):
-        self.text_hash = hashlib.md5(self.text.encode()).hexdigest()
+        self.text_hash = hashlib.md5((self.text + self.owner.username).encode()).hexdigest()
         super().save(*args, **kwargs)
 
     # Add unique together constraint for text_hash, owner and category

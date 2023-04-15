@@ -11,6 +11,8 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('prompts/edit/<int:prompt_id>/', views.edit_prompt, name='edit_prompt'),
     path('toggle-prompt-public/<int:prompt_id>/', views.toggle_prompt_public, name='toggle_prompt_public'),
+    # clone prompt
+    path('prompts/clone/<int:prompt_id>/', views.clone_public_prompt, name='clone_public_prompt'),
     path('labels/<int:label_id>/prompts/', views.list_prompts_by_label, name='list_prompts_by_label'),
     path('editor/', views.editor, name='editor'),
     path('delete_prompt/<int:prompt_id>/', views.delete_prompt, name='delete_prompt'),

@@ -160,6 +160,9 @@
             </span>
           </button>
           {% endif %}
+          {% if user != prompt.owner %}
+          <button class="button clone-prompt-btn is-small is-pulled-right" data-prompt-id="{{prompt.id}}">Clone this prompt</button>
+          {% endif %}
         </div>
       </div>
       {% empty %}
@@ -294,6 +297,25 @@
             location.reload();
           } else {
             alert('An error occurred while deleting the prompt.');
+          }
+        });
+      });
+
+      // clone the prompt
+      $('.clone-prompt-btn').on('click', function() {
+        const promptId = $(this).data('promptId');
+        $.ajax({
+          url: `/prompts/clone/${promptId}/`,
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+          },
+          dataType: 'json'
+        }).done(function(data) {
+          if (data.success === true) {
+            location.reload();
+          } else {
+            alert('An error occurred while cloning the prompt.');
           }
         });
       });
