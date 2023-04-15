@@ -29,27 +29,32 @@ class PrompVisibility(Enum):
     yes = 'yes'
     no = 'no'
 
+
 @login_required(login_url='/login/')
 def list_categories(request):
     user = request.user
     # Only get categories of user
     categories = Category.objects.all().annotate(
-        num_prompts=Count('prompt', filter=Q(prompt__owner=user) | Q(prompt__is_public=True)),
+        num_prompts=Count('prompt', filter=Q(
+            prompt__owner=user) | Q(prompt__is_public=True)),
         last_updated=Max('prompt__modified_at', filter=Q(prompt__owner=user))
     )
 
     # Get two most recent prompts for each category
     for category in categories:
-        category.recent_prompts = category.prompt_set.filter(owner=user).order_by('-modified_at')[:2]
+        category.recent_prompts = category.prompt_set.filter(
+            owner=user).order_by('-modified_at')[:2]
 
     context = {'categories': categories}
     return render(request, 'list_categories.html', context)
+
 
 @login_required(login_url='/login/')
 def list_prompts(request, category_id):
     category = Category.objects.get(pk=category_id)
     # Show prompts that are either public or belong to the current user
-    prompts = category.prompt_set.filter(Q(is_public=True) | Q(owner=request.user)).order_by('-created_at')
+    prompts = category.prompt_set.filter(Q(is_public=True) | Q(
+        owner=request.user)).order_by('-created_at')
 
     prompt_labels = {}
     for prompt in prompts:
@@ -62,6 +67,7 @@ def list_prompts(request, category_id):
         'prompt_labels': prompt_labels.items(),
     })
 
+
 @login_required(login_url='/login/')
 def list_prompts_by_label(request, label_id):
     label = get_object_or_404(Label, pk=label_id)
@@ -69,6 +75,7 @@ def list_prompts_by_label(request, label_id):
     prompts = [pl.prompt for pl in prompt_labels]
 
     return render(request, 'list_prompts_by_label.html', {'label': label, 'prompts': prompts})
+
 
 @login_required
 def editor(request):
@@ -86,9 +93,10 @@ def editor(request):
             is_public = True
 
         category = Category.objects.get(id=category_id)
-        prompt = Prompt(text=prompt_text, category=category, owner=request.user, is_public=is_public)
+        prompt = Prompt(text=prompt_text, category=category,
+                        owner=request.user, is_public=is_public)
         # prompt.save()
-        
+
         try:
             prompt.save()
         except IntegrityError as e:
@@ -119,6 +127,7 @@ def editor(request):
         'selected_category': category_id
     })
 
+
 def login(request):
     if request.method == "POST":
         # Get the username and password from the request body
@@ -146,9 +155,11 @@ def login(request):
             return redirect('list_categories')
         return render(request, "login.html")
 
+
 def logout(request):
     auth_logout(request)
     return redirect('login')
+
 
 @csrf_exempt
 @login_required(login_url='/login/')
@@ -165,11 +176,13 @@ def edit_prompt(request, prompt_id):
     else:
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
+
 @login_required
 def delete_prompt(request, prompt_id):
     prompt = get_object_or_404(Prompt, id=prompt_id)
     prompt.delete()
     return JsonResponse({'status': 'success'})
+
 
 @login_required
 def search(request):
@@ -186,6 +199,7 @@ def search(request):
 
     return render(request, 'search_results.html', context)
 
+
 @login_required(login_url='/login/')
 def activity_stream(request):
     # This version properly type casts SQL queries to SQLite, PostgreSQL databases
@@ -193,16 +207,18 @@ def activity_stream(request):
     actions = Action.objects.annotate(
         target_object_id_as_integer=Cast('target_object_id', IntegerField())
     ).filter(
-        Q(target_object_id_as_integer__in=public_prompts.values_list('id', flat=True), target_content_type=ContentType.objects.get_for_model(Prompt)),
+        Q(target_object_id_as_integer__in=public_prompts.values_list(
+            'id', flat=True), target_content_type=ContentType.objects.get_for_model(Prompt)),
         Q(verb="created") | Q(verb="made public")
     )
 
     return render(request, 'activity_stream.html', {'actions': actions})
 
+
 @login_required(login_url='/login/')
 def upload_avatar(request):
     if request.method == 'POST':
-        
+
         if not request.FILES:
             error_message = "Invalid file uploaded"
             return HttpResponseBadRequest(error_message)
@@ -218,6 +234,7 @@ def upload_avatar(request):
 
     return render(request, 'upload_avatar.html')
 
+
 @login_required(login_url='/login/')
 def create_category(request):
     if request.method == "POST":
@@ -226,7 +243,8 @@ def create_category(request):
         help_text = data.get("helpText")
 
         if category_name:
-            new_category = Category.objects.create(name=category_name, help_text=help_text)
+            new_category = Category.objects.create(
+                name=category_name, help_text=help_text)
             return JsonResponse({"status": "success", "category_id": new_category.pk})
     return JsonResponse({"status": "error"})
 
@@ -249,6 +267,21 @@ def toggle_prompt_public(request, prompt_id):
         return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
 
+@login_required
+def clone_public_prompt(request, prompt_id):
+    if request.method == 'POST':
+        try:
+            prompt = Prompt.objects.get(id=prompt_id, is_public=True)
+            new_prompt = Prompt.objects.create(
+                text=prompt.text, category=prompt.category, owner=request.user, is_public=False)
+            action.send(request.user, verb='cloned', target=new_prompt)
+            return JsonResponse({'success': True, 'prompt_id': new_prompt.id})
+        except Prompt.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Prompt not found'})
+    else:
+        return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
+
 # for apis
 
 class CategoryListCreateView(generics.ListCreateAPIView):
@@ -258,14 +291,15 @@ class CategoryListCreateView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save()
-    
+
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
 
         # Add the count of public prompts for each category
         for category in serializer.data:
-            count = Prompt.objects.filter(category_id=category['id'], is_public=True).count()
+            count = Prompt.objects.filter(
+                category_id=category['id'], is_public=True).count()
             category['public_prompt_count'] = count
 
         return Response(serializer.data)
