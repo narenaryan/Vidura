@@ -16,7 +16,7 @@ This is a basic version for personal use, but if you want to preview more exciti
 3. Support for managing multiple types of prompts (ChatGPT, Stable Diffusion, Custom prompts)
 4. Be part of a global prompt-engineering community,
 
-visit: https://cloud.vidura.ai
+visit: https://vidura.ai
 
 Signup for free with your google account and start prompting in seconds. 😉
 
