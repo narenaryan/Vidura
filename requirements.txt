@@ -7,3 +7,5 @@ pillow==9.5.0
 psycopg2-binary==2.9.6
 django-allauth==0.54.0
 djangorestframework==3.14.0
+python-dotenv==1.0.0
+django-reversion==5.0.4

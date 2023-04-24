@@ -1,5 +1,5 @@
 import json
-
+import reversion
 from enum import Enum
 
 from django.db import IntegrityError
