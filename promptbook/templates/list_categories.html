@@ -2,7 +2,7 @@
 {% block title %}categories{% endblock title %}
 
 {% block content %}
-  <style>
+  <style>  
     .category-card {
       background-color: #fff;
       border-radius: 6px;
@@ -136,8 +136,11 @@
       </footer>
     </div>
   </div>  
+  <div class="container">
+    <h1 class="title">Pinned Categories</h1>
+  </div>
   <div class="columns is-multiline">
-    {% for category in categories %}
+    {% for category in pinned_categories %}
       <div class="column is-one-fifth">
           <div class="category-card">
             <div class="row">
@@ -158,6 +161,46 @@
             <a href="{% url 'list_prompts' category.id %}">
               <button class="button explore-btn is-size-7">Explore</button>
             </a>
+            <button class="pin-button button pin-btn is-size-7 is-danger is-light" data-category-id="{{ category.id }}">
+               Unpin
+            </button>
+          </div>
+      </div>
+      {% empty %}
+      <div class="column">
+        <p>No pinned categories found. Pin a category by clicking on the "Pin to top" button.</p>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="container">
+    <h1 class="title">Unpinned Categories</h1>
+  </div>
+  <div class="columns is-multiline">
+    {% for category in unpinned_categories %}
+      <div class="column is-one-fifth">
+          <div class="category-card">
+            <div class="row">
+              <h3 class="title category-title">{{ category.name}}</h3>
+            </div>
+            <p class="is-size-7 has-text-weight-semibold prompt-count">Prompts: <span class="has-text-weight-normal">{{ category.num_prompts }}</span></p>
+            <section class="preview-section">
+            <p class="is-size-7 has-text-weight-semibold">Recetnly added prompts:</p>
+            <ul>
+              {% for prompt in category.recent_prompts %}
+              <li class="prompt-preview">* {{ prompt.text|truncatechars:50 }}</li>
+              {% empty %}
+              <li>None</li>
+              {% endfor %}
+            </ul>
+            </section>
+            <p class="is-size-8 has-text-weight-semibold last-updated-btn">Last updated: <span class="has-text-weight-normal">{{ category.last_updated }}</span></p>
+            <a href="{% url 'list_prompts' category.id %}">
+              <button class="button explore-btn is-size-7">Explore</button>
+            </a>
+            <button class="pin-button button pin-btn is-size-7 is-info is-light" data-category-id="{{ category.id }}">
+               Pin to top
+            </button>
           </div>
       </div>
       {% empty %}
@@ -202,6 +245,29 @@
           });
         }
       });
+
+      $(".pin-button").click(function(event) {
+        event.preventDefault();
+        const categoryId = $(this).data("category-id");
+        const pinIcon = $(this).find("i");
+      
+        $.ajax({
+          url: `/categories/${categoryId}/toggle_pinned/`,
+          type: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}"
+          },
+          success: function(response) {
+            window.location.reload();
+          },
+          error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+          }
+        });
+      });
+
+
     });
     
   </script>

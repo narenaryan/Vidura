@@ -31,6 +31,8 @@ class Category(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     help_text = models.CharField(max_length=255)
+    pinned_by = models.ManyToManyField(User, related_name='pinned_categories')  # Renamed field
+
 
     def __str__(self):
         return self.name
