@@ -11,7 +11,7 @@ from django.http import JsonResponse, HttpResponseRedirect, HttpResponseBadReque
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Q, Exists, OuterRef
 from django.db.models import Count, Max
 from django.contrib.contenttypes.models import ContentType
 from django.db.models.functions import Cast
@@ -37,15 +37,25 @@ def list_categories(request):
     categories = Category.objects.all().annotate(
         num_prompts=Count('prompt', filter=Q(
             prompt__owner=user) | Q(prompt__is_public=True)),
-        last_updated=Max('prompt__modified_at', filter=Q(prompt__owner=user))
-    )
-
+        last_updated=Max('prompt__modified_at', filter=Q(prompt__owner=user)
+    ))
     # Get two most recent prompts for each category
     for category in categories:
         category.recent_prompts = category.prompt_set.filter(
             owner=user).order_by('-modified_at')[:2]
 
-    context = {'categories': categories}
+    # Get only pinned categories for this user
+    pinned_categories = categories.filter(pinned_by=user)
+    unpinned_categories = categories.exclude(pinned_by=user)
+
+
+    
+    
+
+    pinned_categories = categories.filter(pinned_by=user)
+    unpinned_categories = categories.exclude(pinned_by=user)
+
+    context = {'categories': categories, 'pinned_categories': pinned_categories, 'unpinned_categories': unpinned_categories}
     return render(request, 'list_categories.html', context)
 
 
@@ -280,6 +290,26 @@ def clone_public_prompt(request, prompt_id):
             return JsonResponse({'success': False, 'error': 'Prompt not found'})
     else:
         return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
+
+@login_required
+def toggle_pinned_category(request, category_id):
+    user = request.user
+    try:
+        category = Category.objects.get(pk=category_id)
+    except Category.DoesNotExist:
+        return JsonResponse({"error": "Category not found"}, status=404)
+
+    if user in category.pinned_by.all():
+        category.pinned_by.remove(user)
+        pinned = False
+    else:
+        category.pinned_by.add(user)
+        pinned = True
+
+    category.save()
+
+    return JsonResponse({"pinned": pinned})
 
 
 # for apis
