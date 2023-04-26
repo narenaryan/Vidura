@@ -38,7 +38,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-@reversion.register()
+
 class Prompt(models.Model):
     text = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
