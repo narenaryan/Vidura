@@ -96,7 +96,31 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'reversion.middleware.RevisionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',  # add i18n middleware
 ]
+
+# Internationalization
+# https://docs.djangoproject.com/en/4.1/topics/i18n/
+
+LANGUAGES = [
+    ('en', 'English'),
+    ('zh-hans', 'Simplified Chinese'),
+]
+
+# default language code
+LANGUAGE_CODE = 'en-us'
+
+# 启用Django的翻译系统
+USE_I18N = True
+
+# enable localization of date and number formats
+USE_L10N = True
+
+# direct to the path of the locale folder
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'promptbook/locale'),
+]
+
 
 ROOT_URLCONF = 'vidura.urls'
 
@@ -177,10 +201,7 @@ REST_FRAMEWORK = {
     ]
 }
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = os.environ.get('TIME_ZONE', 'UTC')
 

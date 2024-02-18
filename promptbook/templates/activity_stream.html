@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block title %}activity stream{% endblock title %}
 
 {% block content %}
-  <h1 class="title">Activity Stream</h1>
+  <h1 class="title">{% trans "Activity Stream" %}</h1>
 
   <div class="box">
     <ul>
@@ -22,16 +23,16 @@
             </div>
             <div class="media-content">
               <p>
-                <strong>{{ action.actor }}</strong> {{ action.verb }} <em>{{ action.target }}</em> {{ action.timesince }} ago 
+                <strong>{{ action.actor }}</strong> {{ action.verb }} <em>{{ action.target }}</em> {{ action.timesince }} {% trans "ago" %}
                 {% if action.target and action.target.category %}
-                in <a href="{% url 'list_prompts' action.target.category.id %}">{{ action.target.category.name }}</a>
+                {% trans "in" %} <a href="{% url 'list_prompts' action.target.category.id %}">{{ action.target.category.name }}</a>
                 {% endif %}
               </p><hr />
             </div>
           </div>
         </li>
       {% empty %}
-        <li>No recent activity.</li>
+        <li>{% trans "No recent activity." %}</li>
       {% endfor %}
     </ul>
   </div>

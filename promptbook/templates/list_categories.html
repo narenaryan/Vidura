@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block title %}categories{% endblock title %}
 
 {% block content %}
@@ -98,14 +99,14 @@
     }
   </style>
   <div class="container">
-    <h1 class="title">Categories</h1>
-    <p style="font-weight: 600">Welcome to Vidura, a ChatGPT Prompt Management System (CPMS) that allows you to easily create, retrieve, and search your prompts.</p>
+    <h1 class="title">{% trans "Categories" %}</h1>
+    <p style="font-weight: 600">{% trans "Welcome to Vidura, a ChatGPT Prompt Management System (CPMS) that allows you to easily create, retrieve, and search your prompts." %}</p>
   </div><br />
   <button class="button add-category" id="add-category-button">
     <span class="icon">
       <i class="fas fa-plus"></i>
     </span>
-    <span>Add Category</span>
+    <span>{% trans "Add Category" %}</span>
   </button>
   <hr />
   <div class="modal" id="add-category-modal">
@@ -119,25 +120,25 @@
         <form id="add-category-form">
           {% csrf_token %}
           <div class="field">
-            <label for="category-name" class="label">Category name</label>
+            <label for="category-name" class="label">{% trans "Category name" %}</label>
             <div class="control category-name-control">
-              <input type="text" class="input" id="category-name" placeholder="Enter category name" required>
+              <input type="text" class="input" id="category-name" placeholder="{% trans 'Enter category name' %}" required>
             </div>
-            <label for="category-name" class="label">Help text</label>
+            <label for="category-name" class="label">{% trans "Help text" %}</label>
             <div class="control">
-              <input type="text" class="input" id="category-help-text" placeholder="Enter few comma-seprated use cases for this category" required>
+              <input type="text" class="input" id="category-help-text" placeholder="{% trans 'Enter few comma-seprated use cases for this category' %}" required>
             </div>
           </div>
         </form>
       </section>
       <footer class="modal-card-foot">
-        <button class="button raised" id="save-category">Save</button>
-        <button class="button cancel-btn" id="cancel-category">Cancel</button>
+        <button class="button raised" id="save-category">{% trans "Save" %}</button>
+        <button class="button cancel-btn" id="cancel-category">{% trans "Cancel" %}</button>
       </footer>
     </div>
   </div>  
   <div class="container">
-    <h1 class="title">Pinned Categories</h1>
+    <h1 class="title">{% trans "Pinned Categories" %}</h1>
   </div>
   <div class="columns is-multiline">
     {% for category in pinned_categories %}
@@ -146,35 +147,35 @@
             <div class="row">
               <h3 class="title category-title">{{ category.name}}</h3>
             </div>
-            <p class="is-size-7 has-text-weight-semibold prompt-count">Prompts: <span class="has-text-weight-normal">{{ category.num_prompts }}</span></p>
+            <p class="is-size-7 has-text-weight-semibold prompt-count">{% trans "Prompts" %}: <span class="has-text-weight-normal">{{ category.num_prompts }}</span></p>
             <section class="preview-section">
-            <p class="is-size-7 has-text-weight-semibold">Recetnly added prompts:</p>
+            <p class="is-size-7 has-text-weight-semibold">{% trans "Recently added prompts:" %}</p>
             <ul>
               {% for prompt in category.recent_prompts %}
               <li class="prompt-preview">* {{ prompt.text|truncatechars:50 }}</li>
               {% empty %}
-              <li>None</li>
+              <li>{% trans "None" %}</li>
               {% endfor %}
             </ul>
             </section>
-            <p class="is-size-8 has-text-weight-semibold last-updated-btn">Last updated: <span class="has-text-weight-normal">{{ category.last_updated }}</span></p>
+            <p class="is-size-8 has-text-weight-semibold last-updated-btn">{% trans "Last updated:" %} <span class="has-text-weight-normal">{{ category.last_updated }}</span></p>
             <a href="{% url 'list_prompts' category.id %}">
-              <button class="button explore-btn is-size-7">Explore</button>
+              <button class="button explore-btn is-size-7">{% trans "Explore" %}</button>
             </a>
             <button class="pin-button button pin-btn is-size-7 is-danger is-light" data-category-id="{{ category.id }}">
-               Unpin
+               {% trans "Unpin" %}
             </button>
           </div>
       </div>
       {% empty %}
       <div class="column">
-        <p>No pinned categories found. Pin a category by clicking on the "Pin to top" button.</p>
+        <p>{% trans "No pinned categories found. Pin a category by clicking on the 'Pin to top' button." %}</p>
       </div>
     {% endfor %}
   </div>
 
   <div class="container">
-    <h1 class="title">Unpinned Categories</h1>
+    <h1 class="title">{% trans "Unpinned Categories" %}</h1>
   </div>
   <div class="columns is-multiline">
     {% for category in unpinned_categories %}
@@ -183,29 +184,29 @@
             <div class="row">
               <h3 class="title category-title">{{ category.name}}</h3>
             </div>
-            <p class="is-size-7 has-text-weight-semibold prompt-count">Prompts: <span class="has-text-weight-normal">{{ category.num_prompts }}</span></p>
+            <p class="is-size-7 has-text-weight-semibold prompt-count">{% trans "Prompts:" %} <span class="has-text-weight-normal">{{ category.num_prompts }}</span></p>
             <section class="preview-section">
-            <p class="is-size-7 has-text-weight-semibold">Recetnly added prompts:</p>
+            <p class="is-size-7 has-text-weight-semibold">{% trans "Recently added prompts:" %}</p>
             <ul>
               {% for prompt in category.recent_prompts %}
               <li class="prompt-preview">* {{ prompt.text|truncatechars:50 }}</li>
               {% empty %}
-              <li>None</li>
+              <li>{% trans "None" %}</li>
               {% endfor %}
             </ul>
             </section>
-            <p class="is-size-8 has-text-weight-semibold last-updated-btn">Last updated: <span class="has-text-weight-normal">{{ category.last_updated }}</span></p>
+            <p class="is-size-8 has-text-weight-semibold last-updated-btn">{% trans "Last updated:" %} <span class="has-text-weight-normal">{{ category.last_updated }}</span></p>
             <a href="{% url 'list_prompts' category.id %}">
-              <button class="button explore-btn is-size-7">Explore</button>
+              <button class="button explore-btn is-size-7">{% trans "Explore" %}</button>
             </a>
             <button class="pin-button button pin-btn is-size-7 is-info is-light" data-category-id="{{ category.id }}">
-               Pin to top
+               {% trans "Pin to top" %}
             </button>
           </div>
       </div>
       {% empty %}
       <div class="column">
-        <p>No categories found. Add one by clicking the "Add Category" button.</p>
+        <p>{% trans "No categories found. Add one by clicking the 'Add Category' button." %}</p>
       </div>
     {% endfor %}
   </div>

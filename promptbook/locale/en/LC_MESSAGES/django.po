@@ -1,0 +1,241 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-18 17:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: promptbook/templates/activity_stream.html:35
+msgid "No recent activity."
+msgstr ""
+
+#: promptbook/templates/base.html:183
+#: promptbook/templates/list_categories.html:102
+msgid "Categories"
+msgstr ""
+
+#: promptbook/templates/base.html:185
+msgid "Editor"
+msgstr ""
+
+#: promptbook/templates/base.html:191
+msgid "Search anything"
+msgstr ""
+
+#: promptbook/templates/base.html:221 promptbook/templates/upload_avatar.html:6
+msgid "Upload Avatar"
+msgstr ""
+
+#: promptbook/templates/base.html:228
+msgid "Logout"
+msgstr ""
+
+#: promptbook/templates/editor.html:32
+msgid "Prompt Editor"
+msgstr ""
+
+#: promptbook/templates/editor.html:35
+msgid ""
+"Important: Please do not enter sensitive information in Vidura or in ChatGPT"
+msgstr ""
+
+#: promptbook/templates/editor.html:39
+msgid "Add your text here..."
+msgstr ""
+
+#: promptbook/templates/editor.html:43
+msgid "Category"
+msgstr ""
+
+#: promptbook/templates/editor.html:47
+msgid "Select a category"
+msgstr ""
+
+#: promptbook/templates/editor.html:56
+msgid "Is Community Prompt ?"
+msgstr ""
+
+#: promptbook/templates/editor.html:60
+msgid "Yes"
+msgstr ""
+
+#: promptbook/templates/editor.html:61
+msgid "No"
+msgstr ""
+
+#: promptbook/templates/editor.html:67
+msgid "Labels"
+msgstr ""
+
+#: promptbook/templates/editor.html:80
+#: promptbook/templates/list_categories.html:135
+msgid "Save"
+msgstr ""
+
+#: promptbook/templates/editor.html:81
+#: promptbook/templates/list_categories.html:136
+msgid "Cancel"
+msgstr ""
+
+#: promptbook/templates/list_categories.html:103
+msgid ""
+"Welcome to Vidura, a ChatGPT Prompt Management System (CPMS) that allows you "
+"to easily create, retrieve, and search your prompts."
+msgstr ""
+
+#: promptbook/templates/list_categories.html:109
+msgid "Add Category"
+msgstr ""
+
+#: promptbook/templates/list_categories.html:123
+msgid "Category name"
+msgstr ""
+
+#: promptbook/templates/list_categories.html:125
+msgid "Enter category name"
+msgstr ""
+
+#: promptbook/templates/list_categories.html:127
+msgid "Help text"
+msgstr ""
+
+#: promptbook/templates/list_categories.html:129
+msgid "Enter few comma-seprated use cases for this category"
+msgstr ""
+
+#: promptbook/templates/list_categories.html:141
+msgid "Pinned Categories"
+msgstr ""
+
+#: promptbook/templates/list_categories.html:150
+msgid "Prompts"
+msgstr ""
+
+#: promptbook/templates/list_categories.html:152
+#: promptbook/templates/list_categories.html:189
+msgid "Recently added prompts:"
+msgstr ""
+
+#: promptbook/templates/list_categories.html:157
+#: promptbook/templates/list_categories.html:194
+msgid "None"
+msgstr ""
+
+#: promptbook/templates/list_categories.html:161
+#: promptbook/templates/list_categories.html:198
+#: promptbook/templates/list_prompts.html:140
+msgid "Last updated:"
+msgstr ""
+
+#: promptbook/templates/list_categories.html:163
+#: promptbook/templates/list_categories.html:200
+msgid "Explore"
+msgstr ""
+
+#: promptbook/templates/list_categories.html:166
+msgid "Unpin"
+msgstr ""
+
+#: promptbook/templates/list_categories.html:172
+msgid ""
+"No pinned categories found. Pin a category by clicking on the 'Pin to top' "
+"button."
+msgstr ""
+
+#: promptbook/templates/list_categories.html:178
+msgid "Unpinned Categories"
+msgstr ""
+
+#: promptbook/templates/list_categories.html:187
+msgid "Prompts:"
+msgstr ""
+
+#: promptbook/templates/list_categories.html:203
+msgid "Pin to top"
+msgstr ""
+
+#: promptbook/templates/list_categories.html:209
+msgid "No categories found. Add one by clicking the 'Add Category' button."
+msgstr ""
+
+#: promptbook/templates/list_prompts.html:91
+msgid "Back to Categories"
+msgstr ""
+
+#: promptbook/templates/list_prompts.html:93
+msgid "Prompts in category"
+msgstr ""
+
+#: promptbook/templates/list_prompts.html:98
+#: promptbook/templates/list_prompts.html:178
+msgid "Add prompt"
+msgstr ""
+
+#: promptbook/templates/list_prompts.html:173
+msgid "No prompts. Here's a cookie"
+msgstr ""
+
+#: promptbook/templates/login.html:27
+msgid "Username"
+msgstr ""
+
+#: promptbook/templates/login.html:36
+msgid "Password"
+msgstr ""
+
+#: promptbook/templates/login.html:47
+msgid "Remember me"
+msgstr ""
+
+#: promptbook/templates/login.html:52
+msgid "Login"
+msgstr ""
+
+#: promptbook/templates/login.html:60
+msgid "Sign in with Google"
+msgstr ""
+
+#: promptbook/templates/login.html:61
+msgid "No signup required"
+msgstr ""
+
+#: promptbook/templates/search_results.html:6
+msgid "Search results for:"
+msgstr ""
+
+#: promptbook/templates/search_results.html:8
+msgid "Found Categories"
+msgstr ""
+
+#: promptbook/templates/search_results.html:18
+msgid "No categories found."
+msgstr ""
+
+#: promptbook/templates/search_results.html:23
+msgid "Found Prompts"
+msgstr ""
+
+#: promptbook/templates/search_results.html:42
+msgid "No prompts found."
+msgstr ""
+
+#: promptbook/templates/upload_avatar.html:19
+msgid "Choose an avatar..."
+msgstr ""
+
+#: promptbook/templates/upload_avatar.html:26
+msgid "Upload"
+msgstr ""

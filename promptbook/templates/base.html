@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 {% load tz %} 
 <!DOCTYPE html>
@@ -163,6 +164,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
     <nav class="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
         <div class="container">
+
             <div class="navbar-brand">
               <img class="navbar-item logo" src="https://i.ibb.co/7Vyt7Kw/vidura-logo-grn.png" alt="My image">
                 <a class="navbar-item" href="/">
@@ -173,20 +175,20 @@
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
-              </a>
+            </a>
               {% if user.is_authenticated %}
             <div class="navbar-menu">
                 <div class="navbar-start">
                     <a class="navbar-item" href="{% url 'list_categories' %}">
-                        Categories
+                        {% trans "Categories" %}
                     </a>
-                    <a class="navbar-item" href="{% url 'editor' %}">Editor</a>
+                    <a class="navbar-item" href="{% url 'editor' %}"> {% trans "Editor" %} </a>
                     <!-- Add this inside your navbar div, adjust accordingly -->
                     <div class="navbar-item">
                         <form method="GET" action="{% url 'search' %}">
                             <div class="field has-addons">
                                 <div class="control">
-                                    <input class="input" type="text" name="q" placeholder="Search anything">
+                                    <input class="input" type="text" name="q" placeholder="{% trans 'Search anything' %}">
                                 </div>
                                 <div class="control">
                                     <button class="button" type="submit">
@@ -200,7 +202,7 @@
                     </div>
                 </div>
                 <div class="navbar-end">
-                    <!-- ... other navbar content ... -->
+                <!-- ... other navbar content ... -->
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link" href="#">
                     {% if user.profile.avatar %}
@@ -216,20 +218,39 @@
                         <span class="icon">
                         <i class="fas fa-image"></i>
                         </span>
-                        Upload Avatar
+                        {% trans "Upload Avatar" %}
                     </a>
                     <hr class="navbar-divider">
                     <a class="navbar-item" href="{% url 'logout' %}">
                         <span class="icon">
                         <i class="fas fa-sign-out-alt"></i>
                         </span>
-                        Logout
+                        {% trans "Logout" %}
                     </a>
                     </div>
                 </div>
                 <!-- ... other navbar content ... -->
-  
-                    {% endif %}
+
+                {% endif %}
+                <!-- 语言选择器 -->
+                <div class="navbar-item">
+                    <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ request.path }}">
+                        <div class="select">
+                            <select name="language" onchange="this.form.submit()">
+                                {% get_current_language as LANGUAGE_CODE %}
+                                {% get_available_languages as LANGUAGES %}
+                                {% for lang in LANGUAGES %}
+                                <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected {% endif %}>
+                                    {{ lang.1 }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </form>
+                </div>
+
                 </div>
             </div>
         </div>

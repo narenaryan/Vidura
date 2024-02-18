@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block title %}editor{% endblock title %}
 
 {% block content %}
@@ -28,22 +29,22 @@
   <div class="field">
     <div class="columns">
       <div class="column is-one-quarter">
-        <label class="label">Prompt Editor</label>
+        <label class="label">{% trans "Prompt Editor" %}</label>
       </div>
       <div class="column">
-        <p class="sensitive-info-banner">(Important: Please do not enter sensitive information in Vidura or in ChatGPT)</p>
+        <p class="sensitive-info-banner">({% trans "Important: Please do not enter sensitive information in Vidura or in ChatGPT" %})</p>
       </div>
     </div>
     <div class="control">
-      <textarea placeholder="Add your text here..." class="textarea" name="prompt_text" rows="10" required></textarea>
+      <textarea placeholder="{% trans 'Add your text here...' %}" class="textarea" name="prompt_text" rows="10" required></textarea>
     </div>
   </div>
   <div class="field">
-    <label class="label">Category</label>
+    <label class="label">{% trans "Category" %}</label>
     <div class="control">
       <div>
         <select class="select-options" name="category" required>
-          <option value="">Select a category</option>
+          <option value="">{% trans "Select a category" %}</option>
           {% for category in categories %}
           <option value="{{ category.id }}">{{ category.name }}</option>
           {% endfor %}
@@ -52,18 +53,18 @@
     </div>
   </div>
   <div class="field">
-    <label class="label">Is Community Prompt ?</label>
+    <label class="label">{% trans "Is Community Prompt ?" %}</label>
     <div class="control">
       <div>
         <select class="select-options" name="is-public-prompt">
-          <option value="yes">Yes</option>
-          <option value="no" selected>No</option>
+          <option value="yes">{% trans "Yes" %}</option>
+          <option value="no" selected>{% trans "No" %}</option>
         </select>
       </div>
     </div>
   </div>
   <div class="field">
-    <label class="label">Labels</label>
+    <label class="label">{% trans "Labels" %}</label>
     <div class="control">
       <div>
         <select name="labels" multiple>
@@ -76,8 +77,8 @@
   </div>
   <div class="field">
     <div class="control">
-      <button type="submit" class="button">Save</button>
-      <button class="button cancel-btn"><a href="{% url 'list_categories' %}"> Cancel</a></button>
+      <button type="submit" class="button">{% trans "Save" %}</button>
+      <button class="button cancel-btn"><a href="{% url 'list_categories' %}">{% trans "Cancel" %}</a></button>
     </div>
   </div>
 </form>

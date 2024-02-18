@@ -1,0 +1,275 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-02-18 18:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: promptbook/templates/activity_stream.html:6
+msgid "Activity Stream"
+msgstr "最近事件"
+
+#: promptbook/templates/activity_stream.html:26
+msgid "ago"
+msgstr "前，"
+
+#: promptbook/templates/activity_stream.html:28
+msgid "in"
+msgstr "项目："
+
+#: promptbook/templates/activity_stream.html:35
+msgid "No recent activity."
+msgstr "没有最近的事件"
+
+#: promptbook/templates/base.html:183
+#: promptbook/templates/list_categories.html:102
+msgid "Categories"
+msgstr "项目"
+
+#: promptbook/templates/base.html:185
+msgid "Editor"
+msgstr "编辑 Prompt"
+
+#: promptbook/templates/base.html:191
+msgid "Search anything"
+msgstr "搜索"
+
+#: promptbook/templates/base.html:221 promptbook/templates/upload_avatar.html:6
+msgid "Upload Avatar"
+msgstr "上传头像"
+
+#: promptbook/templates/base.html:228
+msgid "Logout"
+msgstr "退出登录"
+
+#: promptbook/templates/editor.html:32
+msgid "Prompt Editor"
+msgstr "Prompt 编辑器"
+
+#: promptbook/templates/editor.html:35
+msgid ""
+"Important: Please do not enter sensitive information in Vidura or in ChatGPT"
+msgstr "注意：请不要在 Vidura 或 ChatGPT 中输入敏感信息"
+
+#: promptbook/templates/editor.html:39
+msgid "Add your text here..."
+msgstr "在这里编辑 Prompt..."
+
+#: promptbook/templates/editor.html:43
+msgid "Category"
+msgstr "项目"
+
+#: promptbook/templates/editor.html:47
+msgid "Select a category"
+msgstr "选择一个项目"
+
+#: promptbook/templates/editor.html:56
+msgid "Is Community Prompt ?"
+msgstr "是否向社区内成员公开？"
+
+#: promptbook/templates/editor.html:60
+msgid "Yes"
+msgstr "是"
+
+#: promptbook/templates/editor.html:61
+msgid "No"
+msgstr "否"
+
+#: promptbook/templates/editor.html:67
+msgid "Labels"
+msgstr "标签"
+
+#: promptbook/templates/editor.html:80
+#: promptbook/templates/list_categories.html:135
+msgid "Save"
+msgstr "保存"
+
+#: promptbook/templates/editor.html:81
+#: promptbook/templates/list_categories.html:136
+msgid "Cancel"
+msgstr "取消"
+
+#: promptbook/templates/list_categories.html:103
+msgid ""
+"Welcome to Vidura, a ChatGPT Prompt Management System (CPMS) that allows you "
+"to easily create, retrieve, and search your prompts."
+msgstr ""
+"欢迎来到 Vidura，一个 ChatGPT Prompt 管理系统 (CPMS)，它可以让你轻松创建、检"
+"索和搜索你的 Prompts。"
+
+#: promptbook/templates/list_categories.html:109
+msgid "Add Category"
+msgstr "创建项目"
+
+#: promptbook/templates/list_categories.html:123
+msgid "Category name"
+msgstr "项目名称"
+
+#: promptbook/templates/list_categories.html:125
+msgid "Enter category name"
+msgstr "请输入项目名称"
+
+#: promptbook/templates/list_categories.html:127
+msgid "Help text"
+msgstr "备注"
+
+#: promptbook/templates/list_categories.html:129
+msgid "Enter few comma-seprated use cases for this category"
+msgstr "请输入几个逗号分隔的使用场景"
+
+#: promptbook/templates/list_categories.html:141
+msgid "Pinned Categories"
+msgstr "收藏的项目"
+
+#: promptbook/templates/list_categories.html:150
+msgid "Prompts"
+msgstr "Prompt 数量"
+
+#: promptbook/templates/list_categories.html:152
+#: promptbook/templates/list_categories.html:189
+msgid "Recently added prompts:"
+msgstr "最近添加的 Prompts："
+
+#: promptbook/templates/list_categories.html:157
+#: promptbook/templates/list_categories.html:194
+msgid "None"
+msgstr "空"
+
+#: promptbook/templates/list_categories.html:161
+#: promptbook/templates/list_categories.html:198
+#: promptbook/templates/list_prompts.html:140
+msgid "Last updated:"
+msgstr "最近更新："
+
+#: promptbook/templates/list_categories.html:163
+#: promptbook/templates/list_categories.html:200
+msgid "Explore"
+msgstr "查看"
+
+#: promptbook/templates/list_categories.html:166
+msgid "Unpin"
+msgstr "取消收藏"
+
+#: promptbook/templates/list_categories.html:172
+msgid ""
+"No pinned categories found. Pin a category by clicking on the 'Pin to top' "
+"button."
+msgstr "暂无收藏的项目。"
+
+#: promptbook/templates/list_categories.html:178
+msgid "Unpinned Categories"
+msgstr "未收藏的项目"
+
+#: promptbook/templates/list_categories.html:187
+msgid "Prompts:"
+msgstr "Prompt 数量"
+
+#: promptbook/templates/list_categories.html:203
+msgid "Pin to top"
+msgstr "收藏该项目"
+
+#: promptbook/templates/list_categories.html:209
+msgid "No categories found. Add one by clicking the 'Add Category' button."
+msgstr "暂无项目"
+
+#: promptbook/templates/list_prompts.html:91
+msgid "Back to Categories"
+msgstr "返回到项目"
+
+#: promptbook/templates/list_prompts.html:93
+msgid "Prompts in category"
+msgstr "Prompts"
+
+#: promptbook/templates/list_prompts.html:98
+#: promptbook/templates/list_prompts.html:178
+msgid "Add prompt"
+msgstr "创建 Prompt"
+
+#: promptbook/templates/list_prompts.html:116
+msgid "Edit"
+msgstr "编辑"
+
+#: promptbook/templates/list_prompts.html:173
+msgid "No prompts. Here's a cookie"
+msgstr "没有 Prompts。"
+
+#: promptbook/templates/list_prompts.html:345
+msgid "Click to make private"
+msgstr "设为私有"
+
+#: promptbook/templates/list_prompts.html:347
+msgid "Click to make public"
+msgstr "设为公开"
+
+#: promptbook/templates/list_prompts_by_label.html:12
+msgid "Length:"
+msgstr "长度："
+
+#: promptbook/templates/list_prompts_by_label.html:12
+msgid "chars..."
+msgstr "个字符..."
+
+#: promptbook/templates/login.html:27
+msgid "Username"
+msgstr "用户名"
+
+#: promptbook/templates/login.html:36
+msgid "Password"
+msgstr "密码"
+
+#: promptbook/templates/login.html:47
+msgid "Remember me"
+msgstr "记住我"
+
+#: promptbook/templates/login.html:52
+msgid "Login"
+msgstr "登录"
+
+#: promptbook/templates/login.html:60
+msgid "Sign in with Google"
+msgstr "使用 Google 登录"
+
+#: promptbook/templates/login.html:61
+msgid "No signup required"
+msgstr "免注册"
+
+#: promptbook/templates/search_results.html:6
+msgid "Search results for:"
+msgstr "查询关键词："
+
+#: promptbook/templates/search_results.html:8
+msgid "Found Categories"
+msgstr "项目"
+
+#: promptbook/templates/search_results.html:18
+msgid "No categories found."
+msgstr "没有相关的项目"
+
+#: promptbook/templates/search_results.html:23
+msgid "Found Prompts"
+msgstr "Prompts"
+
+#: promptbook/templates/search_results.html:42
+msgid "No prompts found."
+msgstr "没有相关的 Prompts"
+
+#: promptbook/templates/upload_avatar.html:19
+msgid "Choose an avatar..."
+msgstr "选择一个头像图片"
+
+#: promptbook/templates/upload_avatar.html:26
+msgid "Upload"
+msgstr "上传头像"
