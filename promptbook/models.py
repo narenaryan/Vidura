@@ -28,7 +28,7 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     help_text = models.CharField(max_length=255, blank=True, null=True)
