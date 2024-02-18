@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-18 18:05+0800\n"
+"POT-Creation-Date: 2024-02-18 23:52+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,50 +55,47 @@ msgstr "上传头像"
 msgid "Logout"
 msgstr "退出登录"
 
-#: promptbook/templates/editor.html:32
-msgid "Prompt Editor"
-msgstr "Prompt 编辑器"
-
-#: promptbook/templates/editor.html:35
-msgid ""
-"Important: Please do not enter sensitive information in Vidura or in ChatGPT"
-msgstr "注意：请不要在 Vidura 或 ChatGPT 中输入敏感信息"
-
-#: promptbook/templates/editor.html:39
-msgid "Add your text here..."
-msgstr "在这里编辑 Prompt..."
-
-#: promptbook/templates/editor.html:43
+#: promptbook/templates/editor.html:34
 msgid "Category"
 msgstr "项目"
 
-#: promptbook/templates/editor.html:47
+#: promptbook/templates/editor.html:38
 msgid "Select a category"
 msgstr "选择一个项目"
 
-#: promptbook/templates/editor.html:56
-msgid "Is Community Prompt ?"
-msgstr "是否向社区内成员公开？"
+#: promptbook/templates/editor.html:49
+msgid "Prompt Editor"
+msgstr "Prompt 编辑器"
 
-#: promptbook/templates/editor.html:60
-msgid "Yes"
-msgstr "是"
+#: promptbook/templates/editor.html:52
+msgid "Add your text here..."
+msgstr "在这里编辑 Prompt..."
 
-#: promptbook/templates/editor.html:61
-msgid "No"
-msgstr "否"
-
-#: promptbook/templates/editor.html:67
+#: promptbook/templates/editor.html:57
 msgid "Labels"
 msgstr "标签"
 
-#: promptbook/templates/editor.html:80
+#: promptbook/templates/editor.html:63
+msgid "Create New Label..."
+msgstr "创建标签"
+
+#: promptbook/templates/editor.html:66
+msgid "New label name..."
+msgstr "标签名字..."
+
+#: promptbook/templates/editor.html:67
+msgid "Add Label"
+msgstr "添加标签"
+
+#: promptbook/templates/editor.html:74
 #: promptbook/templates/list_categories.html:135
+#: promptbook/templates/list_prompts.html:208
 msgid "Save"
 msgstr "保存"
 
-#: promptbook/templates/editor.html:81
+#: promptbook/templates/editor.html:75
 #: promptbook/templates/list_categories.html:136
+#: promptbook/templates/list_prompts.html:209
 msgid "Cancel"
 msgstr "取消"
 
@@ -146,11 +143,11 @@ msgstr "最近添加的 Prompts："
 #: promptbook/templates/list_categories.html:157
 #: promptbook/templates/list_categories.html:194
 msgid "None"
-msgstr "空"
+msgstr " "
 
 #: promptbook/templates/list_categories.html:161
 #: promptbook/templates/list_categories.html:198
-#: promptbook/templates/list_prompts.html:140
+#: promptbook/templates/list_prompts.html:128
 msgid "Last updated:"
 msgstr "最近更新："
 
@@ -194,23 +191,32 @@ msgid "Prompts in category:"
 msgstr "项目："
 
 #: promptbook/templates/list_prompts.html:98
-#: promptbook/templates/list_prompts.html:178
+#: promptbook/templates/list_prompts.html:187
 msgid "Add prompt"
 msgstr "创建 Prompt"
 
-#: promptbook/templates/list_prompts.html:116
+#: promptbook/templates/list_prompts.html:117
+#: promptbook/templates/list_prompts.html:200
 msgid "Edit"
 msgstr "编辑"
 
-#: promptbook/templates/list_prompts.html:173
+#: promptbook/templates/list_prompts.html:126
+msgid "Copy to clipboard"
+msgstr "复制"
+
+#: promptbook/templates/list_prompts.html:182
 msgid "No prompts. Here's a cookie"
 msgstr "没有 Prompts。"
 
-#: promptbook/templates/list_prompts.html:345
+#: promptbook/templates/list_prompts.html:233
+msgid "Copied prompt to clipboard"
+msgstr "复制"
+
+#: promptbook/templates/list_prompts.html:354
 msgid "Click to make private"
 msgstr ""
 
-#: promptbook/templates/list_prompts.html:347
+#: promptbook/templates/list_prompts.html:356
 msgid "Click to make public"
 msgstr ""
 
@@ -273,3 +279,17 @@ msgstr "选择一个头像图片"
 #: promptbook/templates/upload_avatar.html:26
 msgid "Upload"
 msgstr "上传头像"
+
+#~ msgid ""
+#~ "Important: Please do not enter sensitive information in Vidura or in "
+#~ "ChatGPT"
+#~ msgstr "注意：请不要在 Vidura 或 ChatGPT 中输入敏感信息"
+
+#~ msgid "Is Community Prompt ?"
+#~ msgstr "是否向社区内成员公开？"
+
+#~ msgid "Yes"
+#~ msgstr "是"
+
+#~ msgid "No"
+#~ msgstr "否"

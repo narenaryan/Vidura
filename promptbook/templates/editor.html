@@ -17,7 +17,11 @@
     font-size: 500;
   }
 
-  .select-options {
+  .select-category {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .select-option {
     font-family: 'Poppins', sans-serif;
   }
 </style>
@@ -27,23 +31,10 @@
 <form method="post">
   {% csrf_token %}
   <div class="field">
-    <div class="columns">
-      <div class="column is-one-quarter">
-        <label class="label">{% trans "Prompt Editor" %}</label>
-      </div>
-      <div class="column">
-        <p class="sensitive-info-banner">({% trans "Important: Please do not enter sensitive information in Vidura or in ChatGPT" %})</p>
-      </div>
-    </div>
-    <div class="control">
-      <textarea placeholder="{% trans 'Add your text here...' %}" class="textarea" name="prompt_text" rows="10" required></textarea>
-    </div>
-  </div>
-  <div class="field">
     <label class="label">{% trans "Category" %}</label>
     <div class="control">
       <div>
-        <select class="select-options" name="category" required>
+        <select class="select-category" name="category" required>
           <option value="">{% trans "Select a category" %}</option>
           {% for category in categories %}
           <option value="{{ category.id }}">{{ category.name }}</option>
@@ -52,29 +43,32 @@
       </div>
     </div>
   </div>
+
   <div class="field">
-    <label class="label">{% trans "Is Community Prompt ?" %}</label>
+
+        <label class="label">{% trans "Prompt Editor" %}</label>
+
     <div class="control">
-      <div>
-        <select class="select-options" name="is-public-prompt">
-          <option value="yes">{% trans "Yes" %}</option>
-          <option value="no" selected>{% trans "No" %}</option>
-        </select>
-      </div>
+      <textarea placeholder="{% trans 'Add your text here...' %}" class="textarea" name="prompt_text" rows="10" required></textarea>
     </div>
   </div>
-  <div class="field">
-    <label class="label">{% trans "Labels" %}</label>
-    <div class="control">
-      <div>
-        <select name="labels" multiple>
+
+    <div class="field">
+      <label class="label">{% trans "Labels" %}</label>
+      <div class="control">
+        <select class="select-option" name="labels" multiple id="label-select">
           {% for label in labels %}
           <option value="{{ label.id }}">{{ label.name }}</option>
           {% endfor %}
+          <option value="new_label">{% trans "Create New Label..." %}</option>
         </select>
+        <!-- 隐藏的新标签输入框，初始时不显示 -->
+        <input type="text" id="new-label-name" name="new_label_name" placeholder="{% trans 'New label name...' %}" style="display:none;" />
+        <button type="button" id="add-label-btn" onclick="addNewLabel()" style="display:none;">{% trans "Add Label" %}</button>
       </div>
     </div>
-  </div>
+
+
   <div class="field">
     <div class="control">
       <button type="submit" class="button">{% trans "Save" %}</button>
@@ -84,7 +78,7 @@
 </form>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    var sl = $('select').selectize({
+    var sl = $('.select-category').selectize({
       plugins: ["clear_button"]
     });
     var control = sl[0].selectize;
@@ -92,5 +86,58 @@
     control.setValue({{ selected_category }});
   {% endif %}
     });
+
+
+document.getElementById('label-select').addEventListener('change', function() {
+  // 当选择创建新标签时显示输入框和添加按钮
+  if (this.value === 'new_label') {
+    document.getElementById('new-label-name').style.display = '';
+    document.getElementById('add-label-btn').style.display = '';
+  } else {
+    document.getElementById('new-label-name').style.display = 'none';
+    document.getElementById('add-label-btn').style.display = 'none';
+  }
+});
+
+function addNewLabel() {
+  const labelName = document.getElementById('new-label-name').value;
+  if (labelName) {
+    // 这里可以发送 AJAX 请求到后端创建新标签
+    // 然后在成功回调中将新标签添加到选择框并选中
+    // 以下代码为示例，请根据实际情况调整
+    fetch('/api/labels/', { // 替换为实际的创建标签API路径
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': '{{ csrf_token }}',
+      },
+      body: JSON.stringify({ name: labelName })
+    })
+    .then(response => {
+      if (response.status === 201) { // 检查状态码是否为201
+        return response.json(); // 如果是201，解析响应体
+      } else {
+        throw new Error('Failed to create label'); // 如果不是201，抛出错误
+      }
+    })
+    .then(data => {
+      // 这里处理成功逻辑，如添加新标签到选择框
+      const newOption = new Option(data.name, data.id, false, true);
+      const select = document.getElementById('label-select');
+      select.add(newOption);
+      select.value = data.id; // 选中新添加的标签
+      document.getElementById('new-label-name').style.display = 'none';
+      document.getElementById('add-label-btn').style.display = 'none';
+      document.getElementById('new-label-name').value = ''; // 清空输入框
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert(error.message); // 显示错误信息
+    });
+  } else {
+    alert('Label name is required');
+  }
+}
+
 </script>
 {% endblock %}

@@ -20,7 +20,7 @@ from django.db.models import IntegerField
 from actstream import action
 from actstream.models import Action
 from rest_framework import viewsets, permissions
-from promptbook.serializers import CategorySerializer, PromptSerializer
+from promptbook.serializers import CategorySerializer, PromptSerializer, LabelSerializer
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 
@@ -355,3 +355,19 @@ class CategoryPromptsListCreateView(generics.ListCreateAPIView):
         category_id = self.kwargs['category_id']
         category = get_object_or_404(Category, pk=category_id)
         serializer.save(category=category, owner=self.request.user)
+
+class LabelListCreateView(generics.ListCreateAPIView):
+    queryset = Label.objects.all()
+    serializer_class = LabelSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save()
+        # 需要返回 id, name
+        return JsonResponse(serializer.data, status=201)
+
+    def get_queryset(self):
+        """
+        return labels that belong to the current user.
+        """
+        return Label.objects

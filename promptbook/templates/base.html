@@ -236,7 +236,7 @@
                 <div class="navbar-item">
                     <form action="{% url 'set_language' %}" method="post">
                         {% csrf_token %}
-                        <input name="next" type="hidden" value="{{ request.path }}">
+                        <input name="next" type="hidden" value="{{ request.get_full_path }}">
                         <div class="select">
                             <select name="language" onchange="this.form.submit()">
                                 {% get_current_language as LANGUAGE_CODE %}

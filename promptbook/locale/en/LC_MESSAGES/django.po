@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-18 17:54+0800\n"
+"POT-Creation-Date: 2024-02-18 23:52+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: promptbook/templates/activity_stream.html:6
+msgid "Activity Stream"
+msgstr ""
+
+#: promptbook/templates/activity_stream.html:26
+msgid "ago"
+msgstr ""
+
+#: promptbook/templates/activity_stream.html:28
+msgid "in"
+msgstr ""
 
 #: promptbook/templates/activity_stream.html:35
 msgid "No recent activity."
@@ -43,50 +55,47 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: promptbook/templates/editor.html:32
-msgid "Prompt Editor"
-msgstr ""
-
-#: promptbook/templates/editor.html:35
-msgid ""
-"Important: Please do not enter sensitive information in Vidura or in ChatGPT"
-msgstr ""
-
-#: promptbook/templates/editor.html:39
-msgid "Add your text here..."
-msgstr ""
-
-#: promptbook/templates/editor.html:43
+#: promptbook/templates/editor.html:34
 msgid "Category"
 msgstr ""
 
-#: promptbook/templates/editor.html:47
+#: promptbook/templates/editor.html:38
 msgid "Select a category"
 msgstr ""
 
-#: promptbook/templates/editor.html:56
-msgid "Is Community Prompt ?"
+#: promptbook/templates/editor.html:49
+msgid "Prompt Editor"
 msgstr ""
 
-#: promptbook/templates/editor.html:60
-msgid "Yes"
+#: promptbook/templates/editor.html:52
+msgid "Add your text here..."
 msgstr ""
 
-#: promptbook/templates/editor.html:61
-msgid "No"
-msgstr ""
-
-#: promptbook/templates/editor.html:67
+#: promptbook/templates/editor.html:57
 msgid "Labels"
 msgstr ""
 
-#: promptbook/templates/editor.html:80
+#: promptbook/templates/editor.html:63
+msgid "Create New Label..."
+msgstr ""
+
+#: promptbook/templates/editor.html:66
+msgid "New label name..."
+msgstr ""
+
+#: promptbook/templates/editor.html:67
+msgid "Add Label"
+msgstr ""
+
+#: promptbook/templates/editor.html:74
 #: promptbook/templates/list_categories.html:135
+#: promptbook/templates/list_prompts.html:208
 msgid "Save"
 msgstr ""
 
-#: promptbook/templates/editor.html:81
+#: promptbook/templates/editor.html:75
 #: promptbook/templates/list_categories.html:136
+#: promptbook/templates/list_prompts.html:209
 msgid "Cancel"
 msgstr ""
 
@@ -136,7 +145,7 @@ msgstr ""
 
 #: promptbook/templates/list_categories.html:161
 #: promptbook/templates/list_categories.html:198
-#: promptbook/templates/list_prompts.html:140
+#: promptbook/templates/list_prompts.html:128
 msgid "Last updated:"
 msgstr ""
 
@@ -180,12 +189,41 @@ msgid "Prompts in category:"
 msgstr ""
 
 #: promptbook/templates/list_prompts.html:98
-#: promptbook/templates/list_prompts.html:178
+#: promptbook/templates/list_prompts.html:187
 msgid "Add prompt"
 msgstr ""
 
-#: promptbook/templates/list_prompts.html:173
+#: promptbook/templates/list_prompts.html:117
+#: promptbook/templates/list_prompts.html:200
+msgid "Edit"
+msgstr ""
+
+#: promptbook/templates/list_prompts.html:126
+msgid "Copy to clipboard"
+msgstr ""
+
+#: promptbook/templates/list_prompts.html:182
 msgid "No prompts. Here's a cookie"
+msgstr ""
+
+#: promptbook/templates/list_prompts.html:233
+msgid "Copied prompt to clipboard"
+msgstr ""
+
+#: promptbook/templates/list_prompts.html:354
+msgid "Click to make private"
+msgstr ""
+
+#: promptbook/templates/list_prompts.html:356
+msgid "Click to make public"
+msgstr ""
+
+#: promptbook/templates/list_prompts_by_label.html:12
+msgid "Length:"
+msgstr ""
+
+#: promptbook/templates/list_prompts_by_label.html:12
+msgid "chars..."
 msgstr ""
 
 #: promptbook/templates/login.html:27
