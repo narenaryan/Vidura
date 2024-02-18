@@ -90,7 +90,7 @@
   <a href="{% url 'list_categories' %}" class="back-button">
     <i class="fas fa-arrow-left"></i> {% trans "Back to Categories" %}
   </a>
-  <h1 class="title">{% trans "Prompts in category" %}: {{ category.name }}</h1>
+  <h1 class="title">{% trans "Prompts in category:" %} {{ category.name }}</h1>
   {% if prompts %}
   <a href="{% url 'editor' %}?category_id={{ category.id }}" class="add-prompt-btn">
     <button class="button">

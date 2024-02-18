@@ -176,7 +176,7 @@ msgid "Back to Categories"
 msgstr ""
 
 #: promptbook/templates/list_prompts.html:93
-msgid "Prompts in category"
+msgid "Prompts in category:"
 msgstr ""
 
 #: promptbook/templates/list_prompts.html:98

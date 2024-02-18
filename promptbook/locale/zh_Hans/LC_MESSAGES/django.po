@@ -190,8 +190,8 @@ msgid "Back to Categories"
 msgstr "返回到项目"
 
 #: promptbook/templates/list_prompts.html:93
-msgid "Prompts in category"
-msgstr "Prompts"
+msgid "Prompts in category:"
+msgstr "项目："
 
 #: promptbook/templates/list_prompts.html:98
 #: promptbook/templates/list_prompts.html:178
@@ -208,11 +208,11 @@ msgstr "没有 Prompts。"
 
 #: promptbook/templates/list_prompts.html:345
 msgid "Click to make private"
-msgstr "设为私有"
+msgstr ""
 
 #: promptbook/templates/list_prompts.html:347
 msgid "Click to make public"
-msgstr "设为公开"
+msgstr ""
 
 #: promptbook/templates/list_prompts_by_label.html:12
 msgid "Length:"
