@@ -2,7 +2,7 @@ import json
 import reversion
 from enum import Enum
 
-from django.db import IntegrityError
+from django.db import transaction, IntegrityError
 from django.db.models import Count
 from .models import Category, Prompt, PromptLabel, Label
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
@@ -108,7 +108,9 @@ def editor(request):
         # prompt.save()
 
         try:
-            prompt.save()
+            with transaction.atomic():
+                # 尝试保存，这里是可能会触发IntegrityError的操作
+                prompt.save()
         except IntegrityError as e:
             # load the same page with an error message
             return render(request, 'editor.html', {
