@@ -26,6 +26,9 @@ urlpatterns = [
 api_urls = [
     # add CategoryListCreateView to the urls
     path('api/categories/', views.CategoryListCreateView.as_view(), name='category-list'),
+    path('api/categories/<int:category_id>/prompts/', views.CategoryPromptsListCreateView.as_view(),
+         name='category-prompts-list'),
+
 ]
 
 urlpatterns += api_urls

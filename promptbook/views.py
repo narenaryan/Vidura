@@ -20,7 +20,7 @@ from django.db.models import IntegerField
 from actstream import action
 from actstream.models import Action
 from rest_framework import viewsets, permissions
-from promptbook.serializers import CategorySerializer
+from promptbook.serializers import CategorySerializer, PromptSerializer
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 
@@ -333,3 +333,23 @@ class CategoryListCreateView(generics.ListCreateAPIView):
             category['public_prompt_count'] = count
 
         return Response(serializer.data)
+
+
+class CategoryPromptsListCreateView(generics.ListCreateAPIView):
+    serializer_class = PromptSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        """
+        return prompts that belong to the current category.
+        """
+        category_id = self.kwargs['category_id']
+        return Prompt.objects.filter(category_id=category_id)
+
+    def perform_create(self, serializer):
+        """
+        set the category of the prompt before saving it.
+        """
+        category_id = self.kwargs['category_id']
+        category = get_object_or_404(Category, pk=category_id)
+        serializer.save(category=category, owner=self.request.user)
