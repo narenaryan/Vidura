@@ -9,3 +9,4 @@ django-allauth==0.54.0
 djangorestframework==3.14.0
 python-dotenv==1.0.0
 django-reversion==5.0.4
+mysql-connector-python==8.3.0

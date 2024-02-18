@@ -122,7 +122,7 @@ WSGI_APPLICATION = 'vidura.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-if os.getenv("ENV") == "production":
+if os.getenv("DBTYPE") == "pg":
     db_conf = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DB_NAME'),
@@ -130,6 +130,15 @@ if os.getenv("ENV") == "production":
         'PASSWORD': os.environ.get('DB_PASS'),
         'HOST': os.environ.get('DB_HOST'),
         'PORT': '5432',
+    }
+elif os.getenv("DBTYPE") == "mysql":
+    db_conf = {
+        'ENGINE': 'mysql.connector.django',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': '3306',
     }
 else:
     db_conf = {
@@ -173,7 +182,7 @@ REST_FRAMEWORK = {
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = os.environ.get('TIME_ZONE', 'UTC')
 
 USE_I18N = True
 
