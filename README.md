@@ -81,3 +81,22 @@ python manage.py runserver
 Access server at http://127.0.0.1:8000 and enter the credentials created before to launch Vidura dashboard.
 
 **Note**: Vidura is a court minister and advisor from ancient Indian epic "Mahabharata". https://en.wikipedia.org/wiki/Vidura
+
+# Token Authentication for API
+
+## 生成 Token | Create Token
+
+对于每个用户，你需要生成一个认证Token。这可以通过管理命令、Django管理后台或者编写自己的视图或命令来完成。
+For each user, you need to generate an authentication token. This can be done using the management command, the Django admin, or by writing your own views or commands.
+
+Django REST Framework提供了一个管理命令来手动生成Token：
+Django REST Framework provides a management command to manually generate tokens:
+
+> python manage.py drf_create_token <username>
+
+## 使用Token | Use Token
+
+客户端在请求头中发送Token来进行认证。格式如下：
+Client should send the Token in the request header for authentication. The format is:
+
+> Authorization: Token <your_token_here>

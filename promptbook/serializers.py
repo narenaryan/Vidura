@@ -4,7 +4,7 @@ from .models import Prompt, Category
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['name', 'help_text']
+        fields = ['id', 'name', 'help_text']
 
 
 class PromptSerializer(serializers.ModelSerializer):
