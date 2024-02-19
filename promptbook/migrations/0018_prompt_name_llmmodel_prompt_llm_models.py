@@ -17,7 +17,11 @@ def create_default_llmmodel_and_assign_to_prompts(apps, schema_editor):
     Prompt = apps.get_model('promptbook', 'Prompt')
 
     # 创建默认的LLMModel实例
-    default_category = Category.objects.get(id=1)
+    try:
+        default_category = Category.objects.get(id=1)
+    except Category.DoesNotExist:
+        return
+
     llmmodel, created = LLMModel.objects.get_or_create(
         name='all',
         defaults={'category': default_category}
