@@ -48,10 +48,11 @@ class Prompt:
 
 
 class PromptTemplate:
-    def __init__(self, name: str, text: str, models: List[Dict[str, Any]]):
+    def __init__(self, name: str, text: str, models: List[Dict[str, Any]], labels: List[Dict[str, Any]]):
         self.name = name
         self.text = text
-        self.model_names = [model['name'] for model in models]
+        self.models = models
+        self.labels = labels
 
 
 class PromptHub:
@@ -127,16 +128,16 @@ class PromptHub:
         if not prompts:
             raise errors.PromptNotFoundError
         prompt_data = prompts[0]
-        return PromptTemplate(prompt_data['name'], prompt_data['text'], prompt_data['models'])
+        return PromptTemplate(**prompt_data)
 
-    def create(self, name: str, text: str, models: List[str], labels: List[str]) -> None:
+    def create_template(self, name: str, text: str, model_names: List[str], label_names: List[str]) -> None:
         uri = f"/api/categories/{self.category_id}/prompts/"
         return self.post_request(
             uri,
             data={'name': name,
                   'text': text,
-                  'model_names': models,
-                  'label_names': labels,
+                  'model_names': model_names,
+                  'label_names': label_names,
                   }
         )
 

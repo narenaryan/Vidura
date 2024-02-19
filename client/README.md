@@ -35,17 +35,24 @@ except errors.NoValidModelError:
     print('No valid model')
     # do something
 
+
+
+from client.prompthub import PromptHub, errors
+
+
+prompts = PromptHub('http://localhost:8000', '25cee15690db575d123271ef7f408e6a1f9446b1', category='rmb-prod')
+
     
 template = prompts.get_template('MetaName')
 # 该Prompt适用的模型有哪些
 valid_models = template.models
 
 
-prompt = prompts.create(
-    'MetaName',
-    'text',
-    models=['gpt-3.5', 'gpt-4-turbo'],
-    labels = ['label1', 'label2'],
+template = prompts.create_template(
+    'MetaN1ame',
+    'tex111t',
+    model_names=['gpt-3.5', 'gpt-4-turbo'],
+    label_names = ['label1', 'label2'],
 )
 
 
