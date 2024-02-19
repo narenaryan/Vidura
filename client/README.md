@@ -1,4 +1,6 @@
 
+
+
 ```python
 
 from client.prompthub import PromptHub, errors
@@ -51,6 +53,7 @@ valid_models = template.models
 template = prompts.create_template(
     'MetaN1ame',
     'tex111t',
+    output_format='str',
     model_names=['gpt-3.5', 'gpt-4-turbo'],
     label_names = ['label1', 'label2'],
 )

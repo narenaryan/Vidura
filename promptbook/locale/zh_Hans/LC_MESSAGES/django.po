@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-19 20:06+0800\n"
+"POT-Creation-Date: 2024-02-19 23:31+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,62 +43,82 @@ msgid "Category:"
 msgstr "项目"
 
 #: promptbook/templates/create_or_edit_prompt.html:36
+msgid "Prompt Name"
+msgstr "Prompt 名称"
+
+#: promptbook/templates/create_or_edit_prompt.html:38
+msgid "Add prompt name here..."
+msgstr "输入 Prompt 名称..."
+
+#: promptbook/templates/create_or_edit_prompt.html:43
 #: promptbook/templates/editor.html:49
 msgid "Prompt Editor"
 msgstr "Prompt 编辑器"
 
-#: promptbook/templates/create_or_edit_prompt.html:38
+#: promptbook/templates/create_or_edit_prompt.html:45
 #: promptbook/templates/editor.html:52
 msgid "Add your text here..."
 msgstr "在这里编辑 Prompt..."
 
-#: promptbook/templates/create_or_edit_prompt.html:43
+#: promptbook/templates/create_or_edit_prompt.html:50
+msgid "Output Format"
+msgstr "希望 LLM 以哪种格式输出"
+
+#: promptbook/templates/create_or_edit_prompt.html:54
+msgid "String"
+msgstr ""
+
+#: promptbook/templates/create_or_edit_prompt.html:58
+msgid "JSON"
+msgstr ""
+
+#: promptbook/templates/create_or_edit_prompt.html:65
 msgid "Models"
 msgstr "适用模型"
 
-#: promptbook/templates/create_or_edit_prompt.html:55
+#: promptbook/templates/create_or_edit_prompt.html:77
 msgid "Create New Model..."
 msgstr "新建..."
 
-#: promptbook/templates/create_or_edit_prompt.html:58
+#: promptbook/templates/create_or_edit_prompt.html:80
 msgid "New model name..."
 msgstr "输入模型名字..."
 
-#: promptbook/templates/create_or_edit_prompt.html:59
+#: promptbook/templates/create_or_edit_prompt.html:81
 msgid "Add Model"
 msgstr "添加模型"
 
-#: promptbook/templates/create_or_edit_prompt.html:65
+#: promptbook/templates/create_or_edit_prompt.html:87
 #: promptbook/templates/editor.html:57
 msgid "Labels"
 msgstr "标签"
 
-#: promptbook/templates/create_or_edit_prompt.html:75
+#: promptbook/templates/create_or_edit_prompt.html:97
 #: promptbook/templates/editor.html:63
 msgid "Create New Label..."
 msgstr "新建..."
 
-#: promptbook/templates/create_or_edit_prompt.html:78
+#: promptbook/templates/create_or_edit_prompt.html:100
 #: promptbook/templates/editor.html:66
 msgid "New label name..."
 msgstr "输入标签名字..."
 
-#: promptbook/templates/create_or_edit_prompt.html:79
+#: promptbook/templates/create_or_edit_prompt.html:101
 #: promptbook/templates/editor.html:67
 msgid "Add Label"
 msgstr "添加标签"
 
-#: promptbook/templates/create_or_edit_prompt.html:86
+#: promptbook/templates/create_or_edit_prompt.html:108
 #: promptbook/templates/editor.html:74
 #: promptbook/templates/list_categories.html:135
-#: promptbook/templates/list_prompts.html:181
+#: promptbook/templates/list_prompts.html:186
 msgid "Save"
 msgstr "保存"
 
-#: promptbook/templates/create_or_edit_prompt.html:87
+#: promptbook/templates/create_or_edit_prompt.html:109
 #: promptbook/templates/editor.html:75
 #: promptbook/templates/list_categories.html:136
-#: promptbook/templates/list_prompts.html:182
+#: promptbook/templates/list_prompts.html:187
 msgid "Cancel"
 msgstr "取消"
 
@@ -224,7 +244,7 @@ msgid "Prompts in category:"
 msgstr "项目："
 
 #: promptbook/templates/list_prompts.html:98
-#: promptbook/templates/list_prompts.html:160
+#: promptbook/templates/list_prompts.html:165
 msgid "Add prompt"
 msgstr "创建 Prompt"
 
@@ -238,7 +258,7 @@ msgid "chars."
 msgstr "字符"
 
 #: promptbook/templates/list_prompts.html:116
-#: promptbook/templates/list_prompts.html:173
+#: promptbook/templates/list_prompts.html:178
 msgid "Edit"
 msgstr "编辑"
 
@@ -250,11 +270,15 @@ msgstr "标签："
 msgid "Models:"
 msgstr "适用模型："
 
-#: promptbook/templates/list_prompts.html:155
+#: promptbook/templates/list_prompts.html:141
+msgid "Output Format:"
+msgstr "输出格式："
+
+#: promptbook/templates/list_prompts.html:159
 msgid "No prompts. Here's a cookie"
 msgstr "没有 Prompts。"
 
-#: promptbook/templates/list_prompts.html:206
+#: promptbook/templates/list_prompts.html:211
 msgid "Copied prompt to clipboard"
 msgstr "复制"
 
@@ -318,7 +342,7 @@ msgstr "选择一个头像图片"
 msgid "Upload"
 msgstr "上传头像"
 
-#: promptbook/views.py:136
+#: promptbook/views.py:139
 msgid ""
 "A prompt with this text already exists. Please enter a different prompt."
 msgstr "已存在相同内容的 Prompt。"

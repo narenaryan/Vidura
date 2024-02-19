@@ -111,6 +111,7 @@ def create_or_edit_prompt(request, category_id, prompt_id=None):
     if request.method == 'POST':
         prompt_name = request.POST['prompt_name']
         prompt_text = request.POST['prompt_text']
+        selected_output_format = request.POST['prompt_output_format']
         selected_label_ids = request.POST.getlist('labels')
         selected_labels = Label.objects.filter(id__in=selected_label_ids)
         selected_model_ids = request.POST.getlist('models')
@@ -120,8 +121,10 @@ def create_or_edit_prompt(request, category_id, prompt_id=None):
             prompt = get_object_or_404(Prompt, pk=prompt_id, category=category)
             prompt.name = prompt_name
             prompt.text = prompt_text
+            prompt.output_format = selected_output_format
         else:
-            prompt = Prompt(category=category, name=prompt_name, text=prompt_text)
+            prompt = Prompt(category=category, name=prompt_name,
+                            text=prompt_text, output_format=selected_output_format)
         try:
             with transaction.atomic():
                 # 尝试保存，这里是可能会触发IntegrityError的操作
@@ -134,6 +137,7 @@ def create_or_edit_prompt(request, category_id, prompt_id=None):
                 'category': category,
                 'prompt_name': prompt_name,
                 'prompt_text': prompt_text,
+                'output_format': selected_output_format,
                 'selected_labels': selected_labels,
                 'selected_models': selected_models,
                 'error_message': _('A prompt with this text already exists. Please enter a different prompt.'),
@@ -152,6 +156,7 @@ def create_or_edit_prompt(request, category_id, prompt_id=None):
                 'category': category,
                 'prompt_name': prompt.name,
                 'prompt_text': prompt.text,
+                'output_format': prompt.output_format,
                 'selected_labels': prompt.labels.all(),
                 'selected_models': prompt.llm_models.all(),
             })

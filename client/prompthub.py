@@ -42,15 +42,19 @@ class HTTPClient:
 
 
 class Prompt:
-    def __init__(self, content: str, model: Optional[str] = None):
+    def __init__(self, content: str, output_format: str, model: Optional[str] = None):
         self.content = content
+        self.output_format = output_format
         self.model = model
 
 
+
 class PromptTemplate:
-    def __init__(self, name: str, text: str, models: List[Dict[str, Any]], labels: List[Dict[str, Any]]):
+    def __init__(self, name: str, text: str, output_format: str,
+                 models: List[Dict[str, Any]], labels: List[Dict[str, Any]]):
         self.name = name
         self.text = text
+        self.output_format = output_format
         self.models = models
         self.labels = labels
 
@@ -87,24 +91,24 @@ class PromptHub:
     def set_preferred_models(self, preferred_models: List[str]) -> None:
         self.preferred_models = [model.lower() for model in preferred_models]
 
-    def get(self, prompt_name: str, raise_if_missing_variables: bool = False, **variables) -> Prompt:
+    def get(self, prompt_name: str, raise_if_missing_variables: bool = True, **variables) -> Prompt:
 
         uri = f"/api/categories/{self.category_id}/prompts/"
         prompts = self.get_request(uri, {'name': prompt_name})
         if not prompts:
             raise errors.PromptNotFoundError
-        template_str = prompts[0]['text']
-        template = Template(prompts[0]['text'])
-        missing_variables = [var for var in find_jinja2_variables(template_str) if var not in variables]
+        prompt_data = prompts[0]
+        template = Template(prompt_data['text'])
+        missing_variables = [var for var in find_jinja2_variables(prompt_data['text']) if var not in variables]
         print('missing_variables:', missing_variables)
         print('variables:', variables)
         if missing_variables and raise_if_missing_variables:
             raise errors.PromptMissingVariablesError(missing_variables)
 
         content = template.render(**variables)
-        model_names = [model['name'] for model in prompts[0]['models']]
+        model_names = [model['name'] for model in prompt_data['models']]
         model = self._get_valid_model(model_names)
-        return Prompt(content, model)
+        return Prompt(content, prompt_data['output_format'], model)
 
     def _get_valid_model(self, valid_model_names: List[str]) -> Optional[str]:
         # 从 Prompt 所适用的 Model 列表中获取一个自己最想要的 Model
@@ -130,14 +134,16 @@ class PromptHub:
         prompt_data = prompts[0]
         return PromptTemplate(**prompt_data)
 
-    def create_template(self, name: str, text: str, model_names: List[str], label_names: List[str]) -> None:
+    def create_template(self, name: str, text: str, output_format: str = "str",
+                        model_names: List[str] = None, label_names: List[str] = None) -> PromptTemplate:
         uri = f"/api/categories/{self.category_id}/prompts/"
-        return self.post_request(
+        resp = self.post_request(
             uri,
             data={'name': name,
                   'text': text,
+                  'output_format': output_format,
                   'model_names': model_names,
                   'label_names': label_names,
                   }
         )
-
+        return PromptTemplate(**resp)

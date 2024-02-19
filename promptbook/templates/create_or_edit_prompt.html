@@ -46,6 +46,21 @@
     </div>
   </div>
 
+   <div class="field">
+      <label class="label">{% trans "Output Format" %}</label>
+      <div class="control">
+        <label class="radio">
+          <input type="radio" name="prompt_output_format" value="str" {% if not output_format or output_format == 'str' %}checked{% endif %}>
+          {% trans "String" %}
+        </label>
+        <label class="radio">
+          <input type="radio" name="prompt_output_format" value="json" {% if output_format == 'json' %}checked{% endif %}>
+          {% trans "JSON" %}
+        </label>
+      </div>
+    </div>
+
+
     <div class="field">
       <label class="model">{% trans "Models" %}</label>
       <div class="control">
@@ -81,9 +96,9 @@
           {% endfor %}
             <option value="new_item">{% trans "Create New Label..." %}</option>
         </select>
-<!-- 隐藏的新标签输入框和按钮，初始时不显示 -->
-<input type="text" id="new-label-name" name="new_label_name" placeholder="{% trans 'New label name...' %}" style="display:none;" />
-<button type="button" id="add-label-btn" onclick="addNewItem('label')" style="display:none;">{% trans "Add Label" %}</button>
+        <!-- 隐藏的新标签输入框和按钮，初始时不显示 -->
+        <input type="text" id="new-label-name" name="new_label_name" placeholder="{% trans 'New label name...' %}" style="display:none;" />
+        <button type="button" id="add-label-btn" onclick="addNewItem('label')" style="display:none;">{% trans "Add Label" %}</button>
       </div>
     </div>
 

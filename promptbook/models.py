@@ -66,6 +66,8 @@ class Prompt(models.Model):
     text_hash = models.CharField(max_length=32, unique=True)
     labels = models.ManyToManyField(Label, related_name='prompts')
     llm_models = models.ManyToManyField(LLMModel, related_name='prompts')
+    output_format = models.CharField(max_length=32, default='str', choices=[('json', 'JSON'), ('str', 'String')])
+
 
 
     def __str__(self):

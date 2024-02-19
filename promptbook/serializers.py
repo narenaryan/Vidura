@@ -18,7 +18,7 @@ class PromptSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Prompt
-        fields = ['name', 'text', 'labels', 'models', 'label_names', 'model_names']
+        fields = ['name', 'text', 'output_format', 'labels', 'models', 'label_names', 'model_names']
 
     def get_labels(self, obj):
         """
