@@ -1,3 +1,5 @@
+import os
+
 import requests
 from jinja2 import Template, Environment, meta
 from typing import List, Dict, Any, Optional
@@ -25,9 +27,9 @@ class HTTPClient:
         self.session = requests.Session()
 
     def request(self, method: str, url: str, headers: Optional[Dict[str, str]] = None,
-                params: Optional[Dict[str, str]] = None) -> Any:
+                params: Optional[Dict[str, str]] = None, data=None) -> Any:
         try:
-            response = self.session.request(method, url, headers=headers, params=params)
+            response = self.session.request(method, url, headers=headers, params=params, data=data)
             response.raise_for_status()
             return response.json()
         except requests.exceptions.ConnectionError:
@@ -46,10 +48,10 @@ class Prompt:
 
 
 class PromptTemplate:
-    def __init__(self, name: str, text: str, llm_models: List[Dict[str, Any]]):
+    def __init__(self, name: str, text: str, models: List[Dict[str, Any]]):
         self.name = name
         self.text = text
-        self.valid_models = [model['name'] for model in llm_models]
+        self.model_names = [model['name'] for model in models]
 
 
 class PromptHub:
@@ -68,6 +70,11 @@ class PromptHub:
     def get_request(self, uri: str, params=None) -> Any:
         url = f"{self.base_url}{uri}"
         response = self.http_client.request('GET', url, headers=self.headers, params=params)
+        return response
+
+    def post_request(self, uri: str, data=None) -> Any:
+        url = f"{self.base_url}{uri}"
+        response = self.http_client.request('POST', url, headers=self.headers, data=data)
         return response
 
     def set_category(self, category: str) -> None:
@@ -94,24 +101,24 @@ class PromptHub:
             raise errors.PromptMissingVariablesError(missing_variables)
 
         content = template.render(**variables)
-        model = self._get_valid_model(prompts[0]['llm_models'])
+        model_names = [model['name'] for model in prompts[0]['models']]
+        model = self._get_valid_model(model_names)
         return Prompt(content, model)
 
-    def _get_valid_model(self, llm_models: List[Dict[str, Any]]) -> Optional[str]:
+    def _get_valid_model(self, valid_model_names: List[str]) -> Optional[str]:
         # 从 Prompt 所适用的 Model 列表中获取一个自己最想要的 Model
         # Prompt's available models: all, gpt-4 （如果有all，则说明任何一个都可以）
         # Preferred models: gpt-3.5, gpt-4, any（优先级从高到低，如果有any，则说明可以使用任意一个）
-        valid_models = [model['name'] for model in llm_models]
-        if 'all' in valid_models:
+        if 'all' in valid_model_names:
             return self.preferred_models[0]
         for preferred_model in self.preferred_models:
             if preferred_model == 'any':
-                return valid_models[0] if valid_models else None
-            if preferred_model in valid_models:
+                return valid_model_names[0] if valid_model_names else None
+            if preferred_model in valid_model_names:
                 return preferred_model
         if 'any' not in self.preferred_models:
             raise errors.NoValidModelError(f"Preferred models {self.preferred_models} "
-                                           f"not found in Prompt's available models {valid_models}")
+                                           f"not found in Prompt's available models {valid_model_names}")
         return None
 
     def get_template(self, prompt_name: str) -> PromptTemplate:
@@ -120,7 +127,16 @@ class PromptHub:
         if not prompts:
             raise errors.PromptNotFoundError
         prompt_data = prompts[0]
-        return PromptTemplate(prompt_data['name'], prompt_data['text'], prompt_data['llm_models'])
+        return PromptTemplate(prompt_data['name'], prompt_data['text'], prompt_data['models'])
 
-
+    def create(self, name: str, text: str, models: List[str], labels: List[str]) -> None:
+        uri = f"/api/categories/{self.category_id}/prompts/"
+        return self.post_request(
+            uri,
+            data={'name': name,
+                  'text': text,
+                  'model_names': models,
+                  'label_names': labels,
+                  }
+        )
 

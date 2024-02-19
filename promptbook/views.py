@@ -58,7 +58,8 @@ def list_categories(request):
     pinned_categories = categories.filter(pinned_by=user)
     unpinned_categories = categories.exclude(pinned_by=user)
 
-    context = {'categories': categories, 'pinned_categories': pinned_categories, 'unpinned_categories': unpinned_categories}
+    context = {'categories': categories, 'pinned_categories': pinned_categories,
+               'unpinned_categories': unpinned_categories}
     return render(request, 'list_categories.html', context)
 
 
@@ -84,7 +85,6 @@ def list_prompts_by_label(request, category_id, label_id):
     prompts = label.prompts.all()
 
     return render(request, 'list_prompts_by_label.html', {'label': label, 'prompts': prompts})
-
 
 
 # @csrf_exempt
@@ -192,8 +192,6 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect('login')
-
-
 
 
 @login_required
@@ -345,6 +343,7 @@ class PromptsListCreateView(generics.ListCreateAPIView):
         """
         set the category of the prompt before saving it.
         """
+        print('perform_create', self.kwargs['category_id'], serializer.validated_data)
         category_id = self.kwargs['category_id']
         category = get_object_or_404(Category, pk=category_id)
         serializer.save(category=category)
@@ -388,14 +387,17 @@ class ModelListCreateView(generics.ListCreateAPIView):
         return LLMModel.objects.filter(category_id=category_id)
 
 
-
 class ApiRootView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         return Response({
-            'categories': drf_reverse('api-list-categories', request=request, format=kwargs.get('format')),
-            'category_prompts': drf_reverse('api-list-category-prompts', args=[1], request=request, format=kwargs.get('format')),
-            'category_labels': drf_reverse('api-list-category-labels', args=[1], request=request, format=kwargs.get('format')),
-            # 添加更多的API端点
+            'Categories': drf_reverse('api-list-categories',
+                                      request=request, format=kwargs.get('format')),
+            'Prompts': drf_reverse('api-list-category-prompts', args=[1],
+                                   request=request, format=kwargs.get('format')),
+            'Labels': drf_reverse('api-list-category-labels', args=[1],
+                                  request=request, format=kwargs.get('format')),
+            'Models': drf_reverse('api-list-category-models', args=[1],
+                                  request=request, format=kwargs.get('format')),
         })

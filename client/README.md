@@ -4,7 +4,7 @@
 from client.prompthub import PromptHub, errors
 
 try:
-    prompts = PromptHub('http://localhost:8000', '25cee15690db575d341271ef7f408e6a1f9446b4', category='rmb-prod')
+    prompts = PromptHub('http://localhost:8000', '25cee15690db575d123271ef7f408e6a1f9446b1', category='rmb-prod')
 except errors.CategoryNotFoundError:
     print('Category not found')
     # do something
@@ -38,5 +38,15 @@ except errors.NoValidModelError:
     
 template = prompts.get_template('MetaName')
 # 该Prompt适用的模型有哪些
-valid_models = template.valid_models
+valid_models = template.models
+
+
+prompt = prompts.create(
+    'MetaName',
+    'text',
+    models=['gpt-3.5', 'gpt-4-turbo'],
+    labels = ['label1', 'label2'],
+)
+
+
 ```
