@@ -3,7 +3,7 @@
 {% block title %}prompts by label{% endblock title %}
 
 {% block content %}
-  <h1 class="title">{% "Prompts with label:" %} {{ label.name }}</h1>
+  <h1 class="title">{% trans "Prompts with label:" %} {{ label.name }}</h1>
   <div class="columns is-multiline">
     {% for prompt in prompts %}
       <div class="column is-one-third">

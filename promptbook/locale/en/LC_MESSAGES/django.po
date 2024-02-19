@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-18 23:52+0800\n"
+"POT-Creation-Date: 2024-02-19 20:06+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,41 +18,88 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: promptbook/templates/activity_stream.html:6
-msgid "Activity Stream"
-msgstr ""
-
-#: promptbook/templates/activity_stream.html:26
-msgid "ago"
-msgstr ""
-
-#: promptbook/templates/activity_stream.html:28
-msgid "in"
-msgstr ""
-
-#: promptbook/templates/activity_stream.html:35
-msgid "No recent activity."
-msgstr ""
-
 #: promptbook/templates/base.html:183
-#: promptbook/templates/list_categories.html:102
-msgid "Categories"
+msgid "Activities"
 msgstr ""
 
 #: promptbook/templates/base.html:185
-msgid "Editor"
+msgid "API"
 msgstr ""
 
-#: promptbook/templates/base.html:191
+#: promptbook/templates/base.html:192
 msgid "Search anything"
 msgstr ""
 
-#: promptbook/templates/base.html:221 promptbook/templates/upload_avatar.html:6
+#: promptbook/templates/base.html:222 promptbook/templates/upload_avatar.html:6
 msgid "Upload Avatar"
 msgstr ""
 
-#: promptbook/templates/base.html:228
+#: promptbook/templates/base.html:229
 msgid "Logout"
+msgstr ""
+
+#: promptbook/templates/create_or_edit_prompt.html:33
+msgid "Category:"
+msgstr ""
+
+#: promptbook/templates/create_or_edit_prompt.html:36
+#: promptbook/templates/editor.html:49
+msgid "Prompt Editor"
+msgstr ""
+
+#: promptbook/templates/create_or_edit_prompt.html:38
+#: promptbook/templates/editor.html:52
+msgid "Add your text here..."
+msgstr ""
+
+#: promptbook/templates/create_or_edit_prompt.html:43
+msgid "Models"
+msgstr ""
+
+#: promptbook/templates/create_or_edit_prompt.html:55
+msgid "Create New Model..."
+msgstr ""
+
+#: promptbook/templates/create_or_edit_prompt.html:58
+msgid "New model name..."
+msgstr ""
+
+#: promptbook/templates/create_or_edit_prompt.html:59
+msgid "Add Model"
+msgstr ""
+
+#: promptbook/templates/create_or_edit_prompt.html:65
+#: promptbook/templates/editor.html:57
+msgid "Labels"
+msgstr ""
+
+#: promptbook/templates/create_or_edit_prompt.html:75
+#: promptbook/templates/editor.html:63
+msgid "Create New Label..."
+msgstr ""
+
+#: promptbook/templates/create_or_edit_prompt.html:78
+#: promptbook/templates/editor.html:66
+msgid "New label name..."
+msgstr ""
+
+#: promptbook/templates/create_or_edit_prompt.html:79
+#: promptbook/templates/editor.html:67
+msgid "Add Label"
+msgstr ""
+
+#: promptbook/templates/create_or_edit_prompt.html:86
+#: promptbook/templates/editor.html:74
+#: promptbook/templates/list_categories.html:135
+#: promptbook/templates/list_prompts.html:181
+msgid "Save"
+msgstr ""
+
+#: promptbook/templates/create_or_edit_prompt.html:87
+#: promptbook/templates/editor.html:75
+#: promptbook/templates/list_categories.html:136
+#: promptbook/templates/list_prompts.html:182
+msgid "Cancel"
 msgstr ""
 
 #: promptbook/templates/editor.html:34
@@ -63,46 +110,31 @@ msgstr ""
 msgid "Select a category"
 msgstr ""
 
-#: promptbook/templates/editor.html:49
-msgid "Prompt Editor"
+#: promptbook/templates/list_activities.html:6
+msgid "Activity Stream"
 msgstr ""
 
-#: promptbook/templates/editor.html:52
-msgid "Add your text here..."
+#: promptbook/templates/list_activities.html:26
+msgid "ago"
 msgstr ""
 
-#: promptbook/templates/editor.html:57
-msgid "Labels"
+#: promptbook/templates/list_activities.html:28
+msgid "in"
 msgstr ""
 
-#: promptbook/templates/editor.html:63
-msgid "Create New Label..."
+#: promptbook/templates/list_activities.html:35
+msgid "No recent activity."
 msgstr ""
 
-#: promptbook/templates/editor.html:66
-msgid "New label name..."
-msgstr ""
-
-#: promptbook/templates/editor.html:67
-msgid "Add Label"
-msgstr ""
-
-#: promptbook/templates/editor.html:74
-#: promptbook/templates/list_categories.html:135
-#: promptbook/templates/list_prompts.html:208
-msgid "Save"
-msgstr ""
-
-#: promptbook/templates/editor.html:75
-#: promptbook/templates/list_categories.html:136
-#: promptbook/templates/list_prompts.html:209
-msgid "Cancel"
+#: promptbook/templates/list_categories.html:102
+msgid "Categories"
 msgstr ""
 
 #: promptbook/templates/list_categories.html:103
 msgid ""
-"Welcome to Vidura, a ChatGPT Prompt Management System (CPMS) that allows you "
-"to easily create, retrieve, and search your prompts."
+"Welcome to PromptHub, a Large Language Model Prompt Management System (LPMS) "
+"designed for AI applications and developers. It enables you to easily "
+"create, retrieve, and search through your prompts."
 msgstr ""
 
 #: promptbook/templates/list_categories.html:109
@@ -145,7 +177,7 @@ msgstr ""
 
 #: promptbook/templates/list_categories.html:161
 #: promptbook/templates/list_categories.html:198
-#: promptbook/templates/list_prompts.html:128
+#: promptbook/templates/list_prompts.html:122
 msgid "Last updated:"
 msgstr ""
 
@@ -189,37 +221,42 @@ msgid "Prompts in category:"
 msgstr ""
 
 #: promptbook/templates/list_prompts.html:98
-#: promptbook/templates/list_prompts.html:187
+#: promptbook/templates/list_prompts.html:160
 msgid "Add prompt"
 msgstr ""
 
-#: promptbook/templates/list_prompts.html:117
-#: promptbook/templates/list_prompts.html:200
+#: promptbook/templates/list_prompts.html:108
+#: promptbook/templates/list_prompts_by_label.html:12
+msgid "Length:"
+msgstr ""
+
+#: promptbook/templates/list_prompts.html:108
+msgid "chars."
+msgstr ""
+
+#: promptbook/templates/list_prompts.html:116
+#: promptbook/templates/list_prompts.html:173
 msgid "Edit"
 msgstr ""
 
-#: promptbook/templates/list_prompts.html:126
-msgid "Copy to clipboard"
+#: promptbook/templates/list_prompts.html:129
+msgid "Labels:"
 msgstr ""
 
-#: promptbook/templates/list_prompts.html:182
+#: promptbook/templates/list_prompts.html:135
+msgid "Models:"
+msgstr ""
+
+#: promptbook/templates/list_prompts.html:155
 msgid "No prompts. Here's a cookie"
 msgstr ""
 
-#: promptbook/templates/list_prompts.html:233
+#: promptbook/templates/list_prompts.html:206
 msgid "Copied prompt to clipboard"
 msgstr ""
 
-#: promptbook/templates/list_prompts.html:354
-msgid "Click to make private"
-msgstr ""
-
-#: promptbook/templates/list_prompts.html:356
-msgid "Click to make public"
-msgstr ""
-
-#: promptbook/templates/list_prompts_by_label.html:12
-msgid "Length:"
+#: promptbook/templates/list_prompts_by_label.html:6
+msgid "Prompts with label:"
 msgstr ""
 
 #: promptbook/templates/list_prompts_by_label.html:12
@@ -276,4 +313,9 @@ msgstr ""
 
 #: promptbook/templates/upload_avatar.html:26
 msgid "Upload"
+msgstr ""
+
+#: promptbook/views.py:136
+msgid ""
+"A prompt with this text already exists. Please enter a different prompt."
 msgstr ""

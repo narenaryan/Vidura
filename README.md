@@ -100,3 +100,13 @@ Django REST Framework provides a management command to manually generate tokens:
 Client should send the Token in the request header for authentication. The format is:
 
 > Authorization: Token <your_token_here>
+
+
+# Backlog
+
+- category是资源组的概念。label 应该属于某个category，category删除之后，关联的prompt&label都应该被删除
+- 创建prompt的时候，可以自动识别Parameters，并记录下来
+- 创建prompt的时候，可以指定适应的模型类型
+- 可以通过API完成prompt的录入
+- 增加client端支持
+- 单用户模式（包含关系如下： User -> Category -> Prompt | Label）

@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}create_or_edit_prompt1{% endblock title %}
+
+{% block content %}
+<style>
+  .textarea {
+    background-color: #f2f2f2
+  }
+
+  .option {
+    font-weight: 500;
+  }
+
+  .sensitive-info-banner {
+    color: midnightblue;
+    font-size: 500;
+  }
+
+  .select-category {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .select-option {
+    font-family: 'Poppins', sans-serif;
+  }
+</style>
+{% if error_message %}
+<span class="mb-3 tag is-danger is-light is-medium">{{ error_message }}</span>
+{% endif %}
+<form method="post">
+  {% csrf_token %}
+  <h3 class="title">{% trans "Category:" %} {{ category.name }}</h3>
+
+  <div class="field">
+    <label class="label">{% trans "Prompt Name" %}</label>
+    <div class="control">
+      <textarea placeholder="{% trans 'Add prompt name here...' %}" class="textarea" name="prompt_name" rows="1" required>{% if prompt_name %}{{ prompt_name }}{% endif %}</textarea>
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">{% trans "Prompt Editor" %}</label>
+    <div class="control">
+      <textarea placeholder="{% trans 'Add your text here...' %}" class="textarea" name="prompt_text" rows="10" required>{% if prompt_text %}{{ prompt_text }}{% endif %}</textarea>
+    </div>
+  </div>
+
+    <div class="field">
+      <label class="model">{% trans "Models" %}</label>
+      <div class="control">
+         <!-- 模型选择器 -->
+        <select class="select-option item-select" name="models" multiple id="model-select">
+          <!-- 模型选项 -->
+          {% for model in category.llmmodel_set.all %}
+            {% if model in selected_models %}
+              <option value="{{ model.id }}" selected>{{ model.name }}</option>
+            {% else %}
+              <option value="{{ model.id }}">{{ model.name }}</option>
+            {% endif %}
+          {% endfor %}
+          <option value="new_item">{% trans "Create New Model..." %}</option>
+        </select>
+        <!-- 隐藏的新模型输入框和按钮，初始时不显示 -->
+        <input type="text" id="new-model-name" name="new_model_name" placeholder="{% trans 'New model name...' %}" style="display:none;" />
+        <button type="button" id="add-model-btn" onclick="addNewItem('model')" style="display:none;">{% trans "Add Model" %}</button>
+
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">{% trans "Labels" %}</label>
+      <div class="control">
+        <select class="select-option item-select" name="labels" multiple id="label-select">
+          {% for label in category.label_set.all %}
+            {% if label in selected_labels %}
+              <option value="{{ label.id }}" selected>{{ label.name }}</option>
+            {% else %}
+              <option value="{{ label.id }}">{{ label.name }}</option>
+            {% endif %}
+          {% endfor %}
+            <option value="new_item">{% trans "Create New Label..." %}</option>
+        </select>
+<!-- 隐藏的新标签输入框和按钮，初始时不显示 -->
+<input type="text" id="new-label-name" name="new_label_name" placeholder="{% trans 'New label name...' %}" style="display:none;" />
+<button type="button" id="add-label-btn" onclick="addNewItem('label')" style="display:none;">{% trans "Add Label" %}</button>
+      </div>
+    </div>
+
+
+  <div class="field">
+    <div class="control">
+      <button type="submit" class="button">{% trans "Save" %}</button>
+      <button class="button cancel-btn"><a href="{% url 'list_prompts' category_id=category.id %}">{% trans "Cancel" %}</a></button>
+    </div>
+  </div>
+</form>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var sl = $('.select-category').selectize({
+      plugins: ["clear_button"]
+    });
+    var control = sl[0].selectize;
+    {% if selected_category %}
+    control.setValue({{ selected_category }});
+  {% endif %}
+    });
+
+
+    document.getElementById('label-select').addEventListener('change', function() {
+      // 当选择创建新标签时显示输入框和添加按钮
+      if (this.value === 'new_label') {
+        document.getElementById('new-label-name').style.display = '';
+        document.getElementById('add-label-btn').style.display = '';
+      } else {
+        document.getElementById('new-label-name').style.display = 'none';
+        document.getElementById('add-label-btn').style.display = 'none';
+      }
+    });
+
+    document.querySelectorAll('.item-select').forEach(select => {
+      select.addEventListener('change', function() {
+        const isNewItem = this.value === 'new_item';
+        const prefix = this.id.includes('model') ? 'model' : 'label';
+        document.getElementById(`new-${prefix}-name`).style.display = isNewItem ? '' : 'none';
+        document.getElementById(`add-${prefix}-btn`).style.display = isNewItem ? '' : 'none';
+      });
+    });
+
+    function addNewItem(type) {
+      const nameInputId = `new-${type}-name`;
+      const itemName = document.getElementById(nameInputId).value;
+      if (!itemName) {
+        alert('Item name is required');
+        return;
+      }
+
+      const apiEndpoint = type === 'model' ? 'models' : 'labels';
+      const category_id = '{{ category.id }}';
+      fetch(`/api/categories/${category_id}/${apiEndpoint}/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}',
+        },
+        body: JSON.stringify({ name: itemName })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.id) {
+          const selectId = `${type}-select`;
+          const newOption = new Option(itemName, data.id, false, true);
+          const select = document.getElementById(selectId);
+          select.add(newOption);
+          select.value = data.id;
+        } else {
+          throw new Error('Failed to create item');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert(error.message || 'Failed to create item');
+      })
+      .finally(() => {
+        document.getElementById(nameInputId).style.display = 'none';
+        document.getElementById(`add-${type}-btn`).style.display = 'none';
+        document.getElementById(nameInputId).value = ''; // 清空输入框
+      });
+    }
+
+</script>
+{% endblock %}

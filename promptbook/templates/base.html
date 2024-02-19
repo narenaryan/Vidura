@@ -22,10 +22,10 @@
     <meta property="og:description" content="Welcome to Vidura AI, a ChatGPT Prompt Management System (CPMS) that allows you to easily create, retrieve, and search your prompts.">
     <meta name="twitter:description" content="Are you interested in ChatGPT prompt-engineering ? Vidura AI is here to help">
     
-    <meta property="og:image" content="https://i.ibb.co/7Vyt7Kw/vidura-logo-grn.png">
-    <meta name="twitter:image" content="https://i.ibb.co/7Vyt7Kw/vidura-logo-grn.png">
+    <meta property="og:image" content="https://prompt-hub.oss-cn-shanghai.aliyuncs.com/prompt-hub-logo11.png">
+    <meta name="twitter:image" content="https://prompt-hub.oss-cn-shanghai.aliyuncs.com/prompt-hub-logo11.png">
     <title>Vidura {% block title %}{% endblock %}</title>
-    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/7Vyt7Kw/vidura-logo-grn.png">
+    <link rel="icon" type="image/x-icon" href="https://prompt-hub.oss-cn-shanghai.aliyuncs.com/prompt-hub-logo11.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work Sans">
@@ -166,9 +166,9 @@
         <div class="container">
 
             <div class="navbar-brand">
-              <img class="navbar-item logo" src="https://i.ibb.co/7Vyt7Kw/vidura-logo-grn.png" alt="My image">
+              <img class="navbar-item logo" src="https://prompt-hub.oss-cn-shanghai.aliyuncs.com/prompt-hub-logo11.png" alt="My image">
                 <a class="navbar-item" href="/">
-                    <strong class="logo-name">Vidura</strong> &nbsp;<p>Beta</p>
+                    <strong class="logo-name">Prompt Hub</strong> &nbsp;<p>Beta</p>
                 </a>
             </div>
             <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -179,10 +179,11 @@
               {% if user.is_authenticated %}
             <div class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item" href="{% url 'list_categories' %}">
-                        {% trans "Categories" %}
-                    </a>
-                    <a class="navbar-item" href="{% url 'editor' %}"> {% trans "Editor" %} </a>
+
+                    <a class="navbar-item" href="{% url 'list_activities' %}"> {% trans "Activities" %} </a>
+
+                    <a class="navbar-item" href="{% url 'api-root' %}"  target="_blank"> {% trans "API" %} </a>
+
                     <!-- Add this inside your navbar div, adjust accordingly -->
                     <div class="navbar-item">
                         <form method="GET" action="{% url 'search' %}">

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-18 23:52+0800\n"
+"POT-Creation-Date: 2024-02-19 20:06+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,42 +18,89 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: promptbook/templates/activity_stream.html:6
-msgid "Activity Stream"
+#: promptbook/templates/base.html:183
+msgid "Activities"
 msgstr "最近事件"
 
-#: promptbook/templates/activity_stream.html:26
-msgid "ago"
-msgstr "前，"
-
-#: promptbook/templates/activity_stream.html:28
-msgid "in"
-msgstr "项目："
-
-#: promptbook/templates/activity_stream.html:35
-msgid "No recent activity."
-msgstr "没有最近的事件"
-
-#: promptbook/templates/base.html:183
-#: promptbook/templates/list_categories.html:102
-msgid "Categories"
-msgstr "项目"
-
 #: promptbook/templates/base.html:185
-msgid "Editor"
-msgstr "编辑 Prompt"
+msgid "API"
+msgstr ""
 
-#: promptbook/templates/base.html:191
+#: promptbook/templates/base.html:192
 msgid "Search anything"
 msgstr "搜索"
 
-#: promptbook/templates/base.html:221 promptbook/templates/upload_avatar.html:6
+#: promptbook/templates/base.html:222 promptbook/templates/upload_avatar.html:6
 msgid "Upload Avatar"
 msgstr "上传头像"
 
-#: promptbook/templates/base.html:228
+#: promptbook/templates/base.html:229
 msgid "Logout"
 msgstr "退出登录"
+
+#: promptbook/templates/create_or_edit_prompt.html:33
+msgid "Category:"
+msgstr "项目"
+
+#: promptbook/templates/create_or_edit_prompt.html:36
+#: promptbook/templates/editor.html:49
+msgid "Prompt Editor"
+msgstr "Prompt 编辑器"
+
+#: promptbook/templates/create_or_edit_prompt.html:38
+#: promptbook/templates/editor.html:52
+msgid "Add your text here..."
+msgstr "在这里编辑 Prompt..."
+
+#: promptbook/templates/create_or_edit_prompt.html:43
+msgid "Models"
+msgstr "适用模型"
+
+#: promptbook/templates/create_or_edit_prompt.html:55
+msgid "Create New Model..."
+msgstr "新建..."
+
+#: promptbook/templates/create_or_edit_prompt.html:58
+msgid "New model name..."
+msgstr "输入模型名字..."
+
+#: promptbook/templates/create_or_edit_prompt.html:59
+msgid "Add Model"
+msgstr "添加模型"
+
+#: promptbook/templates/create_or_edit_prompt.html:65
+#: promptbook/templates/editor.html:57
+msgid "Labels"
+msgstr "标签"
+
+#: promptbook/templates/create_or_edit_prompt.html:75
+#: promptbook/templates/editor.html:63
+msgid "Create New Label..."
+msgstr "新建..."
+
+#: promptbook/templates/create_or_edit_prompt.html:78
+#: promptbook/templates/editor.html:66
+msgid "New label name..."
+msgstr "输入标签名字..."
+
+#: promptbook/templates/create_or_edit_prompt.html:79
+#: promptbook/templates/editor.html:67
+msgid "Add Label"
+msgstr "添加标签"
+
+#: promptbook/templates/create_or_edit_prompt.html:86
+#: promptbook/templates/editor.html:74
+#: promptbook/templates/list_categories.html:135
+#: promptbook/templates/list_prompts.html:181
+msgid "Save"
+msgstr "保存"
+
+#: promptbook/templates/create_or_edit_prompt.html:87
+#: promptbook/templates/editor.html:75
+#: promptbook/templates/list_categories.html:136
+#: promptbook/templates/list_prompts.html:182
+msgid "Cancel"
+msgstr "取消"
 
 #: promptbook/templates/editor.html:34
 msgid "Category"
@@ -63,49 +110,33 @@ msgstr "项目"
 msgid "Select a category"
 msgstr "选择一个项目"
 
-#: promptbook/templates/editor.html:49
-msgid "Prompt Editor"
-msgstr "Prompt 编辑器"
+#: promptbook/templates/list_activities.html:6
+msgid "Activity Stream"
+msgstr "最近事件"
 
-#: promptbook/templates/editor.html:52
-msgid "Add your text here..."
-msgstr "在这里编辑 Prompt..."
+#: promptbook/templates/list_activities.html:26
+msgid "ago"
+msgstr "前，"
 
-#: promptbook/templates/editor.html:57
-msgid "Labels"
-msgstr "标签"
+#: promptbook/templates/list_activities.html:28
+msgid "in"
+msgstr "项目："
 
-#: promptbook/templates/editor.html:63
-msgid "Create New Label..."
-msgstr "创建标签"
+#: promptbook/templates/list_activities.html:35
+msgid "No recent activity."
+msgstr "没有最近的事件"
 
-#: promptbook/templates/editor.html:66
-msgid "New label name..."
-msgstr "标签名字..."
-
-#: promptbook/templates/editor.html:67
-msgid "Add Label"
-msgstr "添加标签"
-
-#: promptbook/templates/editor.html:74
-#: promptbook/templates/list_categories.html:135
-#: promptbook/templates/list_prompts.html:208
-msgid "Save"
-msgstr "保存"
-
-#: promptbook/templates/editor.html:75
-#: promptbook/templates/list_categories.html:136
-#: promptbook/templates/list_prompts.html:209
-msgid "Cancel"
-msgstr "取消"
+#: promptbook/templates/list_categories.html:102
+msgid "Categories"
+msgstr "项目"
 
 #: promptbook/templates/list_categories.html:103
 msgid ""
-"Welcome to Vidura, a ChatGPT Prompt Management System (CPMS) that allows you "
-"to easily create, retrieve, and search your prompts."
+"Welcome to PromptHub, a Large Language Model Prompt Management System (LPMS) "
+"designed for AI applications and developers. It enables you to easily "
+"create, retrieve, and search through your prompts."
 msgstr ""
-"欢迎来到 Vidura，一个 ChatGPT Prompt 管理系统 (CPMS)，它可以让你轻松创建、检"
-"索和搜索你的 Prompts。"
+"欢迎来到 PromptHub，一个面向开发者和智能应用的 LLM Prompt 管理系统 (LPMS)"
 
 #: promptbook/templates/list_categories.html:109
 msgid "Add Category"
@@ -124,6 +155,8 @@ msgid "Help text"
 msgstr "备注"
 
 #: promptbook/templates/list_categories.html:129
+#, fuzzy
+#| msgid "Enter few use cases for this category"
 msgid "Enter few comma-seprated use cases for this category"
 msgstr "请输入几个逗号分隔的使用场景"
 
@@ -147,7 +180,7 @@ msgstr " "
 
 #: promptbook/templates/list_categories.html:161
 #: promptbook/templates/list_categories.html:198
-#: promptbook/templates/list_prompts.html:128
+#: promptbook/templates/list_prompts.html:122
 msgid "Last updated:"
 msgstr "最近更新："
 
@@ -191,38 +224,43 @@ msgid "Prompts in category:"
 msgstr "项目："
 
 #: promptbook/templates/list_prompts.html:98
-#: promptbook/templates/list_prompts.html:187
+#: promptbook/templates/list_prompts.html:160
 msgid "Add prompt"
 msgstr "创建 Prompt"
 
-#: promptbook/templates/list_prompts.html:117
-#: promptbook/templates/list_prompts.html:200
+#: promptbook/templates/list_prompts.html:108
+#: promptbook/templates/list_prompts_by_label.html:12
+msgid "Length:"
+msgstr " "
+
+#: promptbook/templates/list_prompts.html:108
+msgid "chars."
+msgstr "字符"
+
+#: promptbook/templates/list_prompts.html:116
+#: promptbook/templates/list_prompts.html:173
 msgid "Edit"
 msgstr "编辑"
 
-#: promptbook/templates/list_prompts.html:126
-msgid "Copy to clipboard"
-msgstr "复制"
+#: promptbook/templates/list_prompts.html:129
+msgid "Labels:"
+msgstr "标签："
 
-#: promptbook/templates/list_prompts.html:182
+#: promptbook/templates/list_prompts.html:135
+msgid "Models:"
+msgstr "适用模型："
+
+#: promptbook/templates/list_prompts.html:155
 msgid "No prompts. Here's a cookie"
 msgstr "没有 Prompts。"
 
-#: promptbook/templates/list_prompts.html:233
+#: promptbook/templates/list_prompts.html:206
 msgid "Copied prompt to clipboard"
 msgstr "复制"
 
-#: promptbook/templates/list_prompts.html:354
-msgid "Click to make private"
-msgstr ""
-
-#: promptbook/templates/list_prompts.html:356
-msgid "Click to make public"
-msgstr ""
-
-#: promptbook/templates/list_prompts_by_label.html:12
-msgid "Length:"
-msgstr "长度："
+#: promptbook/templates/list_prompts_by_label.html:6
+msgid "Prompts with label:"
+msgstr "该标签下的 Prompt："
 
 #: promptbook/templates/list_prompts_by_label.html:12
 msgid "chars..."
@@ -280,16 +318,7 @@ msgstr "选择一个头像图片"
 msgid "Upload"
 msgstr "上传头像"
 
-#~ msgid ""
-#~ "Important: Please do not enter sensitive information in Vidura or in "
-#~ "ChatGPT"
-#~ msgstr "注意：请不要在 Vidura 或 ChatGPT 中输入敏感信息"
-
-#~ msgid "Is Community Prompt ?"
-#~ msgstr "是否向社区内成员公开？"
-
-#~ msgid "Yes"
-#~ msgstr "是"
-
-#~ msgid "No"
-#~ msgstr "否"
+#: promptbook/views.py:136
+msgid ""
+"A prompt with this text already exists. Please enter a different prompt."
+msgstr "已存在相同内容的 Prompt。"
