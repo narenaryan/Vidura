@@ -232,7 +232,7 @@ if os.getenv("ENV") == "development":
     ALLOWED_HOSTS = ["*"]
     DEBUG = True
 else:
-    ALLOWED_HOSTS = ['cloud.vidura.ai']
-    DEBUG = False
+    ALLOWED_HOSTS = ['*']
+    DEBUG = True
 
 CSRF_TRUSTED_ORIGINS = ['https://*.vidura.ai']

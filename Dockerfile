@@ -19,11 +19,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY promptbook /opt/services/djangoapp/promptbook
 COPY vidura /opt/services/djangoapp/vidura
 COPY manage.py /opt/services/djangoapp/manage.py
-COPY media /opt/services/djangoapp/media
 COPY entrypoint.sh /opt/services/djangoapp/entrypoint.sh
 
 ENV TIME_ZONE=Asia/Shanghai \
-    ENV=prod
+    ENV=prod \
+    SUPERUSER_NAME=admin \
+    SUPERUSER_PASSWORD=admin \
+    SUPERUSER_EMAIL=''
 
 # Expose the port the app runs on
 EXPOSE 80
