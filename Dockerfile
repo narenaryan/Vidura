@@ -16,14 +16,15 @@ COPY requirements.txt /opt/services/djangoapp
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the project
-COPY . /opt/services/djangoapp
+COPY promptbook /opt/services/djangoapp/
+COPY vidura /opt/services/djangoapp/
+COPY manage.py /opt/services/djangoapp/
+COPY media /opt/services/djangoapp/media
 
 RUN python manage.py collectstatic --no-input -v 2
 
 ENV TIME_ZONE=Asia/Shanghai \
-    LANG=zh_CN.UTF-8 \
-    LANGUAGE=zh_CN:zh \
-    LC_ALL=zh_CN.UTF-8
+    ENV=prod
 
 # Expose the port the app runs on
 EXPOSE 80
