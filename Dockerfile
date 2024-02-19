@@ -20,6 +20,11 @@ COPY . /opt/services/djangoapp
 
 RUN python manage.py collectstatic --no-input -v 2
 
+ENV TIME_ZONE=Asia/Shanghai \
+    LANG=zh_CN.UTF-8 \
+    LANGUAGE=zh_CN:zh \
+    LC_ALL=zh_CN.UTF-8
+
 # Expose the port the app runs on
 EXPOSE 80
 

@@ -3,15 +3,13 @@ import reversion
 from enum import Enum
 
 from django.db import transaction, IntegrityError
-from django.db.models import Count
 from .models import Category, Prompt, Label, LLMModel
 from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponseBadRequest
-from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q, Exists, OuterRef
+from django.db.models import Q
 from django.db.models import Count, Max
 from django.contrib.contenttypes.models import ContentType
 from django.db.models.functions import Cast
@@ -19,7 +17,6 @@ from django.db.models import IntegerField
 
 from actstream import action
 from actstream.models import Action
-from rest_framework import viewsets, permissions
 from promptbook.serializers import (
     CategorySerializer,
     PromptSerializer,
@@ -33,7 +30,6 @@ from django.utils.translation import gettext as _
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse as drf_reverse
 
 
@@ -79,28 +75,9 @@ def list_prompts(request, category_id):
 def list_prompts_by_label(request, category_id, label_id):
     label = get_object_or_404(Label, pk=label_id, category_id=category_id)
 
-    # prompt_labels = PromptLabel.objects.filter(label=label)
-    # prompts = [pl.prompt for pl in prompt_labels]
-
     prompts = label.prompts.all()
 
     return render(request, 'list_prompts_by_label.html', {'label': label, 'prompts': prompts})
-
-
-# @csrf_exempt
-# @login_required(login_url='/login/')
-# def edit_prompt(request, prompt_id):
-#     if request.method == 'POST':
-#         try:
-#             data = json.loads(request.body)
-#             prompt = Prompt.objects.get(pk=prompt_id)
-#             prompt.text = data.get('text', prompt.text)
-#             prompt.save()
-#             return JsonResponse({'status': 'success'})
-#         except Exception as e:
-#             return JsonResponse({'status': 'error', 'message': str(e)})
-#     else:
-#         return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 
 @login_required

@@ -66,12 +66,11 @@ python manage.py createsuperuser
 ```
 and enter required credentials to use for basic auth.
 
-## Load fixture data
-To load default categories and labels into System, run below command:
-
+## Set environment variables
 ```bash
-python manage.py loaddata promptbook/fixtures/init_data.yaml
-```
+export ENV=development
+export TIME_ZONE=Asia/Shanghai
+````
 
 ## Run the server locally
 ```bash
@@ -105,8 +104,7 @@ Client should send the Token in the request header for authentication. The forma
 # Backlog
 
 - category是资源组的概念。label 应该属于某个category，category删除之后，关联的prompt&label都应该被删除
-- 创建prompt的时候，可以自动识别Parameters，并记录下来
-- 创建prompt的时候，可以指定适应的模型类型
+- 创建prompt的时候，可以指定适应的模型类型，输出格式等
 - 可以通过API完成prompt的录入
 - 增加client端支持
 - 单用户模式（包含关系如下： User -> Category -> Prompt | Label）
