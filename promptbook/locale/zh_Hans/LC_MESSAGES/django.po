@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-19 23:31+0800\n"
+"POT-Creation-Date: 2024-02-20 16:25+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,23 +18,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: promptbook/templates/base.html:183
+#: promptbook/templates/base.html:179
 msgid "Activities"
 msgstr "最近事件"
 
-#: promptbook/templates/base.html:185
+#: promptbook/templates/base.html:181
 msgid "API"
 msgstr ""
 
-#: promptbook/templates/base.html:192
+#: promptbook/templates/base.html:188
 msgid "Search anything"
 msgstr "搜索"
 
-#: promptbook/templates/base.html:222 promptbook/templates/upload_avatar.html:6
+#: promptbook/templates/base.html:218 promptbook/templates/upload_avatar.html:6
 msgid "Upload Avatar"
 msgstr "上传头像"
 
-#: promptbook/templates/base.html:229
+#: promptbook/templates/base.html:225
 msgid "Logout"
 msgstr "退出登录"
 
@@ -154,9 +154,9 @@ msgstr "项目"
 msgid ""
 "Welcome to PromptHub, a Large Language Model Prompt Management System (LPMS) "
 "designed for AI applications and developers. It enables you to easily "
-"create, retrieve, and search through your prompts."
+"create, manage and retrieve through your prompts."
 msgstr ""
-"欢迎来到 PromptHub，一个面向开发者和智能应用的 LLM Prompt 管理系统 (LPMS)"
+"欢迎来到 PromptHub，一个面向开发者和智能应用的 LLM Prompt 管理系统 "
 
 #: promptbook/templates/list_categories.html:109
 msgid "Add Category"
@@ -175,10 +175,8 @@ msgid "Help text"
 msgstr "备注"
 
 #: promptbook/templates/list_categories.html:129
-#, fuzzy
-#| msgid "Enter few use cases for this category"
 msgid "Enter few comma-seprated use cases for this category"
-msgstr "请输入几个逗号分隔的使用场景"
+msgstr "请输入使用场景"
 
 #: promptbook/templates/list_categories.html:141
 msgid "Pinned Categories"
@@ -342,7 +340,7 @@ msgstr "选择一个头像图片"
 msgid "Upload"
 msgstr "上传头像"
 
-#: promptbook/views.py:139
+#: promptbook/views.py:120
 msgid ""
 "A prompt with this text already exists. Please enter a different prompt."
 msgstr "已存在相同内容的 Prompt。"

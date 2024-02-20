@@ -3,7 +3,7 @@
 
 ```python
 
-from client.prompthub import PromptHub, errors
+from prompthub import PromptHub, errors
 
 try:
     prompts = PromptHub('http://localhost:8000', '25cee15690db575d123271ef7f408e6a1f9446b1', category='rmb-prod')

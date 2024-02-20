@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-19 23:31+0800\n"
+"POT-Creation-Date: 2024-02-20 16:25+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,23 +18,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: promptbook/templates/base.html:183
+#: promptbook/templates/base.html:179
 msgid "Activities"
 msgstr ""
 
-#: promptbook/templates/base.html:185
+#: promptbook/templates/base.html:181
 msgid "API"
 msgstr ""
 
-#: promptbook/templates/base.html:192
+#: promptbook/templates/base.html:188
 msgid "Search anything"
 msgstr ""
 
-#: promptbook/templates/base.html:222 promptbook/templates/upload_avatar.html:6
+#: promptbook/templates/base.html:218 promptbook/templates/upload_avatar.html:6
 msgid "Upload Avatar"
 msgstr ""
 
-#: promptbook/templates/base.html:229
+#: promptbook/templates/base.html:225
 msgid "Logout"
 msgstr ""
 
@@ -154,7 +154,7 @@ msgstr ""
 msgid ""
 "Welcome to PromptHub, a Large Language Model Prompt Management System (LPMS) "
 "designed for AI applications and developers. It enables you to easily "
-"create, retrieve, and search through your prompts."
+"create, manage and retrieve through your prompts."
 msgstr ""
 
 #: promptbook/templates/list_categories.html:109
@@ -339,7 +339,7 @@ msgstr ""
 msgid "Upload"
 msgstr ""
 
-#: promptbook/views.py:139
+#: promptbook/views.py:120
 msgid ""
 "A prompt with this text already exists. Please enter a different prompt."
 msgstr ""

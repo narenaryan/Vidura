@@ -1,6 +1,7 @@
 import hashlib
 
 from django.db import models
+from django.db.models import UniqueConstraint
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -40,16 +41,21 @@ class Category(models.Model):
 
 
 class Label(models.Model):
-    name = models.CharField(max_length=32, unique=True)
+    name = models.CharField(max_length=32)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        constraints = [
+            UniqueConstraint(fields=['category', 'name',], name='label_unique_name_category')
+        ]
 
 class LLMModel(models.Model):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=64)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
@@ -57,8 +63,14 @@ class LLMModel(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        constraints = [
+            UniqueConstraint(fields=['category', 'name',], name='model_unique_name_category')
+        ]
+
+
 class Prompt(models.Model):
-    name = models.CharField(max_length=64, unique=True)
+    name = models.CharField(max_length=64)
     text = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -67,7 +79,6 @@ class Prompt(models.Model):
     labels = models.ManyToManyField(Label, related_name='prompts')
     llm_models = models.ManyToManyField(LLMModel, related_name='prompts')
     output_format = models.CharField(max_length=32, default='str', choices=[('json', 'JSON'), ('str', 'String')])
-
 
 
     def __str__(self):
@@ -81,4 +92,7 @@ class Prompt(models.Model):
 
     # Add unique together constraint for text_hash, owner and category
     class Meta:
-        unique_together = ['text_hash', 'category']
+        constraints = [
+            UniqueConstraint(fields=['text_hash', 'category'], name='unique_text_hash_category'),
+            UniqueConstraint(fields=['name', 'category'], name='prompt_unique_name_category')
+        ]

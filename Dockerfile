@@ -27,7 +27,6 @@ COPY entrypoint.sh /opt/services/djangoapp/entrypoint.sh
 
 
 ENV TIME_ZONE=Asia/Shanghai \
-    ENV=prod \
     SUPERUSER_NAME=admin \
     SUPERUSER_PASSWORD=admin \
     SUPERUSER_EMAIL=''

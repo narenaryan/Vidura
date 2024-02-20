@@ -244,7 +244,7 @@ def create_category(request):
 
         if category_name:
             new_category = Category.objects.create(
-                name=category_name, help_text=help_text)
+                name=category_name, help_text=help_text, owner=request.user)
             return JsonResponse({"status": "success", "category_id": new_category.pk})
     return JsonResponse({"status": "error"})
 
