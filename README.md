@@ -6,6 +6,8 @@
 
 # PromptHub: Your AI Prompt Management Tool
 
+[中文文档](README_CN.md) 
+
 ## Introduction
 
 In the world of AI application development, prompts are not just the bridge between human language and machine intelligence, but an indispensable component of modern intelligent applications. PromptHub is designed to provide developers with a simple, lightweight, and easily integrated management system to effectively manage, optimize, and expand your prompt applications, just like GitHub in the prompt domain.

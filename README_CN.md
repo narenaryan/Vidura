@@ -6,6 +6,8 @@
 
 # PromptHub：您的AI Prompt 管理利器
 
+[English Doc](README.md)
+
 ## 简介
 
 在AI智能应用开发的世界里，Prompt 不仅是连接人类语言与机器智能的桥梁，更是现代化智能应用不可或缺的组成部分。PromptHub 旨在为开发者提供一个简单、轻量且易于集成的管理系统，帮助您有效地管理、优化和扩展您的Prompt应用，就像在 Prompt 领域的 GitHub 一样。
