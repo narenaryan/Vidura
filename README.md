@@ -103,6 +103,7 @@ version: '3.8'
 services:
   prompt-hub:
     image: datamini/prompt-hub
+    privileged: true
     ports:
       - "8000:8000"
     environment:
