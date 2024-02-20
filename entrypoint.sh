@@ -9,8 +9,8 @@ echo "Creating superuser..."
 python manage.py createsuperuserfromenv
 
 # 收集静态文件
-echo "Collecting static files..."
-python manage.py collectstatic --no-input --clear
+#echo "Collecting static files..."
+#python manage.py collectstatic --no-input --clear
 
 # 启动Gunicorn服务器
 echo "Starting  server..."

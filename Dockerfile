@@ -1,7 +1,7 @@
 # Use the official Python 3.11 image as the base image
 FROM python:3.11-slim
 
-RUN apt-get update && apt-get install -y vim && apt-get clean
+RUN apt-get update && apt-get install -y vim gettext && apt-get clean
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -31,6 +31,7 @@ ENV TIME_ZONE=Asia/Shanghai \
     SUPERUSER_PASSWORD=admin \
     SUPERUSER_EMAIL=''
 
+RUN python manage.py compilemessages --ignore venv
 
 EXPOSE 8000
 
