@@ -24,6 +24,8 @@ In the world of AI application development, prompts are not just the bridge betw
 
 # Screenshots
 
+
+
 ## Categories view
 <table><tr><td><img src="./screens/categories.png" alt="Categories"/></td></tr></table>
 
@@ -44,6 +46,72 @@ One can search matching categories and prompts in one place by using search bar.
 
 ## API
 
+```json
+{
+    "Categories": "http://127.0.0.1:8000/api/categories/",
+    "Prompts": "http://127.0.0.1:8000/api/categories/1/prompts/",
+    "Labels": "http://127.0.0.1:8000/api/categories/1/labels/",
+    "Models": "http://127.0.0.1:8000/api/categories/1/models/"
+}
+```
+
+<table><tr><td><img src="./screens/api.png" alt="API"/></td></tr></table>
+
+
+# QuickStart
+
+## Client Usage
+
+```python
+from prompthub import PromptHub
+prompts = PromptHub('http://localhost:8000', 'your_token', category='rmb-prod')
+prompt = prompts.get('your_prompt_name')
+```
+
+For more details, please refer to [Client Usage](client%2FREADME.md)
+
+
+## Server Deployment
+
+```bash
+docker run -d -p 8000:8000 datamini/prompt-hub
+```
+
+Note:
+1. Open http://127.0.0.1:8000/ in your browser. Default username and password: `admin/admin`
+2. Use a local SQLite database
+
+# Advanced Usage
+
+## Docker Image
+
+https://hub.docker.com/r/datamini/prompt-hub
+
+
+## Use Docker Compose to deploy
+
+```shell
+version: '3.8'
+services:
+  prompt-hub:
+    image: datamini/prompt-hub
+    ports:
+      - "8000:8000"
+    environment:
+      SUPERUSER_NAME: admin
+      SUPERUSER_PASSWORD: admin
+      SUPERUSER_EMAIL: x@x.x
+      TIME_ZONE: Asia/Shanghai  
+      DB_TYPE: mysql # mysql or postgresql or sqlite
+      DB_HOST: 127.0.0.1
+      DB_NAME: db01
+      DB_USER: admin
+      DB_PASS: admin
+```
+
+# For Developers
+
+Please refer to [Developer Documentation](README4DEV.md)
 
 
 ## Acknowledgements

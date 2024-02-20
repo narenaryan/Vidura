@@ -13,7 +13,7 @@ echo "Collecting static files..."
 python manage.py collectstatic --no-input --clear
 
 # 启动Gunicorn服务器
-echo "Starting Gunicorn server..."
+echo "Starting  server..."
 # Start Gunicorn to serve the Django app using ASGI
 # exec gunicorn vidura.asgi:application -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000
 python manage.py runserver 0.0.0.0:8000

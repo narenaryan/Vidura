@@ -35,24 +35,24 @@
 
 未来，可以按照项目来管理权限。有某个项目权限的人，才能修改这个项目的 Prompt。
 
-<table><tr><td><img src="./screens/categories.png" alt="Categories"/></td></tr></table>
+<table><tr><td><img src="./screens/categories_cn.png" alt="Categories"/></td></tr></table>
 
 
 ## Prompt
 
-<table><tr><td><img src="./screens/prompts.png" alt="Prompts"/></td></tr></table>
+<table><tr><td><img src="./screens/prompts_cn.png" alt="Prompts"/></td></tr></table>
 
 每一个 Prompt 都属于一个项目。创建 Prompt 的时候，可以指定适用的模型，输出格式，也可以为项目打上标签，便于查找和分类。
 
 
 ## 编辑 Prompt
-<table><tr><td><img src="./screens/edit_prompt.png" alt="Editor"/></td></tr></table>
+<table><tr><td><img src="./screens/edit_prompt_cn.png" alt="Editor"/></td></tr></table>
 
 
 ## 搜索
 
 根据关键词或者标签搜索相关的 Prompt
-<table><tr><td><img src="./screens/search.png" alt="Search"/></td></tr></table>
+<table><tr><td><img src="./screens/search_cn.png" alt="Search"/></td></tr></table>
 
 ## API
 
@@ -65,7 +65,7 @@
 }
 ```
 
-<table><tr><td><img src="./screens/api.png" alt="API"/></td></tr></table>
+<table><tr><td><img src="./screens/api_cn.png" alt="API"/></td></tr></table>
 
 
 # 快速开始
@@ -82,10 +82,12 @@ prompt = prompts.get('your_prompt_name')
 
 ## 服务端部署
 
->docker run -d -p 8000:8000 datamini/prompt-hub
+```bash
+docker run -d -p 8000:8000 datamini/prompt-hub
+```
 
 注：
-1. 浏览器打开 http://127.0.0.1:8000/  默认用户名密码：admin/admin
+1. 浏览器打开 http://127.0.0.1:8000/  默认用户名密码：`admin/admin`
 2. 使用本地SQLite数据库
 
 
