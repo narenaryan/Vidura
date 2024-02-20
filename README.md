@@ -62,6 +62,12 @@ One can search matching categories and prompts in one place by using search bar.
 
 ## Client Usage
 
+Install the package using pip（1.6KB）:
+
+```shell    
+pip install prompthub
+```
+
 ```python
 from prompthub import PromptHub
 prompts = PromptHub('http://localhost:8000', 'your_token', category='rmb-prod')

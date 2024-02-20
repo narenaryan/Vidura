@@ -72,6 +72,12 @@
 
 ## 客户端使用
 
+使用 `pip` 安装客户端（1.6KB）：
+
+```shell    
+pip install prompthub
+```
+
 ```python
 from prompthub import PromptHub
 prompts = PromptHub('http://localhost:8000', 'your_token', category='rmb-prod')
