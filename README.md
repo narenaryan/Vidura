@@ -20,6 +20,8 @@ In the world of AI application development, prompts are not just the bridge betw
 - **One-Stop Management**: Centralize the management of prompts across multiple projects, improving efficiency.
 - **Version Control**: Supports saving versions of prompts, convenient for A/B testing and quick rollbacks (planned).
 - **Performance Optimization**: Utilizes models like GPT-4 to optimize the format and content of prompts, increasing accuracy while reducing token usage to save costs (planned). 
+- **Multi-User Support**: Supports multi-user mode, allowing permission management based on projects (planned).
+- **Integration with LLM**: Integration with large models such as GPT-4, Wenxin Yanyi, etc., to test the effect of prompts directly in PromptHub (planned).
 
 
 # Screenshots
