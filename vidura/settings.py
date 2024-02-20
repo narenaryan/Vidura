@@ -235,4 +235,4 @@ else:
     ALLOWED_HOSTS = ['*']
     DEBUG = True
 
-CSRF_TRUSTED_ORIGINS = ['https://*.vidura.ai']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:*',]
