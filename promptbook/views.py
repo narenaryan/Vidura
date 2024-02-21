@@ -187,8 +187,14 @@ def delete_prompt(request, prompt_id):
 def search(request):
     query = request.GET.get('q', '')
 
-    found_categories = Category.objects.filter(name__icontains=query)
-    found_prompts = Prompt.objects.filter(text__icontains=query)
+    found_categories = Category.objects.filter(name__icontains=query, owner=request.user)
+    # Search for prompts that belong to the current user
+    # found_prompts = Prompt.objects.filter(text__icontains=query, category__owner=request.user)
+    # text contains query or name contains query or labels contains query
+    found_prompts = Prompt.objects.filter(
+        Q(text__icontains=query) | Q(name__icontains=query) | Q(labels__name__icontains=query),
+        category__owner=request.user
+    ).distinct()
 
     context = {
         'query': query,
