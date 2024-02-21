@@ -16,7 +16,7 @@ setup(
     url='https://github.com/DataMini/prompt-hub',
     author='lele',
     packages=find_packages(
-        include=["prompthub", "errors" ]
+        include=["prompthub.*", "prompthub"]
     ),
     long_description=long_description,
     long_description_content_type="text/markdown",

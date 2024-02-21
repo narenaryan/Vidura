@@ -1,6 +1,3 @@
-
-
-
 ```python
 
 from prompthub import PromptHub, errors
@@ -26,7 +23,7 @@ try:
     )
     content = prompt.content
     model = prompt.model
-    
+
 except errors.PromptNotFoundError:
     print('Prompt not found')
     # do something
@@ -37,25 +34,20 @@ except errors.NoValidModelError:
     print('No valid model')
     # do something
 
-
-
-from client.prompthub import PromptHub, errors
-
+from client.prompthub.hub import PromptHub, errors
 
 prompts = PromptHub('http://localhost:8000', '25cee15690db575d123271ef7f408e6a1f9446b1', category='rmb-prod')
 
-    
 template = prompts.get_template('MetaName')
 # 该Prompt适用的模型有哪些
 valid_models = template.models
-
 
 template = prompts.create_template(
     'MetaN1ame',
     'tex111t',
     output_format='str',
     model_names=['gpt-3.5', 'gpt-4-turbo'],
-    label_names = ['label1', 'label2'],
+    label_names=['label1', 'label2'],
 )
 
 

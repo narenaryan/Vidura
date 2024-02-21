@@ -1,9 +1,7 @@
-
 import requests
 from jinja2 import Template, Environment, meta
 from typing import List, Dict, Any, Optional
-import errors
-
+from . import errors
 
 
 def find_jinja2_variables(template_str):
@@ -36,6 +34,8 @@ class HTTPClient:
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 404:
                 raise errors.NotFoundError
+            elif e.response.status_code == 401:
+                raise errors.UnauthorizedError
             else:
                 raise errors.PromptsHubError(e)
 
@@ -45,7 +45,6 @@ class Prompt:
         self.content = content
         self.output_format = output_format
         self.model = model
-
 
 
 class PromptTemplate:
@@ -99,8 +98,6 @@ class PromptHub:
         prompt_data = prompts[0]
         template = Template(prompt_data['text'])
         missing_variables = [var for var in find_jinja2_variables(prompt_data['text']) if var not in variables]
-        print('missing_variables:', missing_variables)
-        print('variables:', variables)
         if missing_variables and raise_if_missing_variables:
             raise errors.PromptMissingVariablesError(missing_variables)
 

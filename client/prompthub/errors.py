@@ -7,6 +7,8 @@ class CategoryNotFoundError(PromptsHubError):
 class ConnectionError(PromptsHubError):
     pass
 
+class UnauthorizedError(PromptsHubError):
+    pass
 
 class NotFoundError(PromptsHubError):
     pass
