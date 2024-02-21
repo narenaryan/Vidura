@@ -142,35 +142,39 @@
   </div>
   <div class="columns is-multiline">
     {% for category in pinned_categories %}
-      <div class="column is-one-fifth">
-          <div class="category-card">
-            <div class="row">
-              <h3 class="title category-title">{{ category.name}}</h3>
-            </div>
-            <p class="is-size-7 has-text-weight-semibold prompt-count">{% trans "Prompts" %}: <span class="has-text-weight-normal">{{ category.num_prompts }}</span></p>
-            <section class="preview-section">
-            <p class="is-size-7 has-text-weight-semibold">{% trans "Recently added prompts:" %}</p>
-            <ul>
-              {% for prompt in category.recent_prompts %}
-              <li class="prompt-preview">* {{ prompt.text|truncatechars:50 }}</li>
-              {% empty %}
-              <li>{% trans "None" %}</li>
-              {% endfor %}
-            </ul>
-            </section>
-            <p class="is-size-8 has-text-weight-semibold last-updated-btn">{% trans "Last updated:" %} <span class="has-text-weight-normal">{{ category.last_updated }}</span></p>
-            <a href="{% url 'list_prompts' category.id %}">
-              <button class="button explore-btn is-size-7">{% trans "Explore" %}</button>
-            </a>
-            <button class="pin-button button pin-btn is-size-7 is-danger is-light" data-category-id="{{ category.id }}">
-               {% trans "Unpin" %}
-            </button>
-          </div>
-      </div>
-      {% empty %}
-      <div class="column">
-        <p>{% trans "No pinned categories found. Pin a category by clicking on the 'Pin to top' button." %}</p>
-      </div>
+
+
+<div class="column is-one-fifth-desktop is-half-mobile">
+    <div class="category-card" style="padding: 20px; border: 1px solid #dbdbdb; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+
+        <!-- 类别名称作为链接 -->
+        <a href="{% url 'list_prompts' category.id %}" class="has-text-link">
+            <h3 class="title category-title is-size-5">{{ category.name }}</h3>
+        </a>
+        <!-- 提示计数 -->
+        <p class="is-size-7 has-text-weight-semibold prompt-count">
+            {% trans "Prompts" %}: <span class="has-text-weight-normal">{{ category.num_prompts }}</span>
+        </p>
+
+        <!-- 最后更新时间 -->
+        <p class="is-size-7 has-text-weight-semibold last-updated-btn">
+            {% trans "Last updated:" %} <span class="has-text-weight-normal">{{ category.last_updated }}</span>
+        </p>
+
+        <!-- Unpin 按钮，已优化样式和布局 -->
+        <button class="button pin-button is-small is-light" data-category-id="{{ category.id }}" style="width: auto; align-self: center;">
+
+            <span>{% trans "Unpin" %}</span>
+        </button>
+    </div>
+</div>
+{% empty %}
+<div class="column">
+    <p>{% trans "No pinned categories found. Pin a category by clicking on the 'Pin to top' button." %}</p>
+</div>
+
+
+
     {% endfor %}
   </div>
 
@@ -179,35 +183,37 @@
   </div>
   <div class="columns is-multiline">
     {% for category in unpinned_categories %}
-      <div class="column is-one-fifth">
-          <div class="category-card">
-            <div class="row">
-              <h3 class="title category-title">{{ category.name}}</h3>
-            </div>
-            <p class="is-size-7 has-text-weight-semibold prompt-count">{% trans "Prompts:" %} <span class="has-text-weight-normal">{{ category.num_prompts }}</span></p>
-            <section class="preview-section">
-            <p class="is-size-7 has-text-weight-semibold">{% trans "Recently added prompts:" %}</p>
-            <ul>
-              {% for prompt in category.recent_prompts %}
-              <li class="prompt-preview">* {{ prompt.text|truncatechars:50 }}</li>
-              {% empty %}
-              <li>{% trans "None" %}</li>
-              {% endfor %}
-            </ul>
-            </section>
-            <p class="is-size-8 has-text-weight-semibold last-updated-btn">{% trans "Last updated:" %} <span class="has-text-weight-normal">{{ category.last_updated }}</span></p>
-            <a href="{% url 'list_prompts' category.id %}">
-              <button class="button explore-btn is-size-7">{% trans "Explore" %}</button>
-            </a>
-            <button class="pin-button button pin-btn is-size-7 is-info is-light" data-category-id="{{ category.id }}">
-               {% trans "Pin to top" %}
-            </button>
-          </div>
-      </div>
-      {% empty %}
-      <div class="column">
-        <p>{% trans "No categories found. Add one by clicking the 'Add Category' button." %}</p>
-      </div>
+
+
+<div class="column is-one-fifth-desktop is-half-mobile">
+    <div class="category-card" style="padding: 20px; border: 1px solid #dbdbdb; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+        <!-- 类别名称作为链接，增强直观性 -->
+        <a href="{% url 'list_prompts' category.id %}" class="has-text-link">
+            <h3 class="title category-title is-size-5">{{ category.name }}</h3>
+        </a>
+        <p class="is-size-7 has-text-weight-semibold prompt-count">
+            {% trans "Prompts:" %}: <span class="has-text-weight-normal">{{ category.num_prompts }}</span>
+        </p>
+        <p class="is-size-7 has-text-weight-semibold last-updated-btn">
+            {% trans "Last updated:" %} <span class="has-text-weight-normal">{{ category.last_updated }}</span>
+        </p>
+        <!-- 移除 Explore 按钮，通过点击名称直接导航 -->
+
+        <!-- 优化 Pin to top 按钮样式，使用大头针图标，增强直观性 -->
+        <button class="button is-small is-info is-light pin-button" data-category-id="{{ category.id }}" style="width: auto; align-self: center;">
+            <span class="icon is-small">
+                <i class="fas fa-thumbtack"></i>
+            </span>
+            <span>{% trans "Pin to top" %}</span>
+        </button>
+    </div>
+</div>
+{% empty %}
+<div class="column">
+    <p>{% trans "No categories found. Add one by clicking the 'Add Category' button." %}</p>
+</div>
+
+
     {% endfor %}
   </div>
   <script>
@@ -225,7 +231,7 @@
         event.preventDefault();
         const categoryName = $("#category-name").val();
         const categoryHelpText = $("#category-help-text").val();
-        if (categoryName.trim() !== "" && categoryHelpText.trim() !== "") {
+        if (categoryName.trim() !== "") {
           $.ajax({
             url: "{% url 'create_category' %}",
             type: "POST",

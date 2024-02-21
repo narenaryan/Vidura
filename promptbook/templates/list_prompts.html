@@ -14,6 +14,15 @@
       font-weight: 500;
     }
 
+  .tags {
+    margin-bottom: 8px; /* 减少了.tags容器的底部外边距 */
+  }
+
+  .tags .tag {
+    margin-right: 1px; /* 减少标签之间的右边距 */
+    margin-bottom: 0px; /* 减少标签的底部外边距，使得行之间更紧凑 */
+  }
+
     .toggle-switch {
       position: relative;
       display: inline-block;
@@ -101,57 +110,61 @@
   {% endif %}
   <div class="columns is-multiline content-list">
     {% for prompt in prompts %}
-      <div class="column is-one-third">
-        <div class="box">
-          <div class="content">
 
-            <p data-prompt-id="{{ prompt.id }}" data-full-text="{{ prompt.text }}">{{ prompt.text|truncatechars:250 }} <span class="tag is-light">{% trans "Length:" %} {{ prompt.text|length }} {% trans "chars." %}</span></p>
-              <hr />
-
-              <div class="columns">
-                <div class="column is-6">
-                  <a href="{% url 'edit_prompt' category_id=category.id prompt_id=prompt.id %}" class="edit-prompt-btn">
-                    <button class="button edit-prompt-btn">
-                      <span class="icon"><i class="fas fa-plus"></i></span>
-                      <span>{% trans "Edit" %}</span>
-                    </button>
-                  </a>
-                </div>
-                <div class="column is-6 is-pulled-right">
-                  <div class="row">
-                    <p class="last-updated">{% trans "Last updated:" %} {{ prompt.modified_at }}</p>
-                  </div>
-                </div>
-
-              </div>
-
+<div class="column is-one-third">
+    <div class="box">
+        <!-- 优化后的内容展示 -->
+        <div class="content">
+            <!-- 提示名称，点击进行编辑，样式调整为更加现代且不那么显眼 -->
+            <a href="{% url 'edit_prompt' category_id=category.id prompt_id=prompt.id %}" class="is-size-6 has-text-weight-semibold has-text-info">
+                {{ prompt.name }}
+            </a>
+            <hr />
+            <!-- 提示文本 -->
+            <p data-prompt-id="{{ prompt.id }}" data-full-text="{{ prompt.text }}" class="is-size-6">
+                {{ prompt.text|truncatechars:250 }}
+                <span class="tag is-light is-size-7">{% trans "Length:" %} {{ prompt.text|length }} {% trans "chars." %}</span>
+            </p>
+            <hr />
+            <!-- 标签展示 -->
             <div class="tags">
-                {% trans "Labels:" %}
-                  {% for label in prompt.labels.all %}
-                  <a href="{% url 'list_prompts_by_label' category_id=category.id label_id=label.id %}"><span class="tag is-rounded">{{ label.name }}</span></a>
-                  {% endfor %}
+                <span class="tag is-info is-light">{% trans "Labels:" %}</span>
+                {% for label in prompt.labels.all %}
+                <a href="{% url 'list_prompts_by_label' category_id=category.id label_id=label.id %}" class="tag is-primary is-light is-rounded">
+                    {{ label.name }}
+                </a>
+                {% endfor %}
             </div>
-           <div class="tags">
-               {% trans "Models:" %}
-                  {% for llm_model in prompt.llm_models.all %}
-                  <span class="tag is-rounded">{{ llm_model.name }}</span>
-                  {% endfor %}
-            </div>
+            <!-- 模型展示 -->
             <div class="tags">
-               {% trans "Output Format:" %}
-                  <span class="tag is-rounded">{{ prompt.get_output_format_display }}</span>
+                <span class="tag is-info is-light">{% trans "Models:" %}</span>
+                {% for llm_model in prompt.llm_models.all %}
+                <span class="tag is-warning is-light is-rounded">{{ llm_model.name }}</span>
+                {% endfor %}
             </div>
-          </div>
-
-          <button class="button is-small delete-prompt" data-prompt-id="{{ prompt.id }}">
-            <span class="icon">
-              <i style="color: rgb(212, 34, 34);" class="fas fa-solid fa-trash"></i>
-            </span>
-          </button>
-
-
+            <!-- 输出格式展示 -->
+            <div class="tags mb-4">
+                <span class="tag is-info is-light">{% trans "Output Format:" %}</span>
+                <span class="tag is-success is-light is-rounded">{{ prompt.get_output_format_display }}</span>
+            </div>
+            <!-- 最后更新时间 -->
+            <p class="is-size-7 mb-4">{% trans "Last updated:" %} {{ prompt.modified_at }}</p>
+            <!-- 删除按钮 -->
+            <div class="buttons are-small">
+                <button class="button" data-prompt-id="{{ prompt.id }}">
+                    <span class="icon">
+                        <i class="fas fa-trash"></i>
+                    </span>
+                </button>
+            </div>
         </div>
-      </div>
+    </div>
+</div>
+
+
+
+
+
       {% empty %}
         <div class="column is-full">
           <div class="box has-text-centered" style="height: 200px; display: flex; align-items: center; justify-content: center;">
