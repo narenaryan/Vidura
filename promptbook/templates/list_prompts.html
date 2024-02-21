@@ -115,16 +115,27 @@
     <div class="box">
         <!-- 优化后的内容展示 -->
         <div class="content">
-            <!-- 提示名称，点击进行编辑，样式调整为更加现代且不那么显眼 -->
-            <a href="{% url 'edit_prompt' category_id=category.id prompt_id=prompt.id %}" class="is-size-6 has-text-weight-semibold has-text-info">
-                {{ prompt.name }}
-            </a>
+
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <!-- 提示名称，点击进行编辑，样式调整为更加现代且不那么显眼 -->
+                <a href="{% url 'edit_prompt' category_id=category.id prompt_id=prompt.id %}" class="is-size-6 has-text-weight-semibold has-text-info">
+                    {{ prompt.name }}
+                </a>
+                <!-- 复制按钮 -->
+                  <button style="color: rgb(27, 187, 49);" class="copy-button button is-small has-text-info" data-clipboard-text="{{ prompt.name }}">
+                    <span class="icon">
+                      <i class="fas fa-thin fa-copy"></i>
+                    </span>
+                  </button>
+            </div>
+
             <hr />
             <!-- 提示文本 -->
             <p data-prompt-id="{{ prompt.id }}" data-full-text="{{ prompt.text }}" class="is-size-6">
                 {{ prompt.text|truncatechars:250 }}
                 <span class="tag is-light is-size-7">{% trans "Length:" %} {{ prompt.text|length }} {% trans "chars." %}</span>
-            </p>
+
+           </p>
             <hr />
             <!-- 标签展示 -->
             <div class="tags">
@@ -223,6 +234,7 @@
   <div id="overlay" class="overlay"></div>
   <div id="copy-notification" class="copy-notification">{% trans "Copied prompt to clipboard" %} <i class="fa-solid fa-face-smile-wink"></i></div>
   <script>
+
     const clipboard = new ClipboardJS('.copy-button');
     const copyNotification = document.getElementById('copy-notification');
     const overlay = document.getElementById('overlay');
@@ -233,7 +245,7 @@
       setTimeout(() => {
         overlay.style.display = 'none';
         copyNotification.style.display = 'none';
-      }, 2000);
+      }, 500);
     });
     
     // Handle edit prompt
