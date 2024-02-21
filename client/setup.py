@@ -13,7 +13,7 @@ setup(
     name='prompthub',
     version=VERSION,
     description='Prompt Hub SDK.',
-    url='https://github.com/DataMini/prompt-hub',
+    url='https://github.com/DataMini/PromptHub',
     author='lele',
     packages=find_packages(
         include=["prompthub.*", "prompthub"]
