@@ -71,6 +71,15 @@ class PromptHub:
         # 最好是 3.5，其次是 4，如果这两个都没有，则使用任意一个 Prompt 所适用的 Model
         self.preferred_models = ['gpt-3.5', 'gpt-4', 'any']
 
+    def set_category(self, category: str) -> None:
+        resp = self.get_request("/api/categories/", {'name': category})
+        if not resp:
+            raise errors.CategoryNotFoundError
+        self.category_name = category
+
+    def set_preferred_models(self, preferred_models: List[str]) -> None:
+        self.preferred_models = [model.lower() for model in preferred_models]
+
     def get_request(self, uri: str, params=None) -> Any:
         url = f"{self.base_url}{uri}"
         response = self.http_client.request('GET', url, headers=self.headers, params=params)
@@ -80,12 +89,6 @@ class PromptHub:
         url = f"{self.base_url}{uri}"
         response = self.http_client.request('POST', url, headers=self.headers, data=data)
         return response
-
-    def set_category(self, category: str) -> None:
-        self.category_name = category
-
-    def set_preferred_models(self, preferred_models: List[str]) -> None:
-        self.preferred_models = [model.lower() for model in preferred_models]
 
     def get(self, prompt_name: str, raise_if_missing_variables: bool = True, **variables) -> Prompt:
 
