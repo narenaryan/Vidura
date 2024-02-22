@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-20 16:25+0800\n"
+"POT-Creation-Date: 2024-02-22 17:24+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: promptbook/models.py:37
+msgid ""
+"Must be start with a lowercase letter and contain only lowercase letters, "
+"numbers, and underscores."
+msgstr "必须以小写字母开头，只能包含小写字母、数字和下划线。"
 
 #: promptbook/templates/base.html:179
 msgid "Activities"
@@ -38,87 +44,87 @@ msgstr "上传头像"
 msgid "Logout"
 msgstr "退出登录"
 
-#: promptbook/templates/create_or_edit_prompt.html:33
+#: promptbook/templates/create_or_edit_prompt.html:67
 msgid "Category:"
 msgstr "项目"
 
-#: promptbook/templates/create_or_edit_prompt.html:36
+#: promptbook/templates/create_or_edit_prompt.html:70
 msgid "Prompt Name"
 msgstr "Prompt 名称"
 
-#: promptbook/templates/create_or_edit_prompt.html:38
+#: promptbook/templates/create_or_edit_prompt.html:72
 msgid "Add prompt name here..."
 msgstr "输入 Prompt 名称..."
 
-#: promptbook/templates/create_or_edit_prompt.html:43
+#: promptbook/templates/create_or_edit_prompt.html:77
 #: promptbook/templates/editor.html:49
 msgid "Prompt Editor"
 msgstr "Prompt 编辑器"
 
-#: promptbook/templates/create_or_edit_prompt.html:45
+#: promptbook/templates/create_or_edit_prompt.html:79
 #: promptbook/templates/editor.html:52
 msgid "Add your text here..."
 msgstr "在这里编辑 Prompt..."
 
-#: promptbook/templates/create_or_edit_prompt.html:50
+#: promptbook/templates/create_or_edit_prompt.html:84
 msgid "Output Format"
 msgstr "希望 LLM 以哪种格式输出"
 
-#: promptbook/templates/create_or_edit_prompt.html:54
+#: promptbook/templates/create_or_edit_prompt.html:88
 msgid "String"
 msgstr ""
 
-#: promptbook/templates/create_or_edit_prompt.html:58
+#: promptbook/templates/create_or_edit_prompt.html:92
 msgid "JSON"
 msgstr ""
 
-#: promptbook/templates/create_or_edit_prompt.html:65
+#: promptbook/templates/create_or_edit_prompt.html:99
 msgid "Models"
 msgstr "适用模型"
 
-#: promptbook/templates/create_or_edit_prompt.html:77
+#: promptbook/templates/create_or_edit_prompt.html:108
 msgid "Create New Model..."
 msgstr "新建..."
 
-#: promptbook/templates/create_or_edit_prompt.html:80
+#: promptbook/templates/create_or_edit_prompt.html:110
 msgid "New model name..."
 msgstr "输入模型名字..."
 
-#: promptbook/templates/create_or_edit_prompt.html:81
+#: promptbook/templates/create_or_edit_prompt.html:111
 msgid "Add Model"
 msgstr "添加模型"
 
-#: promptbook/templates/create_or_edit_prompt.html:87
+#: promptbook/templates/create_or_edit_prompt.html:117
 #: promptbook/templates/editor.html:57
 msgid "Labels"
 msgstr "标签"
 
-#: promptbook/templates/create_or_edit_prompt.html:97
+#: promptbook/templates/create_or_edit_prompt.html:126
 #: promptbook/templates/editor.html:63
 msgid "Create New Label..."
 msgstr "新建..."
 
-#: promptbook/templates/create_or_edit_prompt.html:100
+#: promptbook/templates/create_or_edit_prompt.html:129
 #: promptbook/templates/editor.html:66
 msgid "New label name..."
 msgstr "输入标签名字..."
 
-#: promptbook/templates/create_or_edit_prompt.html:101
+#: promptbook/templates/create_or_edit_prompt.html:130
 #: promptbook/templates/editor.html:67
 msgid "Add Label"
 msgstr "添加标签"
 
-#: promptbook/templates/create_or_edit_prompt.html:108
+#: promptbook/templates/create_or_edit_prompt.html:137
 #: promptbook/templates/editor.html:74
-#: promptbook/templates/list_categories.html:135
-#: promptbook/templates/list_prompts.html:186
+#: promptbook/templates/list_categories.html:140
+#: promptbook/templates/list_prompts.html:210
 msgid "Save"
 msgstr "保存"
 
-#: promptbook/templates/create_or_edit_prompt.html:109
+#: promptbook/templates/create_or_edit_prompt.html:140
 #: promptbook/templates/editor.html:75
-#: promptbook/templates/list_categories.html:136
-#: promptbook/templates/list_prompts.html:187
+#: promptbook/templates/list_categories.html:141
+#: promptbook/templates/list_prompts.html:211
 msgid "Cancel"
 msgstr "取消"
 
@@ -155,128 +161,117 @@ msgid ""
 "Welcome to PromptHub, a Large Language Model Prompt Management System (LPMS) "
 "designed for AI applications and developers. It enables you to easily "
 "create, manage and retrieve through your prompts."
-msgstr ""
-"欢迎来到 PromptHub，一个面向开发者和智能应用的 LLM Prompt 管理系统 "
+msgstr "欢迎来到 PromptHub，一个面向开发者和智能应用的 LLM Prompt 管理系统 "
 
 #: promptbook/templates/list_categories.html:109
 msgid "Add Category"
 msgstr "创建项目"
 
-#: promptbook/templates/list_categories.html:123
+#: promptbook/templates/list_categories.html:125
+msgid "Category code"
+msgstr "项目代码"
+
+#: promptbook/templates/list_categories.html:127
+msgid "Enter category code"
+msgstr "请输入项目代码"
+
+#: promptbook/templates/list_categories.html:128
+msgid ""
+"Must start with a lowercase letter and contain only lowercase letters, "
+"numbers, and underscores."
+msgstr "必须以小写字母开头，只能包含小写字母、数字和下划线。"
+
+#: promptbook/templates/list_categories.html:130
 msgid "Category name"
 msgstr "项目名称"
 
-#: promptbook/templates/list_categories.html:125
-msgid "Enter category name"
+#: promptbook/templates/list_categories.html:132
+msgid "Enter category display name"
 msgstr "请输入项目名称"
 
-#: promptbook/templates/list_categories.html:127
-msgid "Help text"
-msgstr "备注"
-
-#: promptbook/templates/list_categories.html:129
-msgid "Enter few comma-seprated use cases for this category"
-msgstr "请输入使用场景"
-
-#: promptbook/templates/list_categories.html:141
+#: promptbook/templates/list_categories.html:146
 msgid "Pinned Categories"
 msgstr "收藏的项目"
 
-#: promptbook/templates/list_categories.html:150
+#: promptbook/templates/list_categories.html:161
 msgid "Prompts"
 msgstr "Prompt 数量"
 
-#: promptbook/templates/list_categories.html:152
-#: promptbook/templates/list_categories.html:189
-msgid "Recently added prompts:"
-msgstr "最近添加的 Prompts："
-
-#: promptbook/templates/list_categories.html:157
-#: promptbook/templates/list_categories.html:194
-msgid "None"
-msgstr " "
-
-#: promptbook/templates/list_categories.html:161
-#: promptbook/templates/list_categories.html:198
-#: promptbook/templates/list_prompts.html:122
+#: promptbook/templates/list_categories.html:166
+#: promptbook/templates/list_categories.html:203
+#: promptbook/templates/list_prompts.html:162
 msgid "Last updated:"
 msgstr "最近更新："
 
-#: promptbook/templates/list_categories.html:163
-#: promptbook/templates/list_categories.html:200
-msgid "Explore"
-msgstr "查看"
-
-#: promptbook/templates/list_categories.html:166
+#: promptbook/templates/list_categories.html:172
 msgid "Unpin"
 msgstr "取消收藏"
 
-#: promptbook/templates/list_categories.html:172
+#: promptbook/templates/list_categories.html:178
 msgid ""
 "No pinned categories found. Pin a category by clicking on the 'Pin to top' "
 "button."
 msgstr "暂无收藏的项目。"
 
-#: promptbook/templates/list_categories.html:178
+#: promptbook/templates/list_categories.html:187
 msgid "Unpinned Categories"
 msgstr "未收藏的项目"
 
-#: promptbook/templates/list_categories.html:187
+#: promptbook/templates/list_categories.html:200
 msgid "Prompts:"
 msgstr "Prompt 数量"
 
-#: promptbook/templates/list_categories.html:203
+#: promptbook/templates/list_categories.html:212
 msgid "Pin to top"
 msgstr "收藏该项目"
 
-#: promptbook/templates/list_categories.html:209
+#: promptbook/templates/list_categories.html:218
 msgid "No categories found. Add one by clicking the 'Add Category' button."
 msgstr "暂无项目"
 
-#: promptbook/templates/list_prompts.html:91
+#: promptbook/templates/list_prompts.html:100
 msgid "Back to Categories"
 msgstr "返回到项目"
 
-#: promptbook/templates/list_prompts.html:93
+#: promptbook/templates/list_prompts.html:102
 msgid "Prompts in category:"
 msgstr "项目："
 
-#: promptbook/templates/list_prompts.html:98
-#: promptbook/templates/list_prompts.html:165
+#: promptbook/templates/list_prompts.html:107
+#: promptbook/templates/list_prompts.html:189
 msgid "Add prompt"
 msgstr "创建 Prompt"
 
-#: promptbook/templates/list_prompts.html:108
+#: promptbook/templates/list_prompts.html:136
 #: promptbook/templates/list_prompts_by_label.html:12
 msgid "Length:"
 msgstr " "
 
-#: promptbook/templates/list_prompts.html:108
+#: promptbook/templates/list_prompts.html:136
 msgid "chars."
 msgstr "字符"
 
-#: promptbook/templates/list_prompts.html:116
-#: promptbook/templates/list_prompts.html:178
-msgid "Edit"
-msgstr "编辑"
-
-#: promptbook/templates/list_prompts.html:129
+#: promptbook/templates/list_prompts.html:142
 msgid "Labels:"
 msgstr "标签："
 
-#: promptbook/templates/list_prompts.html:135
+#: promptbook/templates/list_prompts.html:151
 msgid "Models:"
 msgstr "适用模型："
 
-#: promptbook/templates/list_prompts.html:141
+#: promptbook/templates/list_prompts.html:158
 msgid "Output Format:"
 msgstr "输出格式："
 
-#: promptbook/templates/list_prompts.html:159
+#: promptbook/templates/list_prompts.html:183
 msgid "No prompts. Here's a cookie"
 msgstr "没有 Prompts。"
 
-#: promptbook/templates/list_prompts.html:211
+#: promptbook/templates/list_prompts.html:202
+msgid "Edit"
+msgstr "编辑"
+
+#: promptbook/templates/list_prompts.html:235
 msgid "Copied prompt to clipboard"
 msgstr "复制"
 
@@ -303,14 +298,6 @@ msgstr "记住我"
 #: promptbook/templates/login.html:52
 msgid "Login"
 msgstr "登录"
-
-#: promptbook/templates/login.html:60
-msgid "Sign in with Google"
-msgstr "使用 Google 登录"
-
-#: promptbook/templates/login.html:61
-msgid "No signup required"
-msgstr "免注册"
 
 #: promptbook/templates/search_results.html:6
 msgid "Search results for:"
@@ -340,7 +327,28 @@ msgstr "选择一个头像图片"
 msgid "Upload"
 msgstr "上传头像"
 
-#: promptbook/views.py:120
+#: promptbook/views.py:122
 msgid ""
 "A prompt with this text already exists. Please enter a different prompt."
 msgstr "已存在相同内容的 Prompt。"
+
+#~ msgid "Help text"
+#~ msgstr "备注"
+
+#~ msgid "Enter few comma-seprated use cases for this category"
+#~ msgstr "请输入使用场景"
+
+#~ msgid "Recently added prompts:"
+#~ msgstr "最近添加的 Prompts："
+
+#~ msgid "None"
+#~ msgstr " "
+
+#~ msgid "Explore"
+#~ msgstr "查看"
+
+#~ msgid "Sign in with Google"
+#~ msgstr "使用 Google 登录"
+
+#~ msgid "No signup required"
+#~ msgstr "免注册"

@@ -5,7 +5,7 @@ from .models import Prompt, Category, Label, LLMModel
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'name', 'help_text']
+        fields = ['id', 'name', 'display_name']
 
 
 class PromptSerializer(serializers.ModelSerializer):

@@ -5,6 +5,9 @@ from django.db.models import UniqueConstraint
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.validators import RegexValidator
+from gettext import gettext as _
+
 import reversion
 
 
@@ -28,12 +31,20 @@ def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
 
+# 定义验证器
+code_validator = RegexValidator(
+    regex=r'^[a-z][a-z0-9_]*$',
+    message=_('Must be start with a lowercase letter and '
+              'contain only lowercase letters, numbers, and underscores.'),
+)
+
+
 class Category(models.Model):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=64, unique=True, validators=[code_validator])
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
-    help_text = models.CharField(max_length=255, blank=True, null=True)
+    display_name = models.CharField(max_length=64)
     pinned_by = models.ManyToManyField(User, related_name='pinned_categories')  # Renamed field
 
     def __str__(self):

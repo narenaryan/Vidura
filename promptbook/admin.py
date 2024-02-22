@@ -10,7 +10,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'created_at', 'modified_at', 'help_text')
+    list_display = ('name', 'created_at', 'modified_at', 'display_name')
     search_fields = ('name',)
     list_filter = ('created_at', 'modified_at')
 

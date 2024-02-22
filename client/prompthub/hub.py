@@ -41,7 +41,8 @@ class HTTPClient:
 
 
 class Prompt:
-    def __init__(self, content: str, output_format: str, model: Optional[str] = None):
+    def __init__(self, name: str, content: str, output_format: str, model: Optional[str] = None):
+        self.name = name
         self.content = content
         self.output_format = output_format
         self.model = model
@@ -64,7 +65,7 @@ class PromptHub:
         self.headers = {'Authorization': f'Token {token}'}
         self.http_client = HTTPClient()
 
-        self.category_id = None
+        self.category_name = None
         self.set_category(category)
 
         # 最好是 3.5，其次是 4，如果这两个都没有，则使用任意一个 Prompt 所适用的 Model
@@ -81,17 +82,14 @@ class PromptHub:
         return response
 
     def set_category(self, category: str) -> None:
-        categories = self.get_request("/api/categories/", {'name': category})
-        if not categories:
-            raise errors.CategoryNotFoundError(f"Category '{category}' not found")
-        self.category_id = categories[0]['id']
+        self.category_name = category
 
     def set_preferred_models(self, preferred_models: List[str]) -> None:
         self.preferred_models = [model.lower() for model in preferred_models]
 
     def get(self, prompt_name: str, raise_if_missing_variables: bool = True, **variables) -> Prompt:
 
-        uri = f"/api/categories/{self.category_id}/prompts/"
+        uri = f"/api/categories/{self.category_name}/prompts/"
         prompts = self.get_request(uri, {'name': prompt_name})
         if not prompts:
             raise errors.PromptNotFoundError
@@ -104,7 +102,7 @@ class PromptHub:
         content = template.render(**variables)
         model_names = [model['name'] for model in prompt_data['models']]
         model = self._get_valid_model(model_names)
-        return Prompt(content, prompt_data['output_format'], model)
+        return Prompt(prompt_name, content, prompt_data['output_format'], model)
 
     def _get_valid_model(self, valid_model_names: List[str]) -> Optional[str]:
         # 从 Prompt 所适用的 Model 列表中获取一个自己最想要的 Model
@@ -123,7 +121,7 @@ class PromptHub:
         return None
 
     def get_template(self, prompt_name: str) -> PromptTemplate:
-        uri = f"/api/categories/{self.category_id}/prompts/"
+        uri = f"/api/categories/{self.category_name}/prompts/"
         prompts = self.get_request(uri, {'name': prompt_name})
         if not prompts:
             raise errors.PromptNotFoundError
@@ -132,7 +130,7 @@ class PromptHub:
 
     def create_template(self, name: str, text: str, output_format: str = "str",
                         model_names: List[str] = None, label_names: List[str] = None) -> PromptTemplate:
-        uri = f"/api/categories/{self.category_id}/prompts/"
+        uri = f"/api/categories/{self.category_name}/prompts/"
         resp = self.post_request(
             uri,
             data={'name': name,

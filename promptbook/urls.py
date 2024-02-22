@@ -34,11 +34,13 @@ api_urls = [
     path('api/', views.ApiRootView.as_view(), name='api-root'),
     path('api/categories/', views.CategoryListCreateView.as_view(), name='api-list-categories'),
     path('api/categories/<int:category_id>/prompts/', views.PromptsListCreateView.as_view(),
-         name='api-list-category-prompts'),
+         name='api-list-category-prompts-by-id'),
+    path('api/categories/<slug:category_name>/prompts/', views.PromptsListCreateView.as_view(),
+         name='api-list-category-prompts-by-name'),
     path('api/categories/<int:category_id>/labels/', views.LabelListCreateView.as_view(),
-         name='api-list-category-labels'),
+         name='api-list-category-labels-by-id'),
     path('api/categories/<int:category_id>/models/', views.ModelListCreateView.as_view(),
-         name='api-list-category-models'),
+         name='api-list-category-models-by-id'),
 ]
 
 urlpatterns += api_urls

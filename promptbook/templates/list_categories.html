@@ -5,14 +5,35 @@
 {% block content %}
   <style>  
     .category-card {
-      background-color: #fff;
-      border-radius: 6px;
-      box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
-      color: #4a4a4a;
-      display: block;
-      padding: 1.25rem;
-      min-height: 18rem;
-    }
+  padding: 20px;
+  border: 1px solid #dbdbdb;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.category-code-and-name {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 确保代码和名称左对齐 */
+}
+
+.category-code {
+  background-color: #f2f2f2;
+  color: black;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  padding: 2px 6px; /* 调整内边距使阴影长度自适应文字 */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 轻微的阴影效果 */
+  margin-bottom: 0px; /* 与下方名称的间距 */
+  align-self: flex-start; /* 左对齐 */
+}
+
+.category-title {
+  margin: 0; /* 移除标题的默认外边距 */
+}
 
     .category-label {
       position: relative;
@@ -119,16 +140,20 @@
       <section class="modal-card-body">
         <form id="add-category-form">
           {% csrf_token %}
-          <div class="field">
-            <label for="category-name" class="label">{% trans "Category name" %}</label>
-            <div class="control category-name-control">
-              <input type="text" class="input" id="category-name" placeholder="{% trans 'Enter category name' %}" required>
+          <div id="category-errors" class="notification is-danger is-hidden"></div>
+
+            <div class="field">
+              <label for="category-name" class="label">{% trans "Category code" %}</label>
+              <div class="control category-name-control">
+                <input type="text" class="input" id="category-name" placeholder="{% trans 'Enter category code' %}" required>
+                <p class="help">{% trans "Must start with a lowercase letter and contain only lowercase letters, numbers, and underscores." %}</p>
+              </div>
+              <label for="category-name" class="label">{% trans "Category name" %}</label>
+              <div class="control">
+                <input type="text" class="input" id="category-display-name" placeholder="{% trans 'Enter category display name' %}" required>
+              </div>
             </div>
-            <label for="category-name" class="label">{% trans "Help text" %}</label>
-            <div class="control">
-              <input type="text" class="input" id="category-help-text" placeholder="{% trans 'Enter few comma-seprated use cases for this category' %}" required>
-            </div>
-          </div>
+
         </form>
       </section>
       <footer class="modal-card-foot">
@@ -145,12 +170,17 @@
 
 
 <div class="column is-one-fifth-desktop is-half-mobile">
-    <div class="category-card" style="padding: 20px; border: 1px solid #dbdbdb; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+    <div class="category-card">
 
-        <!-- 类别名称作为链接 -->
-        <a href="{% url 'list_prompts' category.id %}" class="has-text-link">
-            <h3 class="title category-title is-size-5">{{ category.name }}</h3>
-        </a>
+         <div class="category-code-and-name">
+            <!-- 类别代码 -->
+            <div class="category-code">{{ category.name }}</div>
+            <!-- 类别名称作为链接 -->
+            <a href="{% url 'list_prompts' category.id %}" class="has-text-link">
+                <h3 class="title category-title is-size-5">{{ category.display_name }}</h3>
+            </a>
+        </div>
+
         <!-- 提示计数 -->
         <p class="is-size-7 has-text-weight-semibold prompt-count">
             {% trans "Prompts" %}: <span class="has-text-weight-normal">{{ category.num_prompts }}</span>
@@ -187,10 +217,15 @@
 
 <div class="column is-one-fifth-desktop is-half-mobile">
     <div class="category-card" style="padding: 20px; border: 1px solid #dbdbdb; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-        <!-- 类别名称作为链接，增强直观性 -->
-        <a href="{% url 'list_prompts' category.id %}" class="has-text-link">
-            <h3 class="title category-title is-size-5">{{ category.name }}</h3>
-        </a>
+         <div class="category-code-and-name">
+            <!-- 类别代码 -->
+            <div class="category-code">{{ category.name }}</div>
+            <!-- 类别名称作为链接 -->
+            <a href="{% url 'list_prompts' category.id %}" class="has-text-link">
+                <h3 class="title category-title is-size-5">{{ category.display_name }}</h3>
+            </a>
+        </div>
+
         <p class="is-size-7 has-text-weight-semibold prompt-count">
             {% trans "Prompts:" %}: <span class="has-text-weight-normal">{{ category.num_prompts }}</span>
         </p>
@@ -212,10 +247,9 @@
 <div class="column">
     <p>{% trans "No categories found. Add one by clicking the 'Add Category' button." %}</p>
 </div>
-
-
-    {% endfor %}
+  {% endfor %}
   </div>
+
   <script>
     $(document).ready(function() {
     
@@ -227,31 +261,43 @@
         $("#add-category-modal").removeClass("is-active");
       });
     
-      $("#save-category").click(function(event) {
-        event.preventDefault();
-        const categoryName = $("#category-name").val();
-        const categoryHelpText = $("#category-help-text").val();
-        if (categoryName.trim() !== "") {
-          $.ajax({
-            url: "{% url 'create_category' %}",
-            type: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "X-CSRFToken": "{{ csrf_token }}"
-            },
-            data: JSON.stringify({
-              name: categoryName,
-              helpText: categoryHelpText
-            }),
-            success: function() {
-              window.location.reload();
-            },
-            error: function(xhr, status, error) {
-              console.error(xhr.responseText);
-            }
-          });
+     $("#save-category").click(function(event) {
+  event.preventDefault();
+  const categoryName = $("#category-name").val();
+  const categoryDisplayName = $("#category-display-name").val();
+  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value; // 获取CSRFToken
+
+  if (categoryName.trim() !== "") {
+    $.ajax({
+      url: "{% url 'create_category' %}",
+      type: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrfToken
+      },
+      data: JSON.stringify({
+        name: categoryName,
+        displayName: categoryDisplayName
+      }),
+      success: function() {
+        // 成功后关闭模态框并刷新页面
+        $("#add-category-modal").removeClass("is-active");
+        window.location.reload();
+      },
+      error: function(xhr) {
+        // 显示错误信息
+        const errors = JSON.parse(xhr.responseText).errors;
+        let errorMessage = "";
+        for (const key in errors) {
+          errorMessage += `${key}: ${errors[key].join(", ")}<br>`;
         }
-      });
+        $("#category-errors").html(errorMessage).removeClass("is-hidden");
+      }
+    });
+  } else {
+    $("#category-errors").html("Category name cannot be empty.").removeClass("is-hidden");
+  }
+});
 
       $(".pin-button").click(function(event) {
         event.preventDefault();

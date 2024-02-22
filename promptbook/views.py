@@ -14,6 +14,7 @@ from django.db.models import Count, Max
 from django.contrib.contenttypes.models import ContentType
 from django.db.models.functions import Cast
 from django.db.models import IntegerField
+from django.core.exceptions import ValidationError
 
 from actstream import action
 from actstream.models import Action
@@ -27,10 +28,11 @@ from promptbook.serializers import (
 from django.utils.translation import gettext as _
 
 # API根视图
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, serializers
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.reverse import reverse as drf_reverse
+
 
 
 class PrompVisibility(Enum):
@@ -63,7 +65,7 @@ def list_categories(request):
 def list_prompts(request, category_id):
     category = Category.objects.get(pk=category_id, owner=request.user)
     # Show prompts that belong to the current user
-    prompts = category.prompt_set.order_by('-created_at')
+    prompts = category.prompt_set.order_by('name')
 
     return render(request, 'list_prompts.html', {
         'category': category,
@@ -246,13 +248,25 @@ def create_category(request):
     if request.method == "POST":
         data = json.loads(request.body)
         category_name = data.get("name")
-        help_text = data.get("helpText")
+        display_name = data.get("displayName")
 
         if category_name:
-            new_category = Category.objects.create(
-                name=category_name, help_text=help_text, owner=request.user)
-            return JsonResponse({"status": "success", "category_id": new_category.pk})
-    return JsonResponse({"status": "error"})
+            new_category = Category(
+                name=category_name, help_name=display_name, owner=request.user)
+            try:
+                # 执行模型层的完整清理和验证
+                new_category.full_clean()
+                # 验证通过后保存实例
+                new_category.save()
+                return JsonResponse({"status": "success", "category_id": new_category.pk})
+            except ValidationError as e:
+                # 处理验证错误
+                return JsonResponse({"status": "error", "errors": e.message_dict},
+                                    status=status.HTTP_400_BAD_REQUEST)
+
+    # 如果请求方法不是POST或者category_name为空
+    return JsonResponse({"status": "error", "errors": "Invalid request"},
+                        status=status.HTTP_400_BAD_REQUEST)
 
 
 @login_required
@@ -283,7 +297,17 @@ class CategoryListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save()
+        # 尝试实例化Category但不保存到数据库
+        instance = serializer.save(commit=False)
+        try:
+            # 执行模型级别的完整验证
+            instance.full_clean()
+        except ValidationError as e:
+            # 如果验证失败，则抛出serializers.ValidationError
+            raise serializers.ValidationError(e.message_dict)
+        # 验证通过，保存实例到数据库
+        instance.save()
+
 
     def get_queryset(self):
         """
@@ -317,24 +341,37 @@ class PromptsListCreateView(generics.ListCreateAPIView):
         Return prompts that belong to the current category and
         optionally filter by name if the 'name' query parameter is provided.
         """
-        category_id = self.kwargs['category_id']
-        queryset = Prompt.objects.filter(category_id=category_id)
-
-        # 获取URL查询参数中的'name'参数
+        category_id = self.kwargs.get('category_id')
+        category_name = self.kwargs.get('category_name')
         name = self.request.query_params.get('name', None)
-        if name is not None:
-            queryset = queryset.filter(name=name)
 
-        return queryset
+        if category_id is not None:
+            if name is not None:
+                return Prompt.objects.filter(category_id=category_id, name=name)
+            return Prompt.objects.filter(category_id=category_id)
+        elif category_name is not None:
+            if name is not None:
+                return Prompt.objects.filter(category__name=category_name, name=name)
+            return Prompt.objects.filter(category__name=category_name)
+        else:
+            return Prompt.objects.none()
 
     def perform_create(self, serializer):
         """
         set the category of the prompt before saving it.
         """
-        print('perform_create', self.kwargs['category_id'], serializer.validated_data)
-        category_id = self.kwargs['category_id']
-        category = get_object_or_404(Category, pk=category_id)
+        category_id = self.kwargs.get('category_id')
+        category_name = self.kwargs.get('category_name')
+
+        if category_id:
+            category = get_object_or_404(Category, pk=category_id)
+        elif category_name:
+            category = get_object_or_404(Category, name=category_name)
+        else:
+            raise ValueError('category_id or category_name must be provided')
         serializer.save(category=category)
+        return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+
 
 
 class LabelListCreateView(generics.ListCreateAPIView):
@@ -382,10 +419,10 @@ class ApiRootView(generics.GenericAPIView):
         return Response({
             'Categories': drf_reverse('api-list-categories',
                                       request=request, format=kwargs.get('format')),
-            'Prompts': drf_reverse('api-list-category-prompts', args=[1],
+            'Prompts': drf_reverse('api-list-category-prompts-by-id', args=[1],
                                    request=request, format=kwargs.get('format')),
-            'Labels': drf_reverse('api-list-category-labels', args=[1],
+            'Labels': drf_reverse('api-list-category-labels-by-id', args=[1],
                                   request=request, format=kwargs.get('format')),
-            'Models': drf_reverse('api-list-category-models', args=[1],
+            'Models': drf_reverse('api-list-category-models-by-id', args=[1],
                                   request=request, format=kwargs.get('format')),
         })
