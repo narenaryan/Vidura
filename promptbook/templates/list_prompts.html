@@ -161,8 +161,8 @@
             <!-- 最后更新时间 -->
             <p class="is-size-7 mb-4">{% trans "Last updated:" %} {{ prompt.modified_at }}</p>
             <!-- 删除按钮 -->
-            <div class="buttons are-small">
-                <button class="button" data-prompt-id="{{ prompt.id }}">
+            <div class="buttons are-small" >
+                <button class="button delete-prompt" data-prompt-id="{{ prompt.id }}">
                     <span class="icon">
                         <i class="fas fa-trash"></i>
                     </span>
