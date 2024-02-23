@@ -27,9 +27,29 @@ PromptHub 旨在为开发者提供一个简单、轻量且易于集成的管理�
 - **多用户支持**：支持多用户模式，可以按照项目来管理权限（规划中）
 - **集成LLM**：与GPT-4、文心一言等大模型集成，可以直接在 PromptHub 中测试 Prompt 的效果（规划中）
 
+## 使用
+
+使用 `pip` 安装客户端（1.6KB）：
+
+```shell    
+pip install prompthub
+```
+
+```python
+from prompthub import PromptHub
+prompts = PromptHub('http://localhost:8000', 'your_token', category='rmb-prod')
+
+prompt = prompts.get('your_prompt_name')
+
+preferred_model = prompt.model
+prompt_text = prompt.text
+prompt_output_format = prompt.output_format
+```
+
+详细用法请参考 [客户端使用说明](client%2FREADME.md)
 
 
-# 截图
+# 管理页面截图
 
 ## 项目
 
@@ -70,25 +90,11 @@ PromptHub 旨在为开发者提供一个简单、轻量且易于集成的管理�
 <table><tr><td><img src="./screens/api_cn.png" alt="API"/></td></tr></table>
 
 
-# 快速开始
 
-## 客户端使用
+# 服务端部署
 
-使用 `pip` 安装客户端（1.6KB）：
 
-```shell    
-pip install prompthub
-```
-
-```python
-from prompthub import PromptHub
-prompts = PromptHub('http://localhost:8000', 'your_token', category='rmb-prod')
-prompt = prompts.get('your_prompt_name')
-```
-
-详细用法请参考 [客户端使用说明](client%2FREADME.md)
-
-## 服务端部署
+## 使用 [Docker 镜像](https://hub.docker.com/r/datamini/prompt-hub) 快速部署
 
 ```bash
 docker run -d -p 8000:8000 datamini/prompt-hub
@@ -96,17 +102,10 @@ docker run -d -p 8000:8000 datamini/prompt-hub
 
 注：
 1. 浏览器打开 http://127.0.0.1:8000/  默认用户名密码：`admin/admin`
-2. 使用本地SQLite数据库
+2. 默认使用本地SQLite数据库
 
 
-# 高级用法
-
-## Docker 镜像 
-
-https://hub.docker.com/r/datamini/prompt-hub
-
-
-## 使用Docker Compose部署
+## 使用Docker Compose 部署
 
 ```shell
 version: '3.8'

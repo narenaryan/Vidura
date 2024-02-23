@@ -26,6 +26,29 @@ PromptHub is designed to provide developers with a simple, lightweight, and easi
 - **Integration with LLM**: Integration with large models such as GPT-4, Wenxin Yanyi, etc., to test the effect of prompts directly in PromptHub (planned).
 
 
+## Usage
+
+Install the package using pip（1.6KB）:
+
+```shell    
+pip install prompthub
+```
+
+```python
+from prompthub import PromptHub
+prompts = PromptHub('http://localhost:8000', 'your_token', category='rmb-prod')
+
+prompt = prompts.get('your_prompt_name')
+
+preferred_model = prompt.model
+prompt_text = prompt.text
+prompt_output_format = prompt.output_format
+
+```
+
+For more details, please refer to [Client Usage](client%2FREADME.md)
+
+
 # Screenshots
 
 
@@ -61,31 +84,9 @@ One can search matching categories and prompts in one place by using search bar.
 <table><tr><td><img src="./screens/api.png" alt="API"/></td></tr></table>
 
 
-# QuickStart
+# Server Deployment
 
-## Client Usage
-
-Install the package using pip（1.6KB）:
-
-```shell    
-pip install prompthub
-```
-
-```python
-from prompthub import PromptHub
-prompts = PromptHub('http://localhost:8000', 'your_token', category='rmb-prod')
-
-prompt = prompts.get('your_prompt_name')
-preferred_model = prompt.model
-prompt_text = prompt.text
-prompt_output_format = prompt.output_format
-
-```
-
-For more details, please refer to [Client Usage](client%2FREADME.md)
-
-
-## Server Deployment
+## QuickStart by [Docker Image](https://hub.docker.com/r/datamini/prompt-hub)
 
 ```bash
 docker run -d -p 8000:8000 datamini/prompt-hub
@@ -93,13 +94,7 @@ docker run -d -p 8000:8000 datamini/prompt-hub
 
 Note:
 1. Open http://127.0.0.1:8000/ in your browser. Default username and password: `admin/admin`
-2. Use a local SQLite database
-
-# Advanced Usage
-
-## Docker Image
-
-https://hub.docker.com/r/datamini/prompt-hub
+2. Use a local SQLite database by default
 
 
 ## Use Docker Compose to deploy
