@@ -12,7 +12,7 @@
 
 In the world of AI application development, prompts are not just the bridge between human language and machine intelligence, but an indispensable component of modern intelligent applications. 
 
-PromptHub is designed to provide developers with a simple, lightweight, and easily integrated management system to  manage your AI(LLM ) prompts.
+PromptHub is designed to provide developers with a simple, lightweight, and easily integrated AI prompts management system.
 
 ## Features
 - **User-Friendly API/SDK**: With a visual UI and straightforward API/SDK, PromptHub offers developers a seamless integration experience.
