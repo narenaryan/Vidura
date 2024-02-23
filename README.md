@@ -4,47 +4,55 @@
     <img src="https://prompt-hub.oss-cn-shanghai.aliyuncs.com/prompt-hub-logo11.png" width="200px"/>
 </p>
 
-# PromptHub: Your AI Prompt Management Tool
+# PromptHub：您的AI Prompt 管理利器
 
-[中文文档](README_CN.md) 
+[English Doc](README_EN)
 
-## Introduction
+## 简介
 
-In the world of AI application development, prompts are not just the bridge between human language and machine intelligence, but an indispensable component of modern intelligent applications. PromptHub is designed to provide developers with a simple, lightweight, and easily integrated management system to effectively manage, optimize, and expand your prompt applications, just like GitHub in the prompt domain.
+在AI智能应用开发的世界里，Prompt 不仅是连接人类语言与机器智能的桥梁，更是现代化智能应用不可或缺的组成部分。PromptHub 旨在为开发者提供一个简单、轻量且易于集成的管理系统，帮助您有效地管理、优化和扩展您的Prompt应用，就像在 Prompt 领域的 GitHub 一样。
 
-## Features
-- **User-Friendly API/SDK**: With a visual UI and straightforward API/SDK, PromptHub offers developers a seamless integration experience.
-- **Decoupling Code and Prompts**: Focused on separating prompts from code logic, providing stable infrastructure support for production environments.
-- **Support for Multiple Models**: Allows specifying the applicable AI models (e.g., GPT-4, GPT-3.5) to optimize costs according to needs.
-- **Flexible Output Formats**: Supports customizing the output format of prompts (JSON or String) to meet the requirements of different scenarios.
-- **One-Stop Management**: Centralize the management of prompts across multiple projects, improving efficiency.
-- **Version Control**: Supports saving versions of prompts, convenient for A/B testing and quick rollbacks (planned).
-- **Performance Optimization**: Utilizes models like GPT-4 to optimize the format and content of prompts, increasing accuracy while reducing token usage to save costs (planned). 
-- **Multi-User Support**: Supports multi-user mode, allowing permission management based on projects (planned).
-- **Integration with LLM**: Integration with large models such as GPT-4, Wenxin Yanyi, etc., to test the effect of prompts directly in PromptHub (planned).
+## 特色
 
-
-# Screenshots
-
+- **易用的API/SDK**：通过可视化 UI 和简便的 API/SDK，PromptHub 为开发者提供无缝的集成体验。
+- **Code与Prompt解耦**：专注于将提示词（Prompt）与代码逻辑（Code）分离，为生产环境下的系统提供稳定的基础设施支持。
+- **多模型支持**：可指定适用的AI模型（GPT-4, GPT-3.5等），根据需求选择最合适的模型以优化成本。
+- **灵活的输出格式**：支持自定义Prompt的输出格式（JSON或String），满足不同场景下的需求。
+- **一站式管理**：集中管理多个项目的Prompt，提高效率。
+- **多语言支持**：支持中英文
+- **版本控制**：支持 Prompt 版本保存，方便进行A/B测试和快速回滚（规划中）
+- **性能优化**：利用 GPT-4等模型 对 Prompt 格式和内容进行优化，提高准确率，同时减少 Token 使用以节省成本（规划中）
+- **多用户支持**：支持多用户模式，可以按照项目来管理权限（规划中）
+- **集成LLM**：与GPT-4、文心一言等大模型集成，可以直接在 PromptHub 中测试 Prompt 的效果（规划中）
 
 
-## Categories view
-<table><tr><td><img src="./screens/categories.png" alt="Categories"/></td></tr></table>
 
-We simplified categories for you. You can request new categories and we will add it for you.
+# 截图
 
-## Prompts view
-<table><tr><td><img src="./screens/prompts.png" alt="Prompts"/></td></tr></table>
+## 项目
 
-Each prompt will have a list of labels attached like "gpt-3", "simple", or "complex". User can click on a label on any prompt and visit all the prompts tagged with the given label name. 
+在 PromptHub 中，项目是一个资源组的概念，项目和项目之间的 Prompt 是相互独立的。建议你为不同的应用创建不同的项目。
 
-## Edit Prompt view
-<table><tr><td><img src="./screens/edit_prompt.png" alt="Editor"/></td></tr></table>
+未来，可以按照项目来管理权限。有某个项目权限的人，才能修改这个项目的 Prompt。
+
+<table><tr><td><img src="./screens/categories_cn.png" alt="Categories"/></td></tr></table>
 
 
-## Universal search
-One can search matching categories and prompts in one place by using search bar.
-<table><tr><td><img src="./screens/search.png" alt="Search"/></td></tr></table>
+## Prompt
+
+<table><tr><td><img src="./screens/prompts_cn.png" alt="Prompts"/></td></tr></table>
+
+每一个 Prompt 都属于一个项目。创建 Prompt 的时候，可以指定适用的模型，输出格式，也可以为项目打上标签，便于查找和分类。
+
+
+## 编辑 Prompt
+<table><tr><td><img src="./screens/edit_prompt_cn.png" alt="Editor"/></td></tr></table>
+
+
+## 搜索
+
+根据关键词或者标签搜索相关的 Prompt
+<table><tr><td><img src="./screens/search_cn.png" alt="Search"/></td></tr></table>
 
 ## API
 
@@ -57,14 +65,14 @@ One can search matching categories and prompts in one place by using search bar.
 }
 ```
 
-<table><tr><td><img src="./screens/api.png" alt="API"/></td></tr></table>
+<table><tr><td><img src="./screens/api_cn.png" alt="API"/></td></tr></table>
 
 
-# QuickStart
+# 快速开始
 
-## Client Usage
+## 客户端使用
 
-Install the package using pip（1.6KB）:
+使用 `pip` 安装客户端（1.6KB）：
 
 ```shell    
 pip install prompthub
@@ -76,27 +84,27 @@ prompts = PromptHub('http://localhost:8000', 'your_token', category='rmb-prod')
 prompt = prompts.get('your_prompt_name')
 ```
 
-For more details, please refer to [Client Usage](client%2FREADME.md)
+详细用法请参考 [客户端使用说明](client%2FREADME.md)
 
-
-## Server Deployment
+## 服务端部署
 
 ```bash
 docker run -d -p 8000:8000 datamini/prompt-hub
 ```
 
-Note:
-1. Open http://127.0.0.1:8000/ in your browser. Default username and password: `admin/admin`
-2. Use a local SQLite database
+注：
+1. 浏览器打开 http://127.0.0.1:8000/  默认用户名密码：`admin/admin`
+2. 使用本地SQLite数据库
 
-# Advanced Usage
 
-## Docker Image
+# 高级用法
+
+## Docker 镜像 
 
 https://hub.docker.com/r/datamini/prompt-hub
 
 
-## Use Docker Compose to deploy
+## 使用Docker Compose部署
 
 ```shell
 version: '3.8'
@@ -118,15 +126,19 @@ services:
       DB_PASS: admin
 ```
 
-# For Developers
+# 开发者指北
 
-Please refer to [Developer Documentation](README4DEV.md)
+请参考 [开发者文档](README4DEV_zh.md)
+
+# 致谢
+
+PromptHub 基于 Vidura 进行二次开发，我们对 Vidura 团队表示深深的感谢。PromptHub 承诺将完全开源，以回馈社区。
+
+# 加入我们
+
+无论您是希望提高工作效率的开发者，还是对 AI Prompt 管理系统感兴趣的技术爱好者，PromptHub 都欢迎您的加入。
+lele@datamini.ai（坐标中国杭州）
 
 
-## Acknowledgements
-PromptHub is developed based on Vidura, and we express our deep gratitude to the Vidura team. PromptHub promises to be completely open source, as a way to give back to the community.
 
-## Join Us
-
-Whether you are a developer looking to improve work efficiency or a tech enthusiast interested in AI prompt management systems, PromptHub welcomes you.  lele@datamini.ai (i am from HangZhou, China)
 
