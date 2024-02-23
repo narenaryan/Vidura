@@ -10,7 +10,9 @@
 
 ## Introduction
 
-In the world of AI application development, prompts are not just the bridge between human language and machine intelligence, but an indispensable component of modern intelligent applications. PromptHub is designed to provide developers with a simple, lightweight, and easily integrated management system to effectively manage, optimize, and expand your prompt applications, just like GitHub in the prompt domain.
+In the world of AI application development, prompts are not just the bridge between human language and machine intelligence, but an indispensable component of modern intelligent applications. 
+
+PromptHub is designed to provide developers with a simple, lightweight, and easily integrated management system to  manage your AI(LLM ) prompts.
 
 ## Features
 - **User-Friendly API/SDK**: With a visual UI and straightforward API/SDK, PromptHub offers developers a seamless integration experience.
@@ -25,7 +27,6 @@ In the world of AI application development, prompts are not just the bridge betw
 
 
 # Screenshots
-
 
 
 ## Categories view
@@ -73,7 +74,12 @@ pip install prompthub
 ```python
 from prompthub import PromptHub
 prompts = PromptHub('http://localhost:8000', 'your_token', category='rmb-prod')
+
 prompt = prompts.get('your_prompt_name')
+preferred_model = prompt.model
+prompt_text = prompt.text
+prompt_output_format = prompt.output_format
+
 ```
 
 For more details, please refer to [Client Usage](client%2FREADME.md)

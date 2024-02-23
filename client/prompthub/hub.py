@@ -41,9 +41,10 @@ class HTTPClient:
 
 
 class Prompt:
-    def __init__(self, name: str, content: str, output_format: str, model: Optional[str] = None):
+    def __init__(self, name: str, text: str, output_format: str, model: Optional[str] = None):
         self.name = name
-        self.content = content
+        self.text = text
+        self.content = text
         self.output_format = output_format
         self.model = model
 
