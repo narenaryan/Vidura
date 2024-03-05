@@ -6,7 +6,7 @@
 
 # PromptHub：您的AI Prompt 管理利器
 
-[English Doc](README_EN)
+[English Doc](README_EN.md)
 
 ## 简介
 
