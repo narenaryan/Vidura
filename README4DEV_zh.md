@@ -30,7 +30,7 @@
 为了在数据库中修改表结构，您需要按照以下步骤操作：
 
 1. **修改模型文件**：首先，在 `promptbook/models.py` 文件中进行必要的修改。
-2. **生成迁移文件**：使用命令 `python manage.py makemigrations`，这将在 `promptbook/migrations` 目录下生成一个迁移文件。
+2. **生成迁移文件**：使用命令`python manage.py makemigrations`在 `promptbook/migrations` 目录下生成一个迁移文件
 3. **应用迁移至数据库**：通过运行命令 `python manage.py migrate`，将迁移文件应用到数据库中。
 
 

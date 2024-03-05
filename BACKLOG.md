@@ -6,5 +6,5 @@
 - 如果是JSON，则必须是gpt-3.5-turbo-0125,gpt-4-0125-preview,gpt-4-1106-preview
   - https://platform.openai.com/docs/guides/text-generation/json-mode
 - 搜索出来的结果，的样式跟list页面的样式复用，且可以直接打开编辑
-- 删除Prompt不生效
-
+- 支持 copy Category（用于测试）
+- 

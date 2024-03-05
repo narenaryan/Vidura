@@ -36,7 +36,6 @@ jobs:
         context: . # 使用当前目录作为上下文
         file: Dockerfile # Dockerfile的位置
         push: true # 推送镜像到Docker Hub
-        tags: datamini/prompt-hub:${{ env.VERSION }}
-        # tags: datamini/docsbot:latest
+        tags: datamini/prompt-hub:${{ env.VERSION }},datamini/prompt-hub:latest # 指定多个标签
         platforms: linux/amd64,linux/arm64
 
