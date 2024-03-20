@@ -252,7 +252,7 @@ def create_category(request):
 
         if category_name:
             new_category = Category(
-                name=category_name, help_name=display_name, owner=request.user)
+                name=category_name, display_name=display_name, owner=request.user)
             try:
                 # 执行模型层的完整清理和验证
                 new_category.full_clean()
