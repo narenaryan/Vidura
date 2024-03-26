@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}create_or_edit_prompt1{% endblock title %}
+
+{% block content %}
+<style>
+  .textarea {
+    background-color: #f2f2f2
+  }
+
+  .option {
+    font-weight: 500;
+  }
+
+  .sensitive-info-banner {
+    color: midnightblue;
+    font-size: 500;
+  }
+
+  .select-category {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .select-option {
+    font-family: 'Poppins', sans-serif;
+  }
+
+/* 基础样式 */
+.radio-toggle {
+  display: inline-block;
+  background-color: #f0f0f0; /* 未选中时的背景色，与is-light相近 */
+  border-radius: 20px;
+  padding: 4px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.radio-toggle input[type="radio"] {
+  display: none; /* 隐藏默认的单选按钮 */
+}
+
+.radio-toggle .toggle-label {
+  padding: 4px 10px;
+  display: block;
+  font-size: 0.75rem; /* 减小字体大小 */
+
+}
+
+/* 当单选按钮被选中时，改变背景和文本颜色 */
+.radio-toggle input[type="radio"]:checked + .toggle-label {
+  background-color: #48c774; /* 选中状态的背景色，与is-success相近 */
+  color: white;
+  border-radius: 15px;
+}
+
+
+
+</style>
+
+{% if error_message %}
+<span class="mb-3 tag is-danger is-light is-medium">{{ error_message }}</span>
+{% endif %}
+
+<form method="post" style="max-width: 800px; margin: auto;">
+  {% csrf_token %}
+
+  <h3 class="title is-4" style="margin-bottom: 20px;">{% trans "Category:" %} {{ category.name }}</h3>
+
+  <div class="field">
+    <label class="label">{% trans "Prompt Name" %}</label>
+    <div class="control">
+      <input class="input" type="text" placeholder="{% trans 'Add prompt name here...' %}" name="prompt_name" value="{% if prompt_name %}{{ prompt_name }}{% endif %}" required>
+    </div>
+  </div>
+
+<div class="field">
+  <label class="label">{% trans "Prompt Editor" %}</label>
+  <div class="control">
+    <textarea class="textarea" placeholder="{% trans 'Add your text here...' %}" name="prompt_text" rows="4" required oninput="adjustHeight(this)" style="min-height: 100px;">{% if prompt_text %}{{ prompt_text }}{% endif %}</textarea>
+  </div>
+</div>
+
+<div class="field">
+  <label class="label">{% trans "Output Format" %}</label>
+  <div class="control toggle-switch">
+    <label class="radio-toggle">
+      <input type="radio" name="prompt_output_format" value="str" {% if not output_format or output_format == 'str' %}checked{% endif %}>
+      <span class="toggle-label">{% trans "String" %}</span>
+    </label>
+    <label class="radio-toggle">
+      <input type="radio" name="prompt_output_format" value="json" {% if output_format == 'json' %}checked{% endif %}>
+      <span class="toggle-label">{% trans "JSON" %}</span>
+    </label>
+  </div>
+</div>
+
+
+  <div class="field">
+    <label class="label">{% trans "Models" %}</label>
+    <div class="control models-checkboxes">
+      {% for model in category.llmmodel_set.all %}
+      <label class="checkbox">
+        <input type="checkbox" name="models" value="{{ model.id }}" {% if model in selected_models %}checked{% endif %}>
+        {{ model.name }}
+      </label>
+      {% endfor %}
+      <label class="checkbox" id="new-model-checkbox">
+        <input type="checkbox" name="new_model" value="new_item"> {% trans "Create New Model..." %}
+      </label>
+      <input class="input" type="text" id="new-model-name" name="new_model_name" placeholder="{% trans 'New model name...' %}" style="margin-top: 10px; display:none;" />
+      <button class="button is-small is-link" type="button" id="add-model-btn" onclick="addNewItem('model')" style="margin-top: 10px; display:none;">{% trans "Add Model" %}</button>
+    </div>
+  </div>
+
+  <!-- Labels Section -->
+  <div class="field">
+    <label class="label">{% trans "Labels" %}</label>
+    <div class="control labels-checkboxes">
+      {% for label in category.label_set.all %}
+      <label class="checkbox">
+        <input type="checkbox" name="labels" value="{{ label.id }}" {% if label in selected_labels %}checked{% endif %}>
+        {{ label.name }}
+      </label>
+      {% endfor %}
+      <label class="checkbox" id="new-label-checkbox">
+        <input type="checkbox" name="new_label" value="new_item"> {% trans "Create New Label..." %}
+      </label>
+
+      <input class="input" type="text" id="new-label-name" name="new_label_name" placeholder="{% trans 'New label name...' %}" style="margin-top: 10px; display:none;" />
+      <button class="button is-small is-link" type="button" id="add-label-btn" onclick="addNewItem('label')" style="margin-top: 10px; display:none;">{% trans "Add Label" %}</button>
+    </div>
+  </div>
+
+
+  <div class="field is-grouped">
+    <div class="control">
+      <button type="submit" class="button is-success">{% trans "Save" %}</button>
+    </div>
+    <div class="control">
+      <a href="{% url 'list_prompts' category_id=category.id %}" class="button is-light">{% trans "Cancel" %}</a>
+    </div>
+  </div>
+</form>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var sl = $('.select-category').selectize({
+      plugins: ["clear_button"]
+    });
+    var control = sl[0].selectize;
+    {% if selected_category %}
+    control.setValue({{ selected_category }});
+  {% endif %}
+    });
+
+
+function adjustHeight(element) {
+  const lineHeight = 20; // 假设每行高度为20px，根据实际情况调整
+  const additionalLines = 3; // 额外增加的行数
+  element.style.height = 'auto'; // 临时缩小以适应新内容
+  const newHeight = element.scrollHeight + (lineHeight * additionalLines); // 原始滚动高度加上额外行的高度
+  element.style.height = newHeight + 'px'; // 设置新的高度
+}
+
+// 页面加载时调整所有textarea的高度
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.textarea').forEach(adjustHeight);
+});
+
+
+
+    document.getElementById('new-model-checkbox').querySelector('input').addEventListener('change', function() {
+      const isChecked = this.checked;
+      document.getElementById('new-model-name').style.display = isChecked ? '' : 'none';
+      document.getElementById('add-model-btn').style.display = isChecked ? '' : 'none';
+    });
+
+    document.getElementById('new-label-checkbox').querySelector('input').addEventListener('change', function() {
+      const isChecked = this.checked;
+      document.getElementById('new-label-name').style.display = isChecked ? '' : 'none';
+      document.getElementById('add-label-btn').style.display = isChecked ? '' : 'none';
+    });
+
+
+function addNewItem(type) {
+    const nameInputId = `new-${type}-name`;
+    const itemName = document.getElementById(nameInputId).value;
+    if (!itemName) {
+        alert('Item name is required');
+        return;
+    }
+
+    const apiEndpoint = type === 'model' ? 'models' : 'labels';
+    const category_id = '{{ category.id }}';
+    fetch(`/api/categories/${category_id}/${apiEndpoint}/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}',
+        },
+        body: JSON.stringify({ name: itemName })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.id) {
+            // 更新UI以显示新的复选框
+            const containerDiv = document.querySelector(`.${type}s-checkboxes`);
+            const newLabel = document.createElement('label');
+            newLabel.className = 'checkbox';
+            newLabel.innerHTML = `<input type="checkbox" name="${type}s" value="${data.id}" checked> ${itemName}`;
+
+            // 查找 new_item 的复选框
+            const newItemCheckbox = containerDiv.querySelector(`input[value="new_item"]`);
+            if (newItemCheckbox) {
+                // 将新的标签插入到 new_item 的复选框之前
+                containerDiv.insertBefore(newLabel, newItemCheckbox.parentElement);
+            } else {
+                // 如果没有 new_item，就正常添加到最后
+                containerDiv.appendChild(newLabel);
+            }
+
+            // 选中新添加的项，确保 new_item 不被选中
+            newItemCheckbox.checked = false;
+        } else {
+            throw new Error('Failed to create item');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert(error.message || 'Failed to create item');
+    })
+    .finally(() => {
+        // 重置表单元素
+        document.getElementById(nameInputId).style.display = 'none';
+        document.getElementById(`add-${type}-btn`).style.display = 'none';
+        document.getElementById(nameInputId).value = '';
+        // 不需要再次取消勾选“创建新项”的复选框，因为在添加新项成功时已经处理
+    });
+}
+
+
+</script>
+{% endblock %}

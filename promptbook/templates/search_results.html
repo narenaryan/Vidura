@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block title %}search{% endblock title %}
 
 {% block content %}
-  <h1 class="title">Search results for: "{{ query }}"</h1>
+  <h1 class="title">{% trans "Search results for:" %} "{{ query }}"</h1>
 
-  <h2 class="subtitle">Found Categories</h2>
+  <h2 class="subtitle">{% trans "Found Categories" %}</h2>
   <div class="columns is-multiline">
     {% for category in found_categories %}
       <div class="column is-one-third">
@@ -14,12 +15,12 @@
       </div>
     {% empty %}
       <div class="column">
-        <p>No categories found.</p>
+        <p>{% trans "No categories found." %}</p>
       </div>
     {% endfor %}
   </div>
 
-  <h2 class="subtitle">Found Prompts</h2>
+  <h2 class="subtitle">{% trans "Found Prompts" %}</h2>
   <div class="columns is-multiline">
     {% for prompt in found_prompts %}
       <div class="column is-one-third">
@@ -38,7 +39,7 @@
       </div>
     {% empty %}
       <div class="column">
-        <p>No prompts found.</p>
+        <p>{% trans "No prompts found." %}</p>
       </div>
     {% endfor %}
   </div>

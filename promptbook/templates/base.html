@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 {% load tz %} 
 <!DOCTYPE html>
@@ -14,17 +15,13 @@
     </script>
     <meta charset="utf-8" lang="en">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="Vidura Cloud - Bake your ChatGPT prompts">
-    <meta name="twitter:title" content="Vidura Cloud - Bake your ChatGPT prompts">
-    
-    <meta name="description" content="Welcome to Vidura AI, a ChatGPT Prompt Management System (CPMS) that allows you to easily create, retrieve, and search your prompts.">
-    <meta property="og:description" content="Welcome to Vidura AI, a ChatGPT Prompt Management System (CPMS) that allows you to easily create, retrieve, and search your prompts.">
-    <meta name="twitter:description" content="Are you interested in ChatGPT prompt-engineering ? Vidura AI is here to help">
-    
-    <meta property="og:image" content="https://i.ibb.co/7Vyt7Kw/vidura-logo-grn.png">
-    <meta name="twitter:image" content="https://i.ibb.co/7Vyt7Kw/vidura-logo-grn.png">
-    <title>Vidura {% block title %}{% endblock %}</title>
-    <link rel="icon" type="image/x-icon" href="https://i.ibb.co/7Vyt7Kw/vidura-logo-grn.png">
+    <meta property="og:title" content="Prompt Hub">
+
+    <meta name="description" content="Welcome to PromptHub, a Large Language Model Prompt Management System (LPMS) designed for AI applications and developers.">
+    <meta property="og:description" content="Welcome to PromptHub, a Large Language Model Prompt Management System (LPMS) designed for AI applications and developers.">
+    <meta property="og:image" content="https://prompt-hub.oss-cn-shanghai.aliyuncs.com/prompt-hub-logo11.png">
+    <title>PromptHub {% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="https://dminfra-static-files.oss-cn-shanghai.aliyuncs.com/prompt-hub-logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work Sans">
@@ -163,30 +160,32 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
     <nav class="navbar is-fixed-top has-shadow" role="navigation" aria-label="main navigation">
         <div class="container">
+
             <div class="navbar-brand">
-              <img class="navbar-item logo" src="https://i.ibb.co/7Vyt7Kw/vidura-logo-grn.png" alt="My image">
+              <img class="navbar-item logo" src="https://prompt-hub.oss-cn-shanghai.aliyuncs.com/prompt-hub-logo11.png" alt="My image">
                 <a class="navbar-item" href="/">
-                    <strong class="logo-name">Vidura</strong> &nbsp;<p>Beta</p>
+                    <strong class="logo-name">Prompt Hub</strong> &nbsp;<p>Beta</p>
                 </a>
             </div>
             <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
-              </a>
+            </a>
               {% if user.is_authenticated %}
             <div class="navbar-menu">
                 <div class="navbar-start">
-                    <a class="navbar-item" href="{% url 'list_categories' %}">
-                        Categories
-                    </a>
-                    <a class="navbar-item" href="{% url 'editor' %}">Editor</a>
+
+                    <a class="navbar-item" href="{% url 'list_activities' %}"> {% trans "Activities" %} </a>
+
+                    <a class="navbar-item" href="{% url 'api-root' %}"  target="_blank"> {% trans "API" %} </a>
+
                     <!-- Add this inside your navbar div, adjust accordingly -->
                     <div class="navbar-item">
                         <form method="GET" action="{% url 'search' %}">
                             <div class="field has-addons">
                                 <div class="control">
-                                    <input class="input" type="text" name="q" placeholder="Search anything">
+                                    <input class="input" type="text" name="q" placeholder="{% trans 'Search anything' %}">
                                 </div>
                                 <div class="control">
                                     <button class="button" type="submit">
@@ -200,7 +199,7 @@
                     </div>
                 </div>
                 <div class="navbar-end">
-                    <!-- ... other navbar content ... -->
+                <!-- ... other navbar content ... -->
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link" href="#">
                     {% if user.profile.avatar %}
@@ -216,20 +215,39 @@
                         <span class="icon">
                         <i class="fas fa-image"></i>
                         </span>
-                        Upload Avatar
+                        {% trans "Upload Avatar" %}
                     </a>
                     <hr class="navbar-divider">
                     <a class="navbar-item" href="{% url 'logout' %}">
                         <span class="icon">
                         <i class="fas fa-sign-out-alt"></i>
                         </span>
-                        Logout
+                        {% trans "Logout" %}
                     </a>
                     </div>
                 </div>
                 <!-- ... other navbar content ... -->
-  
-                    {% endif %}
+
+                {% endif %}
+                <!-- 语言选择器 -->
+                <div class="navbar-item">
+                    <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                        <div class="select">
+                            <select name="language" onchange="this.form.submit()">
+                                {% get_current_language as LANGUAGE_CODE %}
+                                {% get_available_languages as LANGUAGES %}
+                                {% for lang in LANGUAGES %}
+                                <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %} selected {% endif %}>
+                                    {{ lang.1 }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </form>
+                </div>
+
                 </div>
             </div>
         </div>
@@ -251,25 +269,7 @@
           });
         });
     </script>
-    <footer class="footer">
-      <div class="container">
-        <div class="columns is-vcentered">
-          <div class="column is-6">
-            <p>With love <i class="fas fa-heart" style="color: red"></i> from <a href="https://happy-pythonist.com/" target="_blank">happy-pythonist.com</a></p>
-            <p> All rights reserved @ {% now 'Y' %}.
-              <a href="https://github.com/narenaryan/Vidura" target="_blank">
-              GitHub&nbsp<i class="fab fa-github"></i>
-           </a></p>
-          </div>
-          <div class="column is-2">
-            <a href="https://vidura-docs.s3.us-west-2.amazonaws.com/Terms+%26+Conditions+Vidura+Cloud.pdf" target="_blank">Terms and conditions</a>
-          </div>
-          <div class="column is-2">
-            <a href="https://vidura-docs.s3.us-west-2.amazonaws.com/Privacy+Policy+Vidura+cloud.pdf" target="_blank">Privacy policy</a>
-          </div>
-        </div>
-      </div>
-    </footer>
+
     
 </body>
 </html>

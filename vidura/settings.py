@@ -84,12 +84,14 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'rest_framework',
+    'rest_framework.authtoken',
     "reversion",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',  # add i18n middleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -97,6 +99,29 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'reversion.middleware.RevisionMiddleware',
 ]
+
+# Internationalization
+# https://docs.djangoproject.com/en/4.1/topics/i18n/
+
+LANGUAGES = [
+    ('en', 'English'),
+    ('zh-hans', 'Simplified Chinese'),
+]
+
+# default language code
+LANGUAGE_CODE = 'en-us'
+
+# 启用Django的翻译系统
+USE_I18N = True
+
+# enable localization of date and number formats
+USE_L10N = True
+
+# direct to the path of the locale folder
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'promptbook/locale'),
+]
+
 
 ROOT_URLCONF = 'vidura.urls'
 
@@ -122,7 +147,7 @@ WSGI_APPLICATION = 'vidura.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-if os.getenv("ENV") == "production":
+if os.getenv("DB_TYPE") == "postgresql":
     db_conf = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DB_NAME'),
@@ -130,6 +155,15 @@ if os.getenv("ENV") == "production":
         'PASSWORD': os.environ.get('DB_PASS'),
         'HOST': os.environ.get('DB_HOST'),
         'PORT': '5432',
+    }
+elif os.getenv("DB_TYPE") == "mysql":
+    db_conf = {
+        'ENGINE': 'mysql.connector.django',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': '3306',
     }
 else:
     db_conf = {
@@ -161,6 +195,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # token auth
+        'rest_framework.authentication.SessionAuthentication',  # session auth
+    ],
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
@@ -168,12 +206,9 @@ REST_FRAMEWORK = {
     ]
 }
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = os.environ.get('TIME_ZONE', 'Asia/Shanghai')
 
 USE_I18N = True
 
@@ -197,7 +232,7 @@ if os.getenv("ENV") == "development":
     ALLOWED_HOSTS = ["*"]
     DEBUG = True
 else:
-    ALLOWED_HOSTS = ['cloud.vidura.ai']
-    DEBUG = False
+    ALLOWED_HOSTS = ['*']
+    DEBUG = True
 
-CSRF_TRUSTED_ORIGINS = ['https://*.vidura.ai']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:*',]

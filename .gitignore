@@ -96,3 +96,5 @@ docker-compose.yaml
 static
 # localdev settings
 viduraenv/
+
+.idea

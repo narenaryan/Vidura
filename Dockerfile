@@ -1,5 +1,7 @@
-# Use the official Python 3.9 image as the base image
-FROM python:3.9-slim
+# Use the official Python 3.11 image as the base image
+FROM python:3.11-slim
+
+RUN apt-get update && apt-get install -y vim gettext && apt-get clean
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -13,15 +15,25 @@ WORKDIR /opt/services/djangoapp
 
 # Copy requirements.txt and install dependencies
 COPY requirements.txt /opt/services/djangoapp
+
 RUN pip install --no-cache-dir -r requirements.txt
 
+
 # Copy the rest of the project
-COPY . /opt/services/djangoapp
+COPY promptbook /opt/services/djangoapp/promptbook
+COPY vidura /opt/services/djangoapp/vidura
+COPY manage.py /opt/services/djangoapp/manage.py
+COPY entrypoint.sh /opt/services/djangoapp/entrypoint.sh
 
-RUN python manage.py collectstatic --no-input -v 2
 
-# Expose the port the app runs on
-EXPOSE 80
+ENV TIME_ZONE=Asia/Shanghai \
+    SUPERUSER_NAME=admin \
+    SUPERUSER_PASSWORD=admin \
+    SUPERUSER_EMAIL=''
 
-# Start Gunicorn to serve the Django app using ASGI
-CMD ["gunicorn", "vidura.asgi:application", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "-b", "0.0.0.0:80"]
+RUN python manage.py compilemessages --ignore venv
+
+EXPOSE 8000
+
+CMD ["/opt/services/djangoapp/entrypoint.sh"]
+

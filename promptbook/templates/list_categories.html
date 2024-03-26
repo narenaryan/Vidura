@@ -1,17 +1,39 @@
 {% extends 'base.html' %}
+{% load i18n %}
 {% block title %}categories{% endblock title %}
 
 {% block content %}
   <style>  
     .category-card {
-      background-color: #fff;
-      border-radius: 6px;
-      box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
-      color: #4a4a4a;
-      display: block;
-      padding: 1.25rem;
-      min-height: 18rem;
-    }
+  padding: 20px;
+  border: 1px solid #dbdbdb;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.category-code-and-name {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* 确保代码和名称左对齐 */
+}
+
+.category-code {
+  background-color: #f2f2f2;
+  color: black;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  padding: 2px 6px; /* 调整内边距使阴影长度自适应文字 */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 轻微的阴影效果 */
+  margin-bottom: 0px; /* 与下方名称的间距 */
+  align-self: flex-start; /* 左对齐 */
+}
+
+.category-title {
+  margin: 0; /* 移除标题的默认外边距 */
+}
 
     .category-label {
       position: relative;
@@ -98,14 +120,14 @@
     }
   </style>
   <div class="container">
-    <h1 class="title">Categories</h1>
-    <p style="font-weight: 600">Welcome to Vidura, a ChatGPT Prompt Management System (CPMS) that allows you to easily create, retrieve, and search your prompts.</p>
+    <h1 class="title">{% trans "Categories" %}</h1>
+    <p style="font-weight: 600">{% trans "Welcome to PromptHub, a Large Language Model Prompt Management System (LPMS) designed for AI applications and developers. It enables you to easily create, manage and retrieve through your prompts." %}</p>
   </div><br />
   <button class="button add-category" id="add-category-button">
     <span class="icon">
       <i class="fas fa-plus"></i>
     </span>
-    <span>Add Category</span>
+    <span>{% trans "Add Category" %}</span>
   </button>
   <hr />
   <div class="modal" id="add-category-modal">
@@ -118,97 +140,116 @@
       <section class="modal-card-body">
         <form id="add-category-form">
           {% csrf_token %}
-          <div class="field">
-            <label for="category-name" class="label">Category name</label>
-            <div class="control category-name-control">
-              <input type="text" class="input" id="category-name" placeholder="Enter category name" required>
+          <div id="category-errors" class="notification is-danger is-hidden"></div>
+
+            <div class="field">
+              <label for="category-name" class="label">{% trans "Category code" %}</label>
+              <div class="control category-name-control">
+                <input type="text" class="input" id="category-name" placeholder="{% trans 'Enter category code' %}" required>
+                <p class="help">{% trans "Must start with a lowercase letter and contain only lowercase letters, numbers, and underscores." %}</p>
+              </div>
+              <label for="category-name" class="label">{% trans "Category name" %}</label>
+              <div class="control">
+                <input type="text" class="input" id="category-display-name" placeholder="{% trans 'Enter category display name' %}" required>
+              </div>
             </div>
-            <label for="category-name" class="label">Help text</label>
-            <div class="control">
-              <input type="text" class="input" id="category-help-text" placeholder="Enter few comma-seprated use cases for this category" required>
-            </div>
-          </div>
+
         </form>
       </section>
       <footer class="modal-card-foot">
-        <button class="button raised" id="save-category">Save</button>
-        <button class="button cancel-btn" id="cancel-category">Cancel</button>
+        <button class="button raised" id="save-category">{% trans "Save" %}</button>
+        <button class="button cancel-btn" id="cancel-category">{% trans "Cancel" %}</button>
       </footer>
     </div>
   </div>  
   <div class="container">
-    <h1 class="title">Pinned Categories</h1>
+    <h1 class="title">{% trans "Pinned Categories" %}</h1>
   </div>
   <div class="columns is-multiline">
     {% for category in pinned_categories %}
-      <div class="column is-one-fifth">
-          <div class="category-card">
-            <div class="row">
-              <h3 class="title category-title">{{ category.name}}</h3>
-            </div>
-            <p class="is-size-7 has-text-weight-semibold prompt-count">Prompts: <span class="has-text-weight-normal">{{ category.num_prompts }}</span></p>
-            <section class="preview-section">
-            <p class="is-size-7 has-text-weight-semibold">Recetnly added prompts:</p>
-            <ul>
-              {% for prompt in category.recent_prompts %}
-              <li class="prompt-preview">* {{ prompt.text|truncatechars:50 }}</li>
-              {% empty %}
-              <li>None</li>
-              {% endfor %}
-            </ul>
-            </section>
-            <p class="is-size-8 has-text-weight-semibold last-updated-btn">Last updated: <span class="has-text-weight-normal">{{ category.last_updated }}</span></p>
-            <a href="{% url 'list_prompts' category.id %}">
-              <button class="button explore-btn is-size-7">Explore</button>
+
+
+<div class="column is-one-fifth-desktop is-half-mobile">
+    <div class="category-card">
+
+         <div class="category-code-and-name">
+            <!-- 类别代码 -->
+            <div class="category-code">{{ category.name }}</div>
+            <!-- 类别名称作为链接 -->
+            <a href="{% url 'list_prompts' category.id %}" class="has-text-link">
+                <h3 class="title category-title is-size-5">{{ category.display_name }}</h3>
             </a>
-            <button class="pin-button button pin-btn is-size-7 is-danger is-light" data-category-id="{{ category.id }}">
-               Unpin
-            </button>
-          </div>
-      </div>
-      {% empty %}
-      <div class="column">
-        <p>No pinned categories found. Pin a category by clicking on the "Pin to top" button.</p>
-      </div>
+        </div>
+
+        <!-- 提示计数 -->
+        <p class="is-size-7 has-text-weight-semibold prompt-count">
+            {% trans "Prompts" %}: <span class="has-text-weight-normal">{{ category.num_prompts }}</span>
+        </p>
+
+        <!-- 最后更新时间 -->
+        <p class="is-size-7 has-text-weight-semibold last-updated-btn">
+            {% trans "Last updated:" %} <span class="has-text-weight-normal">{{ category.last_updated }}</span>
+        </p>
+
+        <!-- Unpin 按钮，已优化样式和布局 -->
+        <button class="button pin-button is-small is-light" data-category-id="{{ category.id }}" style="width: auto; align-self: center;">
+
+            <span>{% trans "Unpin" %}</span>
+        </button>
+    </div>
+</div>
+{% empty %}
+<div class="column">
+    <p>{% trans "No pinned categories found. Pin a category by clicking on the 'Pin to top' button." %}</p>
+</div>
+
+
+
     {% endfor %}
   </div>
 
   <div class="container">
-    <h1 class="title">Unpinned Categories</h1>
+    <h1 class="title">{% trans "Unpinned Categories" %}</h1>
   </div>
   <div class="columns is-multiline">
     {% for category in unpinned_categories %}
-      <div class="column is-one-fifth">
-          <div class="category-card">
-            <div class="row">
-              <h3 class="title category-title">{{ category.name}}</h3>
-            </div>
-            <p class="is-size-7 has-text-weight-semibold prompt-count">Prompts: <span class="has-text-weight-normal">{{ category.num_prompts }}</span></p>
-            <section class="preview-section">
-            <p class="is-size-7 has-text-weight-semibold">Recetnly added prompts:</p>
-            <ul>
-              {% for prompt in category.recent_prompts %}
-              <li class="prompt-preview">* {{ prompt.text|truncatechars:50 }}</li>
-              {% empty %}
-              <li>None</li>
-              {% endfor %}
-            </ul>
-            </section>
-            <p class="is-size-8 has-text-weight-semibold last-updated-btn">Last updated: <span class="has-text-weight-normal">{{ category.last_updated }}</span></p>
-            <a href="{% url 'list_prompts' category.id %}">
-              <button class="button explore-btn is-size-7">Explore</button>
+
+
+<div class="column is-one-fifth-desktop is-half-mobile">
+    <div class="category-card" style="padding: 20px; border: 1px solid #dbdbdb; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+         <div class="category-code-and-name">
+            <!-- 类别代码 -->
+            <div class="category-code">{{ category.name }}</div>
+            <!-- 类别名称作为链接 -->
+            <a href="{% url 'list_prompts' category.id %}" class="has-text-link">
+                <h3 class="title category-title is-size-5">{{ category.display_name }}</h3>
             </a>
-            <button class="pin-button button pin-btn is-size-7 is-info is-light" data-category-id="{{ category.id }}">
-               Pin to top
-            </button>
-          </div>
-      </div>
-      {% empty %}
-      <div class="column">
-        <p>No categories found. Add one by clicking the "Add Category" button.</p>
-      </div>
-    {% endfor %}
+        </div>
+
+        <p class="is-size-7 has-text-weight-semibold prompt-count">
+            {% trans "Prompts:" %}: <span class="has-text-weight-normal">{{ category.num_prompts }}</span>
+        </p>
+        <p class="is-size-7 has-text-weight-semibold last-updated-btn">
+            {% trans "Last updated:" %} <span class="has-text-weight-normal">{{ category.last_updated }}</span>
+        </p>
+        <!-- 移除 Explore 按钮，通过点击名称直接导航 -->
+
+        <!-- 优化 Pin to top 按钮样式，使用大头针图标，增强直观性 -->
+        <button class="button is-small is-info is-light pin-button" data-category-id="{{ category.id }}" style="width: auto; align-self: center;">
+            <span class="icon is-small">
+                <i class="fas fa-thumbtack"></i>
+            </span>
+            <span>{% trans "Pin to top" %}</span>
+        </button>
+    </div>
+</div>
+{% empty %}
+<div class="column">
+    <p>{% trans "No categories found. Add one by clicking the 'Add Category' button." %}</p>
+</div>
+  {% endfor %}
   </div>
+
   <script>
     $(document).ready(function() {
     
@@ -220,31 +261,43 @@
         $("#add-category-modal").removeClass("is-active");
       });
     
-      $("#save-category").click(function(event) {
-        event.preventDefault();
-        const categoryName = $("#category-name").val();
-        const categoryHelpText = $("#category-help-text").val();
-        if (categoryName.trim() !== "" && categoryHelpText.trim() !== "") {
-          $.ajax({
-            url: "{% url 'create_category' %}",
-            type: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "X-CSRFToken": "{{ csrf_token }}"
-            },
-            data: JSON.stringify({
-              name: categoryName,
-              helpText: categoryHelpText
-            }),
-            success: function() {
-              window.location.reload();
-            },
-            error: function(xhr, status, error) {
-              console.error(xhr.responseText);
-            }
-          });
+     $("#save-category").click(function(event) {
+  event.preventDefault();
+  const categoryName = $("#category-name").val();
+  const categoryDisplayName = $("#category-display-name").val();
+  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value; // 获取CSRFToken
+
+  if (categoryName.trim() !== "") {
+    $.ajax({
+      url: "{% url 'create_category' %}",
+      type: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": csrfToken
+      },
+      data: JSON.stringify({
+        name: categoryName,
+        displayName: categoryDisplayName
+      }),
+      success: function() {
+        // 成功后关闭模态框并刷新页面
+        $("#add-category-modal").removeClass("is-active");
+        window.location.reload();
+      },
+      error: function(xhr) {
+        // 显示错误信息
+        const errors = JSON.parse(xhr.responseText).errors;
+        let errorMessage = "";
+        for (const key in errors) {
+          errorMessage += `${key}: ${errors[key].join(", ")}<br>`;
         }
-      });
+        $("#category-errors").html(errorMessage).removeClass("is-hidden");
+      }
+    });
+  } else {
+    $("#category-errors").html("Category name cannot be empty.").removeClass("is-hidden");
+  }
+});
 
       $(".pin-button").click(function(event) {
         event.preventDefault();
