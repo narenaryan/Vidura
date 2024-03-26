@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-22 17:24+0800\n"
+"POT-Creation-Date: 2024-03-26 13:57+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116,15 +116,15 @@ msgstr ""
 
 #: promptbook/templates/create_or_edit_prompt.html:137
 #: promptbook/templates/editor.html:74
-#: promptbook/templates/list_categories.html:140
-#: promptbook/templates/list_prompts.html:210
+#: promptbook/templates/list_categories.html:160
+#: promptbook/templates/list_prompts.html:211
 msgid "Save"
 msgstr ""
 
 #: promptbook/templates/create_or_edit_prompt.html:140
 #: promptbook/templates/editor.html:75
-#: promptbook/templates/list_categories.html:141
-#: promptbook/templates/list_prompts.html:211
+#: promptbook/templates/list_categories.html:161
+#: promptbook/templates/list_prompts.html:212
 msgid "Cancel"
 msgstr ""
 
@@ -152,80 +152,80 @@ msgstr ""
 msgid "No recent activity."
 msgstr ""
 
-#: promptbook/templates/list_categories.html:102
+#: promptbook/templates/list_categories.html:123
 msgid "Categories"
 msgstr ""
 
-#: promptbook/templates/list_categories.html:103
+#: promptbook/templates/list_categories.html:124
 msgid ""
 "Welcome to PromptHub, a Large Language Model Prompt Management System (LPMS) "
 "designed for AI applications and developers. It enables you to easily "
 "create, manage and retrieve through your prompts."
 msgstr ""
 
-#: promptbook/templates/list_categories.html:109
+#: promptbook/templates/list_categories.html:130
 msgid "Add Category"
 msgstr ""
 
-#: promptbook/templates/list_categories.html:125
+#: promptbook/templates/list_categories.html:146
 msgid "Category code"
 msgstr ""
 
-#: promptbook/templates/list_categories.html:127
+#: promptbook/templates/list_categories.html:148
 msgid "Enter category code"
 msgstr ""
 
-#: promptbook/templates/list_categories.html:128
+#: promptbook/templates/list_categories.html:149
 msgid ""
 "Must start with a lowercase letter and contain only lowercase letters, "
 "numbers, and underscores."
 msgstr ""
 
-#: promptbook/templates/list_categories.html:130
+#: promptbook/templates/list_categories.html:151
 msgid "Category name"
 msgstr ""
 
-#: promptbook/templates/list_categories.html:132
+#: promptbook/templates/list_categories.html:153
 msgid "Enter category display name"
 msgstr ""
 
-#: promptbook/templates/list_categories.html:146
+#: promptbook/templates/list_categories.html:166
 msgid "Pinned Categories"
 msgstr ""
 
-#: promptbook/templates/list_categories.html:161
+#: promptbook/templates/list_categories.html:186
 msgid "Prompts"
 msgstr ""
 
-#: promptbook/templates/list_categories.html:166
-#: promptbook/templates/list_categories.html:203
+#: promptbook/templates/list_categories.html:191
+#: promptbook/templates/list_categories.html:233
 #: promptbook/templates/list_prompts.html:162
 msgid "Last updated:"
 msgstr ""
 
-#: promptbook/templates/list_categories.html:172
+#: promptbook/templates/list_categories.html:197
 msgid "Unpin"
 msgstr ""
 
-#: promptbook/templates/list_categories.html:178
+#: promptbook/templates/list_categories.html:203
 msgid ""
 "No pinned categories found. Pin a category by clicking on the 'Pin to top' "
 "button."
 msgstr ""
 
-#: promptbook/templates/list_categories.html:187
+#: promptbook/templates/list_categories.html:212
 msgid "Unpinned Categories"
 msgstr ""
 
-#: promptbook/templates/list_categories.html:200
+#: promptbook/templates/list_categories.html:230
 msgid "Prompts:"
 msgstr ""
 
-#: promptbook/templates/list_categories.html:212
+#: promptbook/templates/list_categories.html:242
 msgid "Pin to top"
 msgstr ""
 
-#: promptbook/templates/list_categories.html:218
+#: promptbook/templates/list_categories.html:248
 msgid "No categories found. Add one by clicking the 'Add Category' button."
 msgstr ""
 
@@ -238,7 +238,7 @@ msgid "Prompts in category:"
 msgstr ""
 
 #: promptbook/templates/list_prompts.html:107
-#: promptbook/templates/list_prompts.html:189
+#: promptbook/templates/list_prompts.html:190
 msgid "Add prompt"
 msgstr ""
 
@@ -263,15 +263,19 @@ msgstr ""
 msgid "Output Format:"
 msgstr ""
 
-#: promptbook/templates/list_prompts.html:183
+#: promptbook/templates/list_prompts.html:163
+msgid "Last used:"
+msgstr ""
+
+#: promptbook/templates/list_prompts.html:184
 msgid "No prompts. Here's a cookie"
 msgstr ""
 
-#: promptbook/templates/list_prompts.html:202
+#: promptbook/templates/list_prompts.html:203
 msgid "Edit"
 msgstr ""
 
-#: promptbook/templates/list_prompts.html:235
+#: promptbook/templates/list_prompts.html:236
 msgid "Copied prompt to clipboard"
 msgstr ""
 
@@ -327,7 +331,7 @@ msgstr ""
 msgid "Upload"
 msgstr ""
 
-#: promptbook/views.py:122
+#: promptbook/views.py:123
 msgid ""
 "A prompt with this text already exists. Please enter a different prompt."
 msgstr ""

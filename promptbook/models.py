@@ -86,6 +86,7 @@ class Prompt(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+    last_used_at = models.DateTimeField(auto_now=True)  # API usage tracking（Web访问不计算在内）
     text_hash = models.CharField(max_length=32, unique=True)
     labels = models.ManyToManyField(Label, related_name='prompts')
     llm_models = models.ManyToManyField(LLMModel, related_name='prompts')

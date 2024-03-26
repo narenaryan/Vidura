@@ -26,9 +26,9 @@ Access server at http://127.0.0.1:8000 and enter the credentials created before 
 ## Modifying Table Structure
 To modify the table structure in the database, you need to follow these steps:
 
-- **Modify Model File**: First, make the necessary changes in the promptbook/models.py file.
-- **Generate Migration File**: Use the command python manage.py makemigrations, which will generate a migration file in the promptbook/migrations directory.
-- **Apply Migration to Database**: Run the command python manage.py migrate to apply the migration file to the database.
+- **Modify Model File**: First, make the necessary changes in the `promptbook/models.py` file.
+- **Generate Migration File**: Use the command `python manage.py makemigrations`, which will generate a migration file in the `promptbook/migrations` directory.
+- **Apply Migration to Database**: Run the command `python manage.py migrate` to apply the migration file to the database.
 
 
 

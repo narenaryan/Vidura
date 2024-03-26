@@ -15,6 +15,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models.functions import Cast
 from django.db.models import IntegerField
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 from actstream import action
 from actstream.models import Action
@@ -347,6 +348,7 @@ class PromptsListCreateView(generics.ListCreateAPIView):
 
         if category_id is not None:
             if name is not None:
+                # 通过category_id和name过滤，如果查到，则同时需要更新last_used_at
                 return Prompt.objects.filter(category_id=category_id, name=name)
             return Prompt.objects.filter(category_id=category_id)
         elif category_name is not None:
@@ -355,6 +357,20 @@ class PromptsListCreateView(generics.ListCreateAPIView):
             return Prompt.objects.filter(category__name=category_name)
         else:
             return Prompt.objects.none()
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        if queryset.count() == 1:
+            name = self.request.query_params.get('name', None)
+            if name is not None:
+                # 精确查找时才更新last_used_at
+                queryset.update(last_used_at=timezone.now())
+
+        serializer = self.get_serializer(queryset, many=True)
+
+        return Response(serializer.data)
+
 
     def perform_create(self, serializer):
         """
